@@ -7,7 +7,7 @@ std::map<std::string, sf::SoundBuffer> AssetManager::soundBuffers;
 
 sf::Texture& AssetManager::RequestTexture(std::string assetName)
 {
-    auto pairFound = textures.find(assetName);
+    auto pairFound = textures.find(assetName); //using auto to iterate through textures to find the given asset name.
 
     if (pairFound != textures.end())
     {
@@ -16,8 +16,8 @@ sf::Texture& AssetManager::RequestTexture(std::string assetName)
     }
     else
     {
-        sf::Texture& newTexture = textures[assetName];
-        newTexture.loadFromFile(assetName);
+        sf::Texture& newTexture = textures[assetName]; //creates a new texture and string key value pair.
+        newTexture.loadFromFile(assetName); //loads the item from storage.
         return newTexture;
     }
 
@@ -67,4 +67,6 @@ void AssetManager::DestroyAllAssets()
     textures.clear();
     fonts.clear();
     soundBuffers.clear();
+
+    //wipes the map clean for memory cleaning purposes.
 }

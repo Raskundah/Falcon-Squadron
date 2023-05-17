@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include"SpriteObject.h"
 
 enum class CollisionType
 {
@@ -25,7 +26,8 @@ public:
 	//calling this function on an instance of an object will update any positional information.
 	virtual void Update(sf::Time _frameTime);
 
-	
+	virtual void HandleCollision(Physics& other);
+
 	bool CheckCollision(Physics other); //checks the collision with an object.
 	void SetColliding(bool newColliding); // sets the collision flag of a called object.
 
@@ -39,14 +41,20 @@ protected:
 	sf::Vector2f m_CollisionScale;
 	CollisionType collisionType;
 	bool m_IsAlive;
+	sf::Sprite m_sprite;
 
 private:
+
+	void UpdateAcceleration();
 
 	sf::Vector2f GetCollisionCentre();
 	float GetCircleCollisionRadius();
 	sf::FloatRect GetAABB();
 
 	bool m_Colliding;
-
+	sf::Vector2f m_Position;
+	sf::Vector2f m_twoFramesOldPos;
+	sf::Vector2f m_velocity;
+	sf::Vector2f m_acceleration;
 };
 
