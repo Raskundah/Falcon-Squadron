@@ -25,13 +25,7 @@ public:
 	//calling this function on an instance of an object will update any positional information.
 	virtual void Update(sf::Time _frameTime);
 
-	//calling this function on an instance will draw it to the display window.
-	virtual void Draw(sf::RenderTarget _target);
-
-	sf::Vector2f GetPosition(); // this function gets the position of the object that calls it.
-
-	virtual void SetPosition(sf::Vector2f _newPosition); // this funvction sets a position of an object that calls it.
-
+	
 	bool CheckCollision(Physics other); //checks the collision with an object.
 	void SetColliding(bool newColliding); // sets the collision flag of a called object.
 
@@ -41,7 +35,18 @@ public:
 
 protected:
 
+	sf::Vector2f m_CollisionOffset;
+	sf::Vector2f m_CollisionScale;
+	CollisionType collisionType;
+	bool m_IsAlive;
 
+private:
+
+	sf::Vector2f GetCollisionCentre();
+	float GetCircleCollisionRadius();
+	sf::FloatRect GetAABB();
+
+	bool m_Colliding;
 
 };
 
