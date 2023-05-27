@@ -15,7 +15,10 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 
 	//TODO: add vectors of object positions.
 
-	player.SetPosition(30, 30);	
+	int maxWidth = newGamePointer->GetWindow()->getSize().x;
+	int maxHeight = newGamePointer->GetWindow()->getSize().y;
+
+	player.SetPosition(80, maxHeight/2);	
 	
 
 }
@@ -48,12 +51,8 @@ void LevelScreen::Update(sf::Time frameTime)
 				player.HandleCollision(*platforms[i]);
 				platforms[i]->HandleCollision(player);
 			}
-
-		}
-
-		
+		}		
 	}
-
 		// endPanel.Update(frameTime);
 
 }
@@ -63,11 +62,15 @@ void LevelScreen::Update(sf::Time frameTime)
 void LevelScreen::Draw(sf::RenderTarget& _target)
 {
 	player.Draw(_target);
-
+	sf::CircleShape shape(50);
+	shape.setFillColor(sf::Color(100, 250, 50));
+	shape.setPosition(300, 300);
 
 	if (!gameRunning)
 	{
 		endPanel.Draw(_target);
+	
+
 	}
 }
 

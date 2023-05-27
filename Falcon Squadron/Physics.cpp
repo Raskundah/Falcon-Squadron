@@ -11,7 +11,6 @@ Physics::Physics()
     , m_IsAlive(true)
     , collisionType(CollisionType::AABB)
     , m_Position(0, 0)
-    , m_sprite()
 {
 }
 

@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "EndPanel.h"
+#include "AssetManager.h"
 
 class Game;
 class Platform;
@@ -24,6 +25,7 @@ private:
     Player player;
     EndPanel endPanel;
     bool gameRunning;
+    sf::Sprite background;
 
     std::vector<Platform*> platforms;
     

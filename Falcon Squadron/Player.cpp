@@ -5,12 +5,13 @@ Player::Player()
     :Physics()
     , health(100)
     , shields(0)
-    , speed(50)
-    , speedBoosted(100)
-    , MAXSPEED(100)
-    , currentBoost(100)
+    , speed(500)
+    , speedBoosted(1000)
+    , MAXSPEED(1000)
+    , currentBoost(1000)
 {
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Player/PlayerBlue_Frame_01.png"));
+    m_sprite.setRotation(90.0f);
 }
 
 
@@ -20,6 +21,8 @@ void Player::Update(sf::Time _frameTime)
 
     UpdatePosition(_frameTime);
     UpdateSpeedBoost(_frameTime);
+
+
 }
 
 void Player::Draw(sf::RenderTarget& _target)
@@ -63,6 +66,9 @@ void Player::UpdatePosition(sf::Time frameTime)
             m_position.x -= speed * frameTime.asSeconds();
         }
     }
+
+    m_sprite.setPosition(GetPosition());
+
 }
 
 void Player::SetHealth(int newHealth)
