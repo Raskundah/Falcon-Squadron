@@ -2,11 +2,13 @@
 #include "AssetManager.h"
 
 Player::Player()
-	:Physics()
-	, health(100)
-	, shields(0)
-	, speed(50)
-    , speedBoostTracker(100)
+    :Physics()
+    , health(100)
+    , shields(0)
+    , speed(50)
+    , speedBoosted(100)
+    , MAXSPEED(100)
+    , currentBoost(100)
 {
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Player/PlayerBlue_Frame_01.png"));
 }
@@ -14,8 +16,12 @@ Player::Player()
 
 void Player::Update(sf::Time _frameTime)
 {
-	Physics::Update(_frameTime);
+}
 
+void Player::Update(sf::Time _frameTime)
+{
+    UpdatePosition(_frameTime);
+    UpdateSpeedBoost(_frameTime);
 
 }
 
@@ -66,8 +72,6 @@ void Player::UpdatePosition(sf::Time frameTime, const sf::Vector2u& screenSize)
     }
 }
 
-
-
 void Player::SetHealth(int newHealth)
 {
     health = newHealth;
@@ -93,13 +97,20 @@ int Player::GetShields()
 
 void Player::UpdateSpeedBoost(sf::Time _frameTime)
 {
-    // Speed boost
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+    // Update the speed boost value
+
+   // Increment the speed boost by 10 per second until it reaches the maximum boost value
+
+    if (speedBoosted < MAXSPEED && currentBoost > 0)
     {
-        if (speedBoostTracker > 0)
+        speedBoosted += 10 * _frameTime.asSeconds();
+        speed += speedBoosted;
+        currentBoost -= _frameTime.asSeconds();
+
+        if (speedBoosted > speed && currentBoost > 0)
         {
-            speedBoostTracker -= 10 * _frameTime.asSeconds();
-            speed = speed + speedBoostTracker;
+            speedBoosted = MAXSPEED;
+            speed += speedBoosted;
         }
     }
 }

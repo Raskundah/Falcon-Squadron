@@ -15,16 +15,8 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 
 	//TODO: add vectors of object positions.
 
-
+	player.SetPosition(30, 30);	
 	
-	player.SetPosition(, 30);	
-	
-
-
-	/*platforms.push_back(new Platform(sf::Vector2f(500, 500)));
-	platforms.push_back(new Platform(sf::Vector2f(900, 500)));
-	platforms.push_back(new Platform(sf::Vector2f(30, 500)));
-	*/
 
 }
 
@@ -62,7 +54,7 @@ void LevelScreen::Update(sf::Time frameTime)
 		
 	}
 
-		endPanel.Update(frameTime);
+		// endPanel.Update(frameTime);
 
 }
 
@@ -70,7 +62,6 @@ void LevelScreen::Update(sf::Time frameTime)
 
 void LevelScreen::Draw(sf::RenderTarget& _target)
 {
-	
 	player.Draw(_target);
 
 

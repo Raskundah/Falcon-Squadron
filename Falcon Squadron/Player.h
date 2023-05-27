@@ -9,6 +9,7 @@ public:
     Player();
 
     void Update(sf::Time _frameTime) override;
+         
     void Draw(sf::RenderTarget& _target) override;
 
     void HandleCollision(Physics& other) override;
@@ -23,10 +24,13 @@ public:
     void UpdateSpeedBoost(sf::Time _frameTime);
 
 protected:
+    const int MAXSPEED;
     int speed;
-    int speedBoostTracker;
+    int speedBoosted;
     int shields;
     int health;
+    
+    float currentBoost;
     
 
 private:
