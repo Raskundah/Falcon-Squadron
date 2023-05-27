@@ -1,8 +1,9 @@
 #include "Platform.h"
 #include "AssetManager.h"
+#include "Physics.h"
 
 Platform::Platform(sf::Vector2f newPosition)
-	: SpriteObject()
+	: Physics()
 {
 	m_sprite.setTexture(AssetManager::RequestTexture("Assets/tile.png"));
 

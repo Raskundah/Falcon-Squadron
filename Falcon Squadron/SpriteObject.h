@@ -16,6 +16,7 @@ public:
 
 protected:
 	sf::Sprite m_sprite;
+	bool m_isAlive;
 	sf::Vector2f m_position;
 };
 

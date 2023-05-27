@@ -1,8 +1,8 @@
-
 #pragma once
 #include "SpriteObject.h"
+#include "Physics.h"
 class Platform :
-    public SpriteObject
+    public Physics
 {
 public:
     Platform(sf::Vector2f newPosition);

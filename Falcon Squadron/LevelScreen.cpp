@@ -5,8 +5,7 @@
 
 LevelScreen::LevelScreen(Game* newGamePointer)
 	: Screen(newGamePointer)
-	, playerOne(0)
-	, playerTwo(1)
+	, player()
 	, platforms()
 
 	, endPanel(newGamePointer->GetWindow())
@@ -18,20 +17,9 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 
 
 	
-	playerOne.SetPosition(30, 30);	
-	playerTwo.SetPosition(500, 30);
+	player.SetPosition(, 30);	
+	
 
-	int maxWidth = newGamePointer->GetWindow()->getSize().x;
-	int width = 0;
-
-
-	for (int i = 0; width <= maxWidth; ++i)
-	{
-		platforms.push_back(new Platform(sf::Vector2f(width, 900)));
-		platforms.push_back(new Platform(sf::Vector2f(width, 924)));
-		platforms.push_back(new Platform(sf::Vector2f(width, 948)));
-		width += 24;
-	}
 
 	/*platforms.push_back(new Platform(sf::Vector2f(500, 500)));
 	platforms.push_back(new Platform(sf::Vector2f(900, 500)));
@@ -47,8 +35,7 @@ void LevelScreen::Update(sf::Time frameTime)
 
 		//update moving positions
 
-		playerOne.Update(frameTime);
-		playerTwo.Update(frameTime);
+		player.Update(frameTime);
 		for (int i = 0; i < platforms.size(); ++i)
 		{
 			platforms[i]->Update(frameTime);
@@ -56,27 +43,20 @@ void LevelScreen::Update(sf::Time frameTime)
 
 		//default colllisiuon states
 
-		playerOne.SetColliding(false);
+		player.SetColliding(false);
 
 		for (int i = 0; i < platforms.size(); ++i)
 		{
 			platforms[i]->SetColliding(false);
 
-			if (platforms[i]->CheckCollision(playerOne))
+			if (platforms[i]->CheckCollision(player))
 			{
-				playerOne.SetColliding(true);
+				player.SetColliding(true);
 				platforms[i]->SetColliding(true);
-				playerOne.HandleCollision(*platforms[i]);
-				platforms[i]->HandleCollision(playerOne);
+				player.HandleCollision(*platforms[i]);
+				platforms[i]->HandleCollision(player);
 			}
 
-			if (platforms[i]->CheckCollision(playerTwo))
-			{
-				playerTwo.SetColliding(true);
-				platforms[i]->SetColliding(true);
-				playerTwo.HandleCollision(*platforms[i]);
-				platforms[i]->HandleCollision(playerTwo);
-			}
 		}
 
 		
@@ -90,12 +70,9 @@ void LevelScreen::Update(sf::Time frameTime)
 
 void LevelScreen::Draw(sf::RenderTarget& _target)
 {
-	for (int i = 0; i < platforms.size(); ++i)
-	{
-		platforms[i]->Draw(_target);
-	}
-	playerOne.Draw(_target);
-	playerTwo.Draw(_target);
+	
+	player.Draw(_target);
+
 
 	if (!gameRunning)
 	{

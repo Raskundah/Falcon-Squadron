@@ -14,11 +14,11 @@ EndPanel::EndPanel(sf::RenderWindow* newWindow)
 	//.setTexture(AssetManager::RequestTexture("Assets/Graphics/Panel.png"));
 	//m_background.setScale(5.0f, 5.0f);
 
-	m_title.setFont(AssetManager::RequestFont("Assets/dogica.ttf"));
+	//m_title.setFont(AssetManager::RequestFont("Assets/dogica.ttf"));
 	m_title.setCharacterSize(70);
 	m_title.setString("YOU WIN!");
 
-	m_message.setFont(AssetManager::RequestFont("Assets/dogica.ttf"));
+	//m_message.setFont(AssetManager::RequestFont("Assets/dogica.ttf"));
 	m_message.setCharacterSize(30);
 	m_message.setString("Press R to reset game, \nor ESCAPE to Quit.");
 

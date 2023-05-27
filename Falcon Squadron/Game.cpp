@@ -3,7 +3,7 @@
 #include "LevelScreen.h"
 
 Game::Game()
-	: window(sf::VideoMode::getDesktopMode(), "Grenade Battle", sf::Style::Titlebar | sf::Style::Close)
+	: window(sf::VideoMode::getDesktopMode(), "Falcon Squadron", sf::Style::Titlebar | sf::Style::Close)
 	, gameClock()
 	, currentScreen(nullptr)
 {

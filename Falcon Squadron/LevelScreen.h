@@ -22,8 +22,7 @@ public:
 
 private:
 
-    Player playerOne;
-    Player playerTwo;
+    Player player;
     EndPanel endPanel;
     bool gameRunning;
 

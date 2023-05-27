@@ -4,9 +4,7 @@
 #include "SpriteObject.h"
 
 Physics::Physics()
-    : m_twoFramesOldPos()
-    , m_velocity()
-    , m_acceleration(100, 100)
+    : SpriteObject()
     ,  m_Colliding(false)
     , m_CollisionOffset(0, 0)
     , m_CollisionScale(1, 1)
@@ -137,6 +135,8 @@ void Physics::SetAlive(bool _alive)
 {
     m_IsAlive = _alive; //sets the alive flag
 }
+
+
 
 sf::Vector2f Physics::GetCollisionCentre()
 {

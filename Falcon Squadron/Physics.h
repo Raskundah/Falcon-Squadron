@@ -17,7 +17,8 @@ enum class PhysicsType
 	VELOCITY_VERLET
 };
 
-class Physics
+class Physics :
+	public SpriteObject
 {
 public:
 	Physics();
@@ -42,19 +43,17 @@ protected:
 	CollisionType collisionType;
 	bool m_IsAlive;
 	sf::Sprite m_sprite;
+	sf::Vector2f m_Position;
 
 private:
 
-	void UpdateAcceleration();
 
 	sf::Vector2f GetCollisionCentre();
 	float GetCircleCollisionRadius();
 	sf::FloatRect GetAABB();
 
 	bool m_Colliding;
-	sf::Vector2f m_Position;
-	sf::Vector2f m_twoFramesOldPos;
-	sf::Vector2f m_velocity;
-	sf::Vector2f m_acceleration;
+
+
 };
 
