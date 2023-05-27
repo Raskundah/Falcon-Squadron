@@ -14,20 +14,17 @@ Player::Player()
 }
 
 
-void Player::Update(sf::Time _frameTime)
-{
-}
 
 void Player::Update(sf::Time _frameTime)
 {
+
     UpdatePosition(_frameTime);
     UpdateSpeedBoost(_frameTime);
-
 }
 
 void Player::Draw(sf::RenderTarget& _target)
 {
-	Physics::Draw(_target);
+	SpriteObject::Draw(_target);
 }
 
 void Player::HandleCollision(Physics& other)
@@ -35,37 +32,33 @@ void Player::HandleCollision(Physics& other)
 	Physics::HandleCollision(other);
 }
 
-void Player::UpdatePosition(sf::Time frameTime, const sf::Vector2u& screenSize)
+void Player::UpdatePosition(sf::Time frameTime)
 {
     // Update the player's position based on keyboard input
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        if (m_position.y + speed * frameTime.asSeconds() < screenSize.y)
-        {
+
             m_position.y += speed * frameTime.asSeconds();
-        }
+      
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        if (m_position.y - speed * frameTime.asSeconds() >= 0)
-        {
+       
             m_position.y -= speed * frameTime.asSeconds();
-        }
+
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        if (m_position.x + speed * frameTime.asSeconds() < screenSize.x)
-        {
+
             m_position.x += speed * frameTime.asSeconds();
-        }
+
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        if (m_position.x - speed * frameTime.asSeconds() >= 0)
         {
             m_position.x -= speed * frameTime.asSeconds();
         }

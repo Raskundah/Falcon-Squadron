@@ -26,6 +26,7 @@ public:
 
 	//calling this function on an instance of an object will update any positional information.
 	virtual void Update(sf::Time _frameTime);
+	virtual void Draw(sf::RenderTarget& target);
 
 	virtual void HandleCollision(Physics& other);
 

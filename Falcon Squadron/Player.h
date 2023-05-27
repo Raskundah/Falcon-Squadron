@@ -13,7 +13,7 @@ public:
     void Draw(sf::RenderTarget& _target) override;
 
     void HandleCollision(Physics& other) override;
-    void UpdatePosition(sf::Time frameTime, const sf::Vector2u& screenSize);
+    void UpdatePosition(sf::Time frameTime);
 
     void SetHealth(int newHealth);
     int GetHealth();

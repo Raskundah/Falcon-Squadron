@@ -19,7 +19,6 @@ public:
 
     void TriggerEndState(bool _win);
 
-
 private:
 
     Player player;
@@ -29,4 +28,3 @@ private:
     std::vector<Platform*> platforms;
     
 };
-
