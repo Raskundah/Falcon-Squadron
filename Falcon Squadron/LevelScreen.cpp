@@ -3,6 +3,7 @@
 #include "Platform.h"
 #include "Game.h"
 
+
 LevelScreen::LevelScreen(Game* newGamePointer)
 	: Screen(newGamePointer)
 	, player()
@@ -33,7 +34,18 @@ void LevelScreen::Update(sf::Time frameTime)
 		//update moving positions
 
 		player.Update(frameTime, bounds);
+	
+		for (auto& bullet : player.GetBullets())
+		{
+			bullet.Update(frameTime);
+		}
 		
+		/*
+		for (int i = 0; i < player.GetBullets().size(); ++i)
+		{
+			player.GetBullets()[i].Update(frameTime);
+		}
+		*/
 
 		for (int i = 0; i < platforms.size(); ++i)
 		{
@@ -67,6 +79,7 @@ void LevelScreen::Draw(sf::RenderTarget& _target)
 {
 	player.Draw(_target);
 	player.DrawBullets(_target);
+
 
 	if (!gameRunning)
 	{

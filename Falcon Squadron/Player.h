@@ -14,6 +14,7 @@ public:
          
     void Draw(sf::RenderTarget& _target) override;
     void DrawBullets(sf::RenderTarget& _target);
+    void UpdateBullets(sf::Time _frameTime);
 
     void FireBullets();
 
@@ -22,6 +23,8 @@ public:
 
     void SetHealth(int newHealth);
     int GetHealth();
+
+    std::vector<Bullet> GetBullets();
 
     void SetShields(int newShields);
     int GetShields();
@@ -36,9 +39,9 @@ protected:
     int health;
     
     float currentBoost;
-    
+    std::vector<Bullet> bullets;
 
 private:
-
-    std::vector<Bullet> bullets;
+    sf::Time bulletCooldown;
+    sf::Clock cooldownTimer;
 };

@@ -10,7 +10,7 @@ Physics::Physics()
     , m_CollisionScale(1, 1)
     , m_IsAlive(true)
     , collisionType(CollisionType::AABB)
-    , m_Position(0, 0)
+    , m_pos(0,0)
 {
 }
 
@@ -144,7 +144,7 @@ void Physics::SetAlive(bool _alive)
 
 sf::Vector2f Physics::GetCollisionCentre()
 {
-    sf::Vector2f centre = m_Position; //gets the object of the child class calling this function.
+    sf::Vector2f centre = m_pos; //gets the object of the child class calling this function.
 
     sf::FloatRect bounds = m_sprite.getGlobalBounds(); // generates a vector of the top and left bounds of sprite.
 

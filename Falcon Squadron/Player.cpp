@@ -2,19 +2,22 @@
 #include "AssetManager.h"
 
 Player::Player()
-    :Physics()
+    : Physics()
     , health(100)
     , shields(0)
     , speed(500)
     , speedBoosted(1000)
     , MAXSPEED(2000)
     , currentBoost(0)
+    , bullets()
+    , bulletCooldown()
+    , cooldownTimer()
 {
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Player/PlayerBlue_Frame_01.png"));
     m_sprite.setRotation(90.0f);
+
+    bulletCooldown = sf::seconds(0.2);
 }
-
-
 
 void Player::Update(sf::Time _frameTime, sf::Vector2u levelsize)
 {
@@ -22,7 +25,8 @@ void Player::Update(sf::Time _frameTime, sf::Vector2u levelsize)
     UpdatePosition(_frameTime, levelsize);
     UpdateSpeedBoost(_frameTime);
     FireBullets();
-
+    UpdateBullets(_frameTime);
+    
 
 }
 
@@ -33,25 +37,40 @@ void Player::Draw(sf::RenderTarget& _target)
 
 void Player::DrawBullets(sf::RenderTarget& _target)
 {
-    for (const auto& bullet : bullets)
+
+    for (int bullet = 0; bullet < bullets.size(); ++bullet)
     {
-        SpriteObject::Draw(_target);
+        bullets[bullet].Draw(_target);
+    }
+
+ /*   for (auto& bullet : GetBullets())
+    {
+        bullet.Draw(_target);
+    }
+    */
+}
+
+void Player::UpdateBullets(sf::Time _frameTime)
+{
+    for (auto& bullet : bullets)
+    {
+        bullet.Update(_frameTime); 
     }
 }
 
 void Player::FireBullets()
 {
-    sf::Clock cooldown;
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && cooldownTimer.getElapsedTime() >= bulletCooldown)
     {
         sf::Vector2f bulletPosition = m_sprite.getPosition();
-        bulletPosition.x += m_sprite.getLocalBounds().width; // Adjust x-coordinate to the right side of the player
+        bulletPosition.x += m_sprite.getLocalBounds().width + 100; // Adjust x-coordinate to the right side of the player
 
-        Bullet newBullet(50.f, 10, true); // Customize the bullet parameters as needed
-        
+        Bullet newBullet(500.f, 10, true); // Customize the bullet parameters as needed
+
         newBullet.SetPosition(bulletPosition);
         bullets.push_back(newBullet);
+
+        cooldownTimer.restart(); // Restart the cooldown timer
     }
 }
 
@@ -108,6 +127,11 @@ void Player::SetHealth(int newHealth)
 int Player::GetHealth()
 {
     return health;
+}
+
+std::vector<Bullet> Player::GetBullets()
+{
+    return bullets;
 }
 
 

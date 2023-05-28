@@ -21,19 +21,18 @@ void Bullet::SetDamage(int _damage)
 
 void Bullet::SetBulletPath(sf::Time _frameTime)
 {
-	// Update bullet position based on its movement logic
-	sf::Vector2f movement(0.f, -speed * _frameTime.asSeconds());
+
 
 	if (isPlayerFired)
 	{
 		// Move bullet from left to right for the player
-		movement.x = speed * _frameTime.asSeconds();
+		m_position.x += speed * _frameTime.asSeconds();
 	}
 	else
 	{
 		// Move bullet from right to left for enemies
-		movement.x = -speed * _frameTime.asSeconds();
+		m_position.x += -speed * _frameTime.asSeconds();
 	}
 
-	m_sprite.setPosition(movement);
+	m_sprite.setPosition(GetPosition());
 }

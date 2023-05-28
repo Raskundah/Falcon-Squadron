@@ -43,7 +43,7 @@ protected:
 	sf::Vector2f m_CollisionScale;
 	CollisionType collisionType;
 	bool m_IsAlive;
-	sf::Vector2f m_Position;
+	sf::Vector2f m_pos;
 
 private:
 
