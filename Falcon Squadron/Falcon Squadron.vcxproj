@@ -149,10 +149,11 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Easing.cpp" />
     <ClCompile Include="EndPanel.cpp" />
+    <ClCompile Include="EnemyShip.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="LevelScreen.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="Asteroid.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Screen.cpp" />
@@ -164,9 +165,10 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Easing.h" />
     <ClInclude Include="EndPanel.h" />
+    <ClInclude Include="EnemyShip.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="LevelScreen.h" />
-    <ClInclude Include="Platform.h" />
+    <ClInclude Include="Asteroid.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Screen.h" />

@@ -1,13 +1,13 @@
 #include "LevelScreen.h"
 #include "AssetManager.h"
-#include "Platform.h"
+#include "Asteroid.h"
 #include "Game.h"
 
 
 LevelScreen::LevelScreen(Game* newGamePointer)
 	: Screen(newGamePointer)
 	, player()
-	, platforms()
+	, asteroids()
 	, background()
 	, endPanel(newGamePointer->GetWindow())
 	, gameRunning(true)
@@ -47,25 +47,26 @@ void LevelScreen::Update(sf::Time frameTime)
 		}
 		*/
 
-		for (int i = 0; i < platforms.size(); ++i)
+		for (int i = 0; i < asteroids.size(); ++i)
 		{
-			platforms[i]->Update(frameTime);
+			asteroids[i]->Update(frameTime);
 		}
 
 		//default colllisiuon states
 
 		player.SetColliding(false);
 
-		for (int i = 0; i < platforms.size(); ++i)
-		{
-			platforms[i]->SetColliding(false);
 
-			if (platforms[i]->CheckCollision(player))
+		for (int i = 0; i < asteroids.size(); ++i)
+		{
+			asteroids[i]->SetColliding(false);
+
+			if (asteroids[i]->CheckCollision(player))
 			{
 				player.SetColliding(true);
-				platforms[i]->SetColliding(true);
-				player.HandleCollision(*platforms[i]);
-				platforms[i]->HandleCollision(player);
+				asteroids[i]->SetColliding(true);
+				player.HandleCollision(*asteroids[i]);
+				asteroids[i]->HandleCollision(player);
 			}
 		}		
 	}

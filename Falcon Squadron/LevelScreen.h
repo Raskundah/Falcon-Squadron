@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "EndPanel.h"
+#include "Asteroid.h"
 
 class Game;
 class Platform;
@@ -27,6 +28,6 @@ private:
     sf::Sprite background;
     sf::Vector2u bounds;
 
-    std::vector<Platform*> platforms;
+    std::vector<Asteroid*> asteroids;
     
 };

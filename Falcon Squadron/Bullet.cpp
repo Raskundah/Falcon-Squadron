@@ -11,6 +11,11 @@ void Bullet::SetMarkedForDeletion(bool value)
 	markedForDeletion = value;
 }
 
+void Bullet::SetDamage(int _damage)
+{
+	damage = _damage;
+}
+
 Bullet::Bullet(float _speed, int _damage, bool _isPlayerFired, sf::Time _lifetime)
 	: Physics()
 	, speed(_speed)

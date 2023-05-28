@@ -66,7 +66,7 @@ void Player::FireBullets() //generates a bullet to the players bullet vector and
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && cooldownTimer.getElapsedTime() >= bulletCooldown)
     {
         sf::Vector2f bulletPosition = m_sprite.getPosition(); 
-        bulletPosition.x += m_sprite.getLocalBounds().width + 100; // Adjust x-coordinate to the right side of the player
+        bulletPosition.y += m_sprite.getLocalBounds().height * 0.5f; // Adjust x-coordinate to the right side of the player
 
         Bullet newBullet(500.f, 10, true, sf::seconds(5)); // Customize the bullet parameters as needed
 

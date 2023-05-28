@@ -6,6 +6,7 @@ class Bullet :
 public:
     bool IsMarkedForDeletion() const;
     void SetMarkedForDeletion(bool value);
+    void SetDamage(int _damage);
 
     Bullet(float _speed, int _damage, bool _isPlayerFired, sf::Time _lifetime);
 

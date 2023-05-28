@@ -1,10 +1,10 @@
 #pragma once
 #include "SpriteObject.h"
 #include "Physics.h"
-class Platform :
+class Asteroid :
     public Physics
 {
 public:
-    Platform(sf::Vector2f newPosition);
+    Asteroid(sf::Vector2f newPosition);
     
 };
