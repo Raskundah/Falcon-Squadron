@@ -7,30 +7,34 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	: Screen(newGamePointer)
 	, player()
 	, platforms()
-
+	, background()
 	, endPanel(newGamePointer->GetWindow())
 	, gameRunning(true)
+	, bounds (newGamePointer->GetWindow()->getSize().x, newGamePointer->GetWindow()->getSize().y)
 {
 	//default positions for non dynamically allocated and test objects.
 
 	//TODO: add vectors of object positions.
 
-	int maxWidth = newGamePointer->GetWindow()->getSize().x;
-	int maxHeight = newGamePointer->GetWindow()->getSize().y;
+	
+	background.setTexture(AssetManager::RequestTexture("Assets/Background.png"));
+	player.SetPosition(80, bounds.y/2);
 
-	player.SetPosition(80, maxHeight/2);	
 	
 
 }
 
 void LevelScreen::Update(sf::Time frameTime)
 {
+
 	if (gameRunning)
 	{
 
 		//update moving positions
 
-		player.Update(frameTime);
+		player.Update(frameTime, bounds);
+		
+
 		for (int i = 0; i < platforms.size(); ++i)
 		{
 			platforms[i]->Update(frameTime);
@@ -62,9 +66,6 @@ void LevelScreen::Update(sf::Time frameTime)
 void LevelScreen::Draw(sf::RenderTarget& _target)
 {
 	player.Draw(_target);
-	sf::CircleShape shape(50);
-	shape.setFillColor(sf::Color(100, 250, 50));
-	shape.setPosition(300, 300);
 
 	if (!gameRunning)
 	{

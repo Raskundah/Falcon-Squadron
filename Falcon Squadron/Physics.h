@@ -53,7 +53,5 @@ private:
 	sf::FloatRect GetAABB();
 
 	bool m_Colliding;
-
-
 };
 

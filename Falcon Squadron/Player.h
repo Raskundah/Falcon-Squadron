@@ -1,6 +1,7 @@
 #pragma once
 #include "SpriteObject.h"
 #include "Physics.h"
+#include "Bullet.h"
 
 class Player :
     public Physics
@@ -8,12 +9,13 @@ class Player :
 public:
     Player();
 
-    void Update(sf::Time _frameTime) override;
+    void Update(sf::Time _frameTime, sf::Vector2u levelsize);
+
          
     void Draw(sf::RenderTarget& _target) override;
 
     void HandleCollision(Physics& other) override;
-    void UpdatePosition(sf::Time frameTime);
+    void UpdatePosition(sf::Time frameTime, sf::Vector2u levelsize);
 
     void SetHealth(int newHealth);
     int GetHealth();
@@ -35,4 +37,5 @@ protected:
 
 private:
 
+    std::vector<Bullet> bullets;
 };
