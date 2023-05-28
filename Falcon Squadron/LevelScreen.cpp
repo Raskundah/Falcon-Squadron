@@ -66,6 +66,7 @@ void LevelScreen::Update(sf::Time frameTime)
 void LevelScreen::Draw(sf::RenderTarget& _target)
 {
 	player.Draw(_target);
+	player.DrawBullets(_target);
 
 	if (!gameRunning)
 	{

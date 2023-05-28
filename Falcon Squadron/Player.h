@@ -13,6 +13,9 @@ public:
 
          
     void Draw(sf::RenderTarget& _target) override;
+    void DrawBullets(sf::RenderTarget& _target);
+
+    void FireBullets();
 
     void HandleCollision(Physics& other) override;
     void UpdatePosition(sf::Time frameTime, sf::Vector2u levelsize);

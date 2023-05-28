@@ -19,9 +19,9 @@ Player::Player()
 void Player::Update(sf::Time _frameTime, sf::Vector2u levelsize)
 {
 
-
     UpdatePosition(_frameTime, levelsize);
     UpdateSpeedBoost(_frameTime);
+    FireBullets();
 
 
 }
@@ -29,6 +29,30 @@ void Player::Update(sf::Time _frameTime, sf::Vector2u levelsize)
 void Player::Draw(sf::RenderTarget& _target)
 {
 	SpriteObject::Draw(_target);
+}
+
+void Player::DrawBullets(sf::RenderTarget& _target)
+{
+    for (const auto& bullet : bullets)
+    {
+        SpriteObject::Draw(_target);
+    }
+}
+
+void Player::FireBullets()
+{
+    sf::Clock cooldown;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+        sf::Vector2f bulletPosition = m_sprite.getPosition();
+        bulletPosition.x += m_sprite.getLocalBounds().width; // Adjust x-coordinate to the right side of the player
+
+        Bullet newBullet(50.f, 10, true); // Customize the bullet parameters as needed
+        
+        newBullet.SetPosition(bulletPosition);
+        bullets.push_back(newBullet);
+    }
 }
 
 void Player::HandleCollision(Physics& other)
