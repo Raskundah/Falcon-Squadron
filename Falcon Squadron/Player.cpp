@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "AssetManager.h"
 
-Player::Player()
+Player::Player() // player contructor 
     : Physics()
     , health(100)
     , shields(0)
@@ -14,9 +14,9 @@ Player::Player()
     , cooldownTimer()
 {
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Player/PlayerBlue_Frame_01.png"));
-    m_sprite.setRotation(90.0f);
+    m_sprite.setRotation(90.0f); //rotates the sprite to suit our needs.
 
-    bulletCooldown = sf::seconds(0.2);
+    bulletCooldown = sf::seconds(0.2); //defining the players shooting cooldown. 
 }
 
 void Player::Update(sf::Time _frameTime, sf::Vector2u levelsize)
@@ -26,13 +26,16 @@ void Player::Update(sf::Time _frameTime, sf::Vector2u levelsize)
     UpdateSpeedBoost(_frameTime);
     FireBullets();
     UpdateBullets(_frameTime);
-    
 
+    // Remove bullets that are marked for deletion
+    bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet& bullet) {
+        return bullet.IsMarkedForDeletion();
+        }), bullets.end());
 }
 
 void Player::Draw(sf::RenderTarget& _target)
 {
-	SpriteObject::Draw(_target);
+	SpriteObject::Draw(_target); //Draws the player object.
 }
 
 void Player::DrawBullets(sf::RenderTarget& _target)
@@ -40,7 +43,7 @@ void Player::DrawBullets(sf::RenderTarget& _target)
 
     for (int bullet = 0; bullet < bullets.size(); ++bullet)
     {
-        bullets[bullet].Draw(_target);
+        bullets[bullet].Draw(_target); //draws the players bullets. 
     }
 
  /*   for (auto& bullet : GetBullets())
@@ -54,21 +57,21 @@ void Player::UpdateBullets(sf::Time _frameTime)
 {
     for (auto& bullet : bullets)
     {
-        bullet.Update(_frameTime); 
+        bullet.Update(_frameTime);  //updates the players bullets.
     }
 }
 
-void Player::FireBullets()
+void Player::FireBullets() //generates a bullet to the players bullet vector and handles the initilisation of each.
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && cooldownTimer.getElapsedTime() >= bulletCooldown)
     {
-        sf::Vector2f bulletPosition = m_sprite.getPosition();
+        sf::Vector2f bulletPosition = m_sprite.getPosition(); 
         bulletPosition.x += m_sprite.getLocalBounds().width + 100; // Adjust x-coordinate to the right side of the player
 
-        Bullet newBullet(500.f, 10, true); // Customize the bullet parameters as needed
+        Bullet newBullet(500.f, 10, true, sf::seconds(5)); // Customize the bullet parameters as needed
 
         newBullet.SetPosition(bulletPosition);
-        bullets.push_back(newBullet);
+        bullets.push_back(newBullet); 
 
         cooldownTimer.restart(); // Restart the cooldown timer
     }
@@ -76,7 +79,7 @@ void Player::FireBullets()
 
 void Player::HandleCollision(Physics& other)
 {
-	Physics::HandleCollision(other);
+	Physics::HandleCollision(other); //impliments the physics collision.
 }
 
 void Player::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
