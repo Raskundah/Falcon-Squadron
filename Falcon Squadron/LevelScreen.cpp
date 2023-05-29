@@ -35,21 +35,23 @@ void LevelScreen::Update(sf::Time frameTime)
 
 		player.Update(frameTime, bounds);
 		mediumShip.Update(frameTime, bounds);
+
+		
 	
 
 
-		/*for (int i = 0; i < asteroids.size(); ++i)
+		for (int i = 0; i < asteroids.size(); ++i)
 		{
-			asteroids[i]->Update(frameTime);
+			asteroids[i]->Update(frameTime, bounds);
 		}
 
-		*/
+		
 		//default colllisiuon states
 
 		player.SetColliding(false);
 
 
-		/*for (int i = 0; i < asteroids.size(); ++i)
+		for (int i = 0; i < asteroids.size(); ++i)
 		{
 			asteroids[i]->SetColliding(false);
 
@@ -62,7 +64,7 @@ void LevelScreen::Update(sf::Time frameTime)
 			}
 		}
 
-		*/
+		
 	}
 		// endPanel.Update(frameTime);
 

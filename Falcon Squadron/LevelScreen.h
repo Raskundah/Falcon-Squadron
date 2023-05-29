@@ -30,6 +30,8 @@ private:
     sf::Vector2u bounds;
     MediumShip mediumShip;
 
+    int maxAsteroids;
+
     std::vector<Asteroid*> asteroids;
     
 };

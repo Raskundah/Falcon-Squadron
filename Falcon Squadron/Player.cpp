@@ -57,7 +57,7 @@ void Player::UpdateBullets(sf::Time _frameTime)
 }
 
 void Player::FireBullets() //generates a bullet to the players bullet vector and handles the initilisation of each.
-{
+ {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && cooldownTimer.getElapsedTime() >= bulletCooldown)
     {
         sf::Vector2f bulletPosition = m_sprite.getPosition(); 
