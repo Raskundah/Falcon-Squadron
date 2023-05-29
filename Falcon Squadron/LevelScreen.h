@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "EndPanel.h"
 #include "Asteroid.h"
+#include "MediumShip.h"
 
 class Game;
 class Platform;
@@ -27,6 +28,7 @@ private:
     bool gameRunning;
     sf::Sprite background;
     sf::Vector2u bounds;
+    MediumShip mediumShip;
 
     std::vector<Asteroid*> asteroids;
     

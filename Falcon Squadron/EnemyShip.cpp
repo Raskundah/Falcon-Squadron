@@ -1,14 +1,21 @@
 #include "EnemyShip.h"
+#include "AssetManager.h"
 
 EnemyShip::EnemyShip()
-    : m_health()
+    : Physics()
+    , m_health()
     , m_shields()
-    , m_speed(500.0f)
+    , m_speed()
     , m_markedForDeletion(false)
     , m_bullets()
+    , moveCooldown(sf::seconds(0.1f))
+    , cooldownTimer()
+    , firstSpawn(true)
+    , shootCooldown()
 {
     // Initialize the sprite, position, and other member variables
     // based on the specific variant of the enemy ship.
+
 }
 
 EnemyShip::~EnemyShip() {}
@@ -17,6 +24,7 @@ void EnemyShip::Update(sf::Time frameTime, sf::Vector2u levelSize)
 {
     UpdatePosition(frameTime, levelSize);
     UpdateBullets(frameTime);
+
 }
 
 void EnemyShip::Draw(sf::RenderTarget& target)
@@ -27,10 +35,7 @@ void EnemyShip::Draw(sf::RenderTarget& target)
 
 void EnemyShip::FireBullet()
 {
-    // Create a new bullet and set its properties based on the enemy variant
-   // Bullet newBullet(50.0f,  false, sf::seconds(10));
-    //newBullet.SetPosition(m_sprite.getPosition());
-   // m_bullets.push_back(newBullet);
+
 }
 
 bool EnemyShip::IsMarkedForDeletion() const
@@ -43,10 +48,44 @@ void EnemyShip::SetMarkedForDeletion(bool value)
     m_markedForDeletion = value;
 }
 
+std::vector<Bullet> EnemyShip::GetBullets()
+{
+    return m_bullets;
+}
+
 void EnemyShip::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
 {
-    // Update the enemy ship's position based on its movement logic
-    // This can vary depending on the variant of the enemy ship
+    if (firstSpawn)
+    {
+        m_position.y = levelSize.y / 3.0f;
+        firstSpawn = false;
+    }
+
+    if (cooldownTimer.getElapsedTime() >= moveCooldown)
+    {
+        // Randomly change the y-axis position within a range
+        int randomY = rand() % 3 - 1; // Generate random number between -1 and 1
+        m_position.y += randomY * m_speed * frameTime.asSeconds();
+
+        // Keep the x-axis position within a specific range
+        // Adjust the minimum and maximum values as needed
+        const float minX = levelSize.x / 2.0f;
+        const float maxX = levelSize.x;
+        m_position.x = std::max(minX, std::min(maxX, m_position.x));
+
+        if (m_position.y + m_speed * frameTime.asSeconds() < levelSize.y - m_sprite.getLocalBounds().height - 32)
+        {
+            m_position.y += m_speed * frameTime.asSeconds();
+        }
+
+        if (m_position.y - m_speed * frameTime.asSeconds() >= 0)
+        {
+            m_position.y -= m_speed * frameTime.asSeconds();
+        }
+
+        m_sprite.setPosition(GetPosition());
+        cooldownTimer.restart();
+    }
 }
 
 void EnemyShip::UpdateBullets(sf::Time frameTime)

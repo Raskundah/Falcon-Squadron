@@ -12,6 +12,7 @@ public:
 
     void Update(sf::Time _frameTime);
     void SetBulletPath(sf::Time _frameTime);
+    void SetSpriteTexture(sf::Texture i_bullet);
 
     
 
@@ -21,6 +22,7 @@ private:
     int damage;
     bool isPlayerFired;
     bool markedForDeletion;
+    sf::Sprite bulletSprite;
 
     sf::Time lifetime; // the predefined lifespan of any bullet.
     sf::Clock lifetimeTimer; //counts down from the max timer.

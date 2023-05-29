@@ -57,6 +57,9 @@
     <ClCompile Include="EnemyShip.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MediumShip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Physics.h">
@@ -96,6 +99,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EnemyShip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MediumShip.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

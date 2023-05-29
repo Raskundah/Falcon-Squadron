@@ -27,6 +27,7 @@ void Player::Update(sf::Time _frameTime, sf::Vector2u levelsize)
     FireBullets();
     UpdateBullets(_frameTime);
 
+
     // Remove bullets that are marked for deletion
     bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet& bullet) {
         return bullet.IsMarkedForDeletion();
@@ -36,6 +37,7 @@ void Player::Update(sf::Time _frameTime, sf::Vector2u levelsize)
 void Player::Draw(sf::RenderTarget& _target)
 {
 	SpriteObject::Draw(_target); //Draws the player object.
+    DrawBullets(_target);
 }
 
 void Player::DrawBullets(sf::RenderTarget& _target)
@@ -69,7 +71,7 @@ void Player::FireBullets() //generates a bullet to the players bullet vector and
         bulletPosition.y += m_sprite.getLocalBounds().height * 0.5f; // Adjust x-coordinate to the right side of the player
 
         Bullet newBullet(500.f, 10, true, sf::seconds(5)); // Customize the bullet parameters as needed
-
+        // newBullet.SetSpriteTexture(AssetManager::RequestTexture("Assets/Bullets/Proton_Medium.png"));
         newBullet.SetPosition(bulletPosition);
         bullets.push_back(newBullet); 
 

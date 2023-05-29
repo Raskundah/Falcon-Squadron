@@ -14,10 +14,11 @@ public:
     void Update(sf::Time frameTime, sf::Vector2u levelSize);
     void Draw(sf::RenderTarget& target);
 
-    virtual void FireBullet() = 0;
+    virtual void FireBullet();
 
     bool IsMarkedForDeletion() const;
     void SetMarkedForDeletion(bool value);
+    std::vector<Bullet> GetBullets();
 
 protected:
     int m_health;
@@ -26,6 +27,10 @@ protected:
     std::vector<Bullet> m_bullets;
     bool m_markedForDeletion;
 
-    void UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize);
-    void UpdateBullets(sf::Time frameTime);
+    virtual void UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize);
+    virtual void UpdateBullets(sf::Time frameTime);
+    sf::Time moveCooldown;
+    sf::Time shootCooldown;
+    sf::Clock cooldownTimer;
+    bool firstSpawn;
 };

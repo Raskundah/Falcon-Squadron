@@ -21,8 +21,6 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	background.setTexture(AssetManager::RequestTexture("Assets/Background.png"));
 	player.SetPosition(80, bounds.y/2);
 
-	
-
 }
 
 void LevelScreen::Update(sf::Time frameTime)
@@ -34,18 +32,9 @@ void LevelScreen::Update(sf::Time frameTime)
 		//update moving positions
 
 		player.Update(frameTime, bounds);
+		mediumShip.Update(frameTime, bounds);
 	
-		for (auto& bullet : player.GetBullets())
-		{
-			bullet.Update(frameTime);
-		}
-		
-		/*
-		for (int i = 0; i < player.GetBullets().size(); ++i)
-		{
-			player.GetBullets()[i].Update(frameTime);
-		}
-		*/
+
 
 		for (int i = 0; i < asteroids.size(); ++i)
 		{
@@ -79,14 +68,12 @@ void LevelScreen::Update(sf::Time frameTime)
 void LevelScreen::Draw(sf::RenderTarget& _target)
 {
 	player.Draw(_target);
-	player.DrawBullets(_target);
+	mediumShip.Draw(_target);
 
 
 	if (!gameRunning)
 	{
 		endPanel.Draw(_target);
-	
-
 	}
 }
 
