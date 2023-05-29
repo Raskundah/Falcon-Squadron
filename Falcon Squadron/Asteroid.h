@@ -6,5 +6,16 @@ class Asteroid :
 {
 public:
     Asteroid(sf::Vector2f newPosition);
+
+    void Update(sf::Time frameTime, sf::Vector2u levelSize);
+    void Draw(sf::RenderTarget& target);
+
+    void HandleCollision(Physics& other);
+    void SetPosition(sf::Time frameTime, sf::Vector2u levelSize);
+
+private:
+    int speed;
+    bool firstSpawn;
+
     
 };

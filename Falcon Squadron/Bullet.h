@@ -4,17 +4,15 @@ class Bullet :
     public Physics
 {
 public:
+    void Update(sf::Time _frameTime);
     bool IsMarkedForDeletion() const;
     void SetMarkedForDeletion(bool value);
     void SetDamage(int _damage);
 
     Bullet(float _speed, int _damage, bool _isPlayerFired, sf::Time _lifetime);
 
-    void Update(sf::Time _frameTime);
     void SetBulletPath(sf::Time _frameTime);
     void SetSpriteTexture(sf::Texture i_bullet);
-
-    
 
 private:
 

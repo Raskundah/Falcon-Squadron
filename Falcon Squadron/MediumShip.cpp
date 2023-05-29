@@ -1,3 +1,4 @@
+
 #include "MediumShip.h"
 #include "AssetManager.h"
 #include <cstdlib>
@@ -27,9 +28,8 @@ void MediumShip::Update(sf::Time frameTime, sf::Vector2u levelSize)
 
 void MediumShip::Draw(sf::RenderTarget& target)
 {
-    SpriteObject::Draw(target);
+    EnemyShip::Draw(target);
     DrawBullets(target);
-
 }
 
 void MediumShip::FireBullets()
@@ -37,10 +37,9 @@ void MediumShip::FireBullets()
     if (cooldownTimer.getElapsedTime() >= shootCooldown)
     {
         sf::Vector2f bulletPosition = m_sprite.getPosition();
-        bulletPosition.y -= m_sprite.getLocalBounds().height * 0.5f; // Adjust x-coordinate to the right side of the enemy
-
+        //bulletPosition.y -= m_sprite.getLocalBounds().height; // Adjust x-coordinate to the right side of the enemy
+        // bulletPosition.x -= 10;
         Bullet newBullet(500.f, 10, false, sf::seconds(5)); // Customize the bullet parameters as needed
-        
 
         newBullet.SetPosition(bulletPosition);
         m_bullets.push_back(newBullet);
@@ -53,8 +52,15 @@ void MediumShip::DrawBullets(sf::RenderTarget& target)
 {
     for (int bullet = 0; bullet < m_bullets.size(); ++bullet)
     {
-        m_bullets[bullet].Draw(target); //draws the players bullets. 
+        m_bullets[bullet].Draw(target); //draws the enemy  bullets. 
     }
+
+    /*for (auto& bullet : m_bullets)
+    {
+        bullet.Draw(target); // Draw each bullet
+    }
+
+    */
 }
 
 void MediumShip::UpdateBullets(sf::Time frameTime)

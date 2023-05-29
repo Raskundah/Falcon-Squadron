@@ -20,7 +20,7 @@ void Physics::Update(sf::Time _frameTime)
 
 void Physics::Draw(sf::RenderTarget& target)
 {
-    SpriteObject::Draw(target);
+    // SpriteObject::Draw(target);
 }
 
 void Physics::HandleCollision(Physics& other)
