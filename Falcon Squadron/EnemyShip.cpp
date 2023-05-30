@@ -8,10 +8,11 @@ EnemyShip::EnemyShip()
     , m_speed()
     , m_markedForDeletion(false)
     , m_bullets()
-    , moveCooldown(sf::seconds(.1f))
-    , cooldownTimer()
+    , moveCooldown(sf::seconds(1.0f))
+    , shootCooldownTimer()
     , firstSpawn(true)
     , shootCooldown()
+    , moveCooldownTimer()
 {
     // Initialize the sprite, position, and other member variables
     // based on the specific variant of the enemy ship.
@@ -33,6 +34,7 @@ void EnemyShip::Draw(sf::RenderTarget& target)
 {
     target.draw(m_sprite);
     // Draw other visual elements associated with the enemy ship.
+
 }
 
 void EnemyShip::HandleCollision(Physics& other)
@@ -68,7 +70,7 @@ void EnemyShip::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
         firstSpawn = false;
     }
 
-    if (cooldownTimer.getElapsedTime() >= moveCooldown)
+    if (moveCooldownTimer.getElapsedTime() >= moveCooldown)
     {
         // Randomly change the y-axis position within a range
         int randomY = rand() % 3 - 1; // Generate random number between -1 and 1
@@ -78,8 +80,12 @@ void EnemyShip::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
         // Adjust the minimum and maximum values as needed
         const float minX = levelSize.x / 2.0f;
         const float maxX = levelSize.x;
-        m_position.x = std::max(minX, std::min(maxX, m_position.x));
+       // m_position.x = std::max(minX, std::min(maxX, m_position.x));
+        m_position.x = rand() % (levelSize.x) + levelSize.x;
 
+
+
+        
         if (m_position.y + m_speed * frameTime.asSeconds() < levelSize.y - m_sprite.getLocalBounds().height - 32)
         {
             m_position.y += m_speed * frameTime.asSeconds();
@@ -89,9 +95,9 @@ void EnemyShip::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
         {
             m_position.y -= m_speed * frameTime.asSeconds();
         }
-
+        
         m_sprite.setPosition(GetPosition());
-        cooldownTimer.restart();
+        moveCooldownTimer.restart();
     }
 }
 

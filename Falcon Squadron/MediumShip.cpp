@@ -8,8 +8,8 @@ MediumShip::MediumShip()
 {
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Player/Green_Frame_01.png"));
     m_sprite.setRotation(270.f);
-    m_speed = 50;
-    shootCooldown = sf::seconds(0.1f);
+    m_speed = 500;
+    shootCooldown = sf::seconds(1.f);
     
 
 }
@@ -34,17 +34,19 @@ void MediumShip::Draw(sf::RenderTarget& target)
 
 void MediumShip::FireBullets()
 {
-    if (cooldownTimer.getElapsedTime() >= shootCooldown)
+    sf::Time temp = shootCooldownTimer.getElapsedTime();
+
+    if (shootCooldownTimer.getElapsedTime() >= shootCooldown)
     {
         sf::Vector2f bulletPosition = m_sprite.getPosition();
-        //bulletPosition.y -= m_sprite.getLocalBounds().height; // Adjust x-coordinate to the right side of the enemy
-        // bulletPosition.x -= 10;
+        bulletPosition.y -= 35;
+        bulletPosition.x -= 16;
         Bullet newBullet(500.f, 10, false, sf::seconds(5)); // Customize the bullet parameters as needed
 
         newBullet.SetPosition(bulletPosition);
         m_bullets.push_back(newBullet);
 
-        cooldownTimer.restart(); // Restart the cooldown timer
+        shootCooldownTimer.restart(); // Restart the cooldown timer
     }
 }
 

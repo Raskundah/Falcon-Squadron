@@ -33,6 +33,8 @@ protected:
     virtual void UpdateBullets(sf::Time frameTime);
     sf::Time moveCooldown;
     sf::Time shootCooldown;
-    sf::Clock cooldownTimer;
+    sf::Clock moveCooldownTimer;
+    sf::Clock shootCooldownTimer;
+
     bool firstSpawn;
 };
