@@ -44,10 +44,17 @@ void Player::Draw(sf::RenderTarget& _target)
 
 void Player::DrawBullets(sf::RenderTarget& _target)
 {
+
     for (int bullet = 0; bullet < bullets.size(); ++bullet)
     {
         bullets[bullet].Draw(_target); //draws the players bullets. 
     }
+
+ /*   for (auto& bullet : GetBullets())
+    {
+        bullet.Draw(_target);
+    }
+    */
 }
 
 void Player::UpdateBullets(sf::Time _frameTime)

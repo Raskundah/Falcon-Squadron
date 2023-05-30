@@ -7,7 +7,6 @@
 LevelScreen::LevelScreen(Game* newGamePointer)
 	: Screen(newGamePointer)
 	, player()
-	, mediumShip()
 	, asteroids()
 	, background()
 	, endPanel(newGamePointer->GetWindow())
@@ -21,7 +20,6 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	
 	background.setTexture(AssetManager::RequestTexture("Assets/Background.png"));
 	player.SetPosition(80, bounds.y/2);
-
 
 }
 
@@ -38,18 +36,17 @@ void LevelScreen::Update(sf::Time frameTime)
 	
 
 
-		/*for (int i = 0; i < asteroids.size(); ++i)
+		for (int i = 0; i < asteroids.size(); ++i)
 		{
 			asteroids[i]->Update(frameTime);
 		}
 
-		*/
 		//default colllisiuon states
 
 		player.SetColliding(false);
 
 
-		/*for (int i = 0; i < asteroids.size(); ++i)
+		for (int i = 0; i < asteroids.size(); ++i)
 		{
 			asteroids[i]->SetColliding(false);
 
@@ -60,9 +57,7 @@ void LevelScreen::Update(sf::Time frameTime)
 				player.HandleCollision(*asteroids[i]);
 				asteroids[i]->HandleCollision(player);
 			}
-		}
-
-		*/
+		}		
 	}
 		// endPanel.Update(frameTime);
 

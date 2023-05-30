@@ -14,8 +14,6 @@ public:
     void Update(sf::Time frameTime, sf::Vector2u levelSize);
     void Draw(sf::RenderTarget& target);
 
-    void HandleCollision(Physics& other);
-
     virtual void FireBullet();
 
     bool IsMarkedForDeletion() const;

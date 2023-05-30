@@ -16,8 +16,6 @@ EnemyShip::EnemyShip()
     // Initialize the sprite, position, and other member variables
     // based on the specific variant of the enemy ship.
 
-    srand(time(NULL));
-
 }
 
 EnemyShip::~EnemyShip() {}
@@ -33,11 +31,6 @@ void EnemyShip::Draw(sf::RenderTarget& target)
 {
     target.draw(m_sprite);
     // Draw other visual elements associated with the enemy ship.
-}
-
-void EnemyShip::HandleCollision(Physics& other)
-{
-    Physics::HandleCollision(other);
 }
 
 void EnemyShip::FireBullet()
