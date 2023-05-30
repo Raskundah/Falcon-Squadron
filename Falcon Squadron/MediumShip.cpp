@@ -8,7 +8,7 @@ MediumShip::MediumShip()
 {
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Player/Green_Frame_01.png"));
     m_sprite.setRotation(270.f);
-    m_speed = 2500;
+    m_speed = 50;
     shootCooldown = sf::seconds(0.1f);
     
 
