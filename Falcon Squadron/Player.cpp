@@ -29,9 +29,11 @@ void Player::Update(sf::Time _frameTime, sf::Vector2u levelsize)
 
 
     // Remove bullets that are marked for deletion
+    /*
     bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet& bullet) {
         return bullet.IsMarkedForDeletion();
         }), bullets.end());
+        */
 }
 
 void Player::Draw(sf::RenderTarget& _target)
@@ -50,9 +52,9 @@ void Player::DrawBullets(sf::RenderTarget& _target)
 
 void Player::UpdateBullets(sf::Time _frameTime)
 {
-    for (auto& bullet : bullets)
+    for (int bullet = 0; bullet < bullets.size(); ++bullet)
     {
-        bullet.Update(_frameTime);  //updates the players bullets.
+        bullets[bullet].Update(_frameTime); //draws the players bullets. 
     }
 }
 
