@@ -20,11 +20,7 @@ void Physics::Update(sf::Time _frameTime)
 
 void Physics::Draw(sf::RenderTarget& target)
 {
-<<<<<<< HEAD
    SpriteObject::Draw(target);
-=======
-    SpriteObject::Draw(target);
->>>>>>> parent of 58efc7a (we have issues with bullets while working on asteroids.)
 }
 
 void Physics::HandleCollision(Physics& other)
