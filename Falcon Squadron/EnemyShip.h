@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Bullet.h"
+#include <random>
 
 class EnemyShip :
     public Physics
@@ -22,12 +23,16 @@ public:
     void SetMarkedForDeletion(bool value);
     std::vector<Bullet> GetBullets();
 
+    int getRandomDirection();
+
 protected:
     int m_health;
     int m_shields;
+    int moveDir;
     float m_speed;
     std::vector<Bullet> m_bullets;
     bool m_markedForDeletion;
+
 
     virtual void UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize);
     virtual void UpdateBullets(sf::Time frameTime);

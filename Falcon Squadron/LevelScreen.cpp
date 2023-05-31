@@ -35,6 +35,8 @@ void LevelScreen::Update(sf::Time frameTime)
 
 		player.Update(frameTime, bounds);
 		mediumShip.Update(frameTime, bounds);
+		easyShip.Update(frameTime, bounds);
+		challengingShip.Update(frameTime, bounds);
 
 		
 	
@@ -76,6 +78,8 @@ void LevelScreen::Draw(sf::RenderTarget& _target)
 {
 	player.Draw(_target);
 	mediumShip.Draw(_target);
+	easyShip.Draw(_target);
+	challengingShip.Draw(_target);
 
 
 	if (!gameRunning)

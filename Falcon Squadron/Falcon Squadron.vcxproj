@@ -147,8 +147,10 @@
   <ItemGroup>
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="ChallengingShip.cpp" />
     <ClCompile Include="Collectible.cpp" />
     <ClCompile Include="Easing.cpp" />
+    <ClCompile Include="EasyShip.cpp" />
     <ClCompile Include="EndPanel.cpp" />
     <ClCompile Include="EnemyShip.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -168,8 +170,10 @@
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="ChallengingShip.h" />
     <ClInclude Include="Collectible.h" />
     <ClInclude Include="Easing.h" />
+    <ClInclude Include="EasyShip.h" />
     <ClInclude Include="EndPanel.h" />
     <ClInclude Include="EnemyShip.h" />
     <ClInclude Include="Game.h" />

@@ -5,6 +5,8 @@
 #include "EndPanel.h"
 #include "Asteroid.h"
 #include "MediumShip.h"
+#include "EasyShip.h"
+#include "ChallengingShip.h"
 
 class Game;
 class Platform;
@@ -29,6 +31,8 @@ private:
     sf::Sprite background;
     sf::Vector2u bounds;
     MediumShip mediumShip;
+    EasyShip easyShip;
+    ChallengingShip challengingShip;
 
     int maxAsteroids;
 
