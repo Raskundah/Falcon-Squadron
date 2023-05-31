@@ -7,7 +7,7 @@ EasyShip::EasyShip()
     :EnemyShip()
 {
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Enemy_02/Enemy02_Blue_Frame_1.png"));
-    m_sprite.setRotation(270.f);
+    m_sprite.setRotation(90.f);
     m_speed = 750;
     shootCooldown = sf::seconds(0.2f);
 
@@ -45,6 +45,7 @@ void EasyShip::FireBullets()
 
         newBullet.SetPosition(bulletPosition);
         m_bullets.push_back(newBullet);
+
 
         shootCooldownTimer.restart(); // Restart the cooldown timer
     }

@@ -7,6 +7,7 @@
 #include "MediumShip.h"
 #include "EasyShip.h"
 #include "ChallengingShip.h"
+#include "EnemyShip.h"
 
 class Game;
 class Platform;
@@ -20,6 +21,7 @@ public:
 
     void Update(sf::Time frameTime) override;
     void Draw(sf::RenderTarget& target) override;
+    void MakeAsteroids(sf::Time frameTime);
 
     void TriggerEndState(bool _win);
 
@@ -34,8 +36,9 @@ private:
     EasyShip easyShip;
     ChallengingShip challengingShip;
 
+    int currentLevel;
     int maxAsteroids;
 
-    std::vector<Asteroid*> asteroids;
-    
+    std::vector<Asteroid> asteroids;
+    std::vector<EnemyShip*> enemies;
 };

@@ -6,7 +6,7 @@ ChallengingShip::ChallengingShip()
     :EnemyShip()
 {
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Enemy_01/Enemy01_Red_Frame_1.png"));
-    m_sprite.setRotation(270.f);
+    m_sprite.setRotation(90.f);
     m_speed = 250;
     shootCooldown = sf::seconds(1.f);
 

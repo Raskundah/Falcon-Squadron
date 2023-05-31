@@ -5,7 +5,7 @@ class Asteroid :
     public Physics
 {
 public:
-    Asteroid(sf::Vector2f newPosition);
+    Asteroid();
 
     void Update(sf::Time frameTime, sf::Vector2u levelSize);
     void Draw(sf::RenderTarget& target);
@@ -17,5 +17,4 @@ private:
     int speed;
     bool firstSpawn;
 
-    
 };

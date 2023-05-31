@@ -18,7 +18,6 @@ EnemyShip::EnemyShip()
     // Initialize the sprite, position, and other member variables
     // based on the specific variant of the enemy ship.
 
-    srand(time(NULL));
 
 }
 
@@ -97,12 +96,8 @@ void EnemyShip::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
       
         m_position.y = rand() % rangeY;
 
-        m_position.x = rand() % rangeX;
+        m_position.x = rand() % rangeX + minX;
 
-        if (m_position.x < levelSize.x * 0.5f)
-        {
-            m_position.x = levelSize.x * 0.5f;
-        }
 
         moveDir = getRandomDirection();
 
