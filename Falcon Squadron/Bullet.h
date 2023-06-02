@@ -5,6 +5,7 @@ class Bullet :
 {
 public:
     void Update(sf::Time _frameTime);
+    void Draw(sf::RenderTarget& _target);
     bool IsMarkedForDeletion() const;
     void SetMarkedForDeletion(bool value);
     void SetDamage(int _damage);
@@ -13,6 +14,7 @@ public:
 
     void SetBulletPath(sf::Time _frameTime);
     void SetSpriteTexture(sf::Texture i_bullet);
+    bool GetShooter();
 
 private:
 

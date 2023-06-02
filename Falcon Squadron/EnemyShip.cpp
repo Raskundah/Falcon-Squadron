@@ -1,8 +1,10 @@
 #include "EnemyShip.h"
 #include "AssetManager.h"
+#include "LevelScreen.h"
 
-EnemyShip::EnemyShip()
+EnemyShip::EnemyShip(LevelScreen* level)
     : Physics()
+    , level (level)
     , m_health()
     , m_shields()
     , m_speed()
@@ -18,10 +20,9 @@ EnemyShip::EnemyShip()
     // Initialize the sprite, position, and other member variables
     // based on the specific variant of the enemy ship.
 
-
 }
 
-EnemyShip::~EnemyShip() {}
+// EnemyShip::~EnemyShip() {}
 
 void EnemyShip::Update(sf::Time frameTime, sf::Vector2u levelSize)
 {
@@ -32,8 +33,10 @@ void EnemyShip::Update(sf::Time frameTime, sf::Vector2u levelSize)
 
 void EnemyShip::Draw(sf::RenderTarget& target)
 {
-   target.draw(m_sprite);
-    // Draw other visual elements associated with the enemy ship.
+    Physics::Draw(target);
+
+    // target.draw(m_sprite);
+    //Draw other visual elements associated with the enemy ship.
 
 }
 

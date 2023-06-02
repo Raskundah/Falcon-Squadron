@@ -15,9 +15,17 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, background()
 	, endPanel(newGamePointer->GetWindow())
 	, gameRunning(true)
-	, bounds (newGamePointer->GetWindow()->getSize().x, newGamePointer->GetWindow()->getSize().y)
-	, maxAsteroids((currentLevel +1) * 3)
+	, bounds(newGamePointer->GetWindow()->getSize().x, newGamePointer->GetWindow()->getSize().y)
+	, maxAsteroids((currentLevel + 1) * 3)
 	, currentLevel(0)
+	, maxEasy()
+	, currentEasy()
+	, maxMedium()
+	, currentMedium()
+	, maxChallenging()
+	, currentChallenging()
+	
+
 {
 	//default positions for non dynamically allocated and test objects.
 
@@ -39,23 +47,34 @@ void LevelScreen::Update(sf::Time frameTime)
 	if (gameRunning)
 	{
 		MakeAsteroids(frameTime);
+		WhichShips();
 
 		//update moving positions
 
 		player.Update(frameTime, bounds);
+
+		/*
 		mediumShip.Update(frameTime, bounds);
 		easyShip.Update(frameTime, bounds);
 		challengingShip.Update(frameTime, bounds);
+
+		*/
 		
 		for (int i = 0; i < asteroids.size(); ++i)
 		{
 			asteroids[i].Update(frameTime, bounds);
 		}
+
+		for (int i = 0; i < enemies.size(); ++i)
+		{
+			enemies[i]->Update(frameTime, bounds);
+		}
+
 		
 		//default colllisiuon states
 
 		player.SetColliding(false);
-
+		
 
 		for (int i = 0; i < asteroids.size(); ++i)
 		{
@@ -83,9 +102,12 @@ void LevelScreen::Draw(sf::RenderTarget& _target)
 
 	_target.draw(background);
 	player.Draw(_target);
-	mediumShip.Draw(_target);
-	easyShip.Draw(_target);
-	challengingShip.Draw(_target);
+
+	for (int i = 0; i < enemies.size(); ++i)
+	{
+		enemies[i]->Draw(_target);
+	}
+
 
 	for (int i = 0; i < asteroids.size(); ++i)
 	{
@@ -116,3 +138,88 @@ void LevelScreen::TriggerEndState(bool _win)
 			gameRunning = false;
 			endPanel.StartAnimation();
 		}
+
+void LevelScreen::WhichShips()
+{
+#pragma region Level One ships
+
+	if (currentLevel == 0)
+	{
+		maxEasy = 10;
+		maxMedium = 2;
+
+		for (int i = 0; i < maxEasy - currentEasy; ++i)
+		{
+			EasyShip* newEasy{};
+			enemies.push_back(newEasy);
+		}
+
+		for (int i = 0; i < maxMedium - currentMedium; ++i)
+		{
+			MediumShip* newMedium{};
+			enemies.push_back(newMedium);
+		}
+
+	}
+
+#pragma endregion
+
+#pragma region Level Two Ships
+
+	if (currentLevel == 1)
+	{
+		maxEasy = 5;
+		maxMedium = 5;
+		maxChallenging = 1;
+
+		for (int i = 0; i < maxEasy - currentEasy; ++i)
+		{
+			EasyShip* newEasy{};
+			enemies.push_back(newEasy);
+		}
+
+		for (int i = 0; i < maxMedium - currentMedium; ++i)
+		{
+			MediumShip* newMedium{};
+			enemies.push_back(newMedium);
+		}
+
+		for (int i = 0; i < maxChallenging - currentChallenging; ++i)
+		{
+			ChallengingShip* newHard{};
+			enemies.push_back(newHard);
+		}
+	}
+
+#pragma endregion
+
+#pragma region  Level Three Ships
+
+	if (currentLevel == 2)
+	{
+		maxEasy = 1;
+		maxMedium = 10;
+		maxChallenging = 2;
+
+		for (int i = 0; i < enemies.size() - currentEasy; ++i)
+		{
+			EasyShip* newEasy{};
+			enemies.push_back(newEasy);
+		}
+
+		for (int i = 0; i < enemies.size() - currentMedium; ++i)
+		{
+			MediumShip* newMedium{};
+			enemies.push_back(newMedium);
+		}
+
+		for (int i = 0; i < enemies.size() - currentChallenging; ++i)
+		{
+			ChallengingShip* newHard{};
+			enemies.push_back(newHard);
+		}
+	}
+
+#pragma endregion
+
+}

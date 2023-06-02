@@ -4,13 +4,15 @@
 #include <cstdlib>
 
 MediumShip::MediumShip()
-	:EnemyShip()
+	: EnemyShip()
+
 {
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Player/Green_Frame_01.png"));
     m_sprite.setRotation(270.f);
     m_speed = 500;
     shootCooldown = sf::seconds(0.2f);
-    
+    m_CollisionOffset.y = -m_sprite.getLocalBounds().height;
+
 
 }
 
@@ -54,7 +56,7 @@ void MediumShip::DrawBullets(sf::RenderTarget& target)
 {
     for (int bullet = 0; bullet < m_bullets.size(); ++bullet)
     {
-        m_bullets[bullet].Draw(target); //draws the enemy  bullets. 
+        m_bullets[bullet].Draw(target); //draws the enemy bullets. 
     }
 
     /*for (auto& bullet : m_bullets)

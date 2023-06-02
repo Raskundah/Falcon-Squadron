@@ -12,6 +12,7 @@ Asteroid::Asteroid()
 
 	m_CollisionOffset = sf::Vector2f(0, 0);
 	m_CollisionScale = sf::Vector2f(1.0f, 1.0f);
+	collisionType = CollisionType::CIRCLE;
 }
 
 void Asteroid::Update(sf::Time frameTime, sf::Vector2u levelSize)
@@ -24,7 +25,9 @@ void Asteroid::Update(sf::Time frameTime, sf::Vector2u levelSize)
 
 void Asteroid::Draw(sf::RenderTarget& target)
 {
-	SpriteObject::Draw(target);
+	Physics::Draw(target);
+
+	//target.draw(m_sprite);
 }
 
 void Asteroid::HandleCollision(Physics& other)

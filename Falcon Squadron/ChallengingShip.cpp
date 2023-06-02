@@ -8,9 +8,9 @@ ChallengingShip::ChallengingShip()
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Enemy_01/Enemy01_Red_Frame_1.png"));
     m_sprite.setRotation(90.f);
     m_speed = 250;
+    
     shootCooldown = sf::seconds(1.f);
-
-
+    m_CollisionOffset.x = -m_sprite.getLocalBounds().width;
 }
 
 void ChallengingShip::Update(sf::Time frameTime, sf::Vector2u levelSize)

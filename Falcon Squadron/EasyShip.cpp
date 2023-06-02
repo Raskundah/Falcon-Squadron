@@ -10,6 +10,7 @@ EasyShip::EasyShip()
     m_sprite.setRotation(90.f);
     m_speed = 750;
     shootCooldown = sf::seconds(0.2f);
+    m_CollisionOffset.x = -m_sprite.getLocalBounds().width;
 
 
 }

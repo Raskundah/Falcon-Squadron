@@ -15,8 +15,11 @@ Player::Player() // player contructor
 {
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Player/PlayerBlue_Frame_01.png"));
     m_sprite.setRotation(90.0f); //rotates the sprite to suit our needs.
+    m_CollisionOffset.x = -m_sprite.getLocalBounds().width;
 
-    bulletCooldown = sf::seconds(0.2); //defining the players shooting cooldown. 
+    bulletCooldown = sf::seconds(0.2f); //defining the players shooting cooldown. 
+
+    collisionType = CollisionType::AABB;
 }
 
 void Player::Update(sf::Time _frameTime, sf::Vector2u levelsize)
@@ -38,7 +41,9 @@ void Player::Update(sf::Time _frameTime, sf::Vector2u levelsize)
 
 void Player::Draw(sf::RenderTarget& _target)
 {
-	SpriteObject::Draw(_target); //Draws the player object.
+    Physics::Draw(_target);
+
+    // _target.draw(m_sprite);; //Draws the player object.
     DrawBullets(_target);
 }
 

@@ -4,13 +4,15 @@
 #include "Bullet.h"
 #include <random>
 
+class LevelScreen;
+
 class EnemyShip :
     public Physics
 {
     
 public:
-    EnemyShip();
-    virtual ~EnemyShip();
+    EnemyShip(LevelScreen* level);
+    // virtual ~EnemyShip();
 
     void Update(sf::Time frameTime, sf::Vector2u levelSize);
     void Draw(sf::RenderTarget& target);
@@ -33,7 +35,6 @@ protected:
     std::vector<Bullet> m_bullets;
     bool m_markedForDeletion;
 
-
     virtual void UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize);
     virtual void UpdateBullets(sf::Time frameTime);
     sf::Time moveCooldown;
@@ -42,4 +43,7 @@ protected:
     sf::Clock shootCooldownTimer;
 
     bool firstSpawn;
+
+private:
+    LevelScreen* level;
 };

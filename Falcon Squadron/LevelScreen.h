@@ -24,6 +24,9 @@ public:
     void MakeAsteroids(sf::Time frameTime);
 
     void TriggerEndState(bool _win);
+    void WhichShips();
+
+    
 
 private:
 
@@ -36,9 +39,13 @@ private:
     EasyShip easyShip;
     ChallengingShip challengingShip;
 
-    int currentLevel;
+    int currentLevel, maxEasy, maxMedium, maxChallenging;
+    int currentEasy, currentMedium, currentChallenging;
     int maxAsteroids;
 
     std::vector<Asteroid> asteroids;
     std::vector<EnemyShip*> enemies;
+
+    sf::Time levelTime;
+    sf::Clock LevelCountdown;
 };

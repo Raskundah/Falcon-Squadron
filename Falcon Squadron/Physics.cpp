@@ -10,7 +10,6 @@ Physics::Physics()
     , m_CollisionScale(1, 1)
     , m_IsAlive(true)
     , collisionType(CollisionType::AABB)
-    , m_pos(0,0)
 {
 }
 
@@ -21,6 +20,56 @@ void Physics::Update(sf::Time _frameTime)
 void Physics::Draw(sf::RenderTarget& target)
 {
    SpriteObject::Draw(target);
+
+   bool drawCollider = true;
+
+   if (drawCollider)
+   {
+       switch (collisionType)
+       {
+       case CollisionType::CIRCLE:
+       {
+           sf::CircleShape circle;
+
+           float circleRadius = GetCircleCollisionRadius();
+
+           sf::Vector2f shapePosition = GetCollisionCentre();
+           shapePosition.x -= circleRadius;
+           shapePosition.y -= circleRadius;
+
+           circle.setPosition(shapePosition);
+           circle.setRadius(GetCircleCollisionRadius());
+           sf::Color collisionColor = sf::Color::Green;
+
+           if (m_Colliding)
+               collisionColor = sf::Color::Red;
+
+           collisionColor.a = 100;
+           circle.setFillColor(collisionColor);
+           target.draw(circle);
+       }
+       break;
+       case CollisionType::AABB:
+       {
+           sf::RectangleShape rectangle;
+           sf::FloatRect bounds = GetAABB();
+           rectangle.setPosition(bounds.left, bounds.top);
+           rectangle.setSize(sf::Vector2f(bounds.width, bounds.height));
+
+           sf::Color collisionColor = sf::Color::Green;
+
+           if (m_Colliding)
+               collisionColor = sf::Color::Red;
+
+           collisionColor.a = 100;
+           rectangle.setFillColor(collisionColor);
+           target.draw(rectangle);
+       }
+       break;
+       default:
+           break;
+       }
+   }
 }
 
 void Physics::HandleCollision(Physics& other)
@@ -28,7 +77,6 @@ void Physics::HandleCollision(Physics& other)
 
     // parent method for handling collision in child classes.
 }
-
 
 bool Physics::CheckCollision(Physics other)
 {
@@ -140,11 +188,9 @@ void Physics::SetAlive(bool _alive)
     m_IsAlive = _alive; //sets the alive flag
 }
 
-
-
 sf::Vector2f Physics::GetCollisionCentre()
 {
-    sf::Vector2f centre = m_pos; //gets the object of the child class calling this function.
+    sf::Vector2f centre = m_position; //gets the object of the child class calling this function.
 
     sf::FloatRect bounds = m_sprite.getGlobalBounds(); // generates a vector of the top and left bounds of sprite.
 
