@@ -36,6 +36,7 @@ protected:
     int m_shields;
     int moveDir;
     float m_speed;
+    int m_damage;
     std::vector<Bullet> m_bullets;
     bool m_markedForDeletion;
   

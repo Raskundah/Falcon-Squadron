@@ -10,6 +10,7 @@ EasyShip::EasyShip()
     m_sprite.setRotation(90.f);
     m_speed = 750;
     m_health = 50;
+    m_damage = 5;
     shootCooldown = sf::seconds(1.0f);
     m_CollisionOffset.x = -m_sprite.getLocalBounds().width;
 
@@ -43,7 +44,7 @@ void EasyShip::FireBullets()
         sf::Vector2f bulletPosition = m_sprite.getPosition();
         bulletPosition.y -= 35;
         bulletPosition.x -= 16;
-        Bullet newBullet(500.f, 5, false, sf::seconds(5)); // Customize the bullet parameters as needed
+        Bullet newBullet(500.f, m_damage, false, sf::seconds(5)); // Customize the bullet parameters as needed
 
         newBullet.SetPosition(bulletPosition);
         m_bullets.push_back(newBullet);

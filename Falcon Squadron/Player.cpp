@@ -4,6 +4,7 @@
 Player::Player() // player contructor 
     : Physics()
     , health(100)
+    , damage(25)
     , shields(0)
     , speed(500)
     , speedBoosted(1000)
@@ -74,7 +75,7 @@ void Player::FireBullets() //generates a bullet to the players bullet vector and
         sf::Vector2f bulletPosition = m_sprite.getPosition(); 
         bulletPosition.y += m_sprite.getLocalBounds().height * 0.5f; // Adjust x-coordinate to the right side of the player
 
-        Bullet newBullet(500.f, 10, true, sf::seconds(5)); // Customize the bullet parameters as needed
+        Bullet newBullet(10100.f, 10, true, sf::seconds(5)); // Customize the bullet parameters as needed
         // newBullet.SetSpriteTexture(AssetManager::RequestTexture("Assets/Bullets/Proton_Medium.png"));
         newBullet.SetPosition(bulletPosition);
         bullets.push_back(newBullet); 
@@ -152,6 +153,11 @@ void Player::SetShields(int newShields)
 int Player::GetShields()
 {
     return shields;;
+}
+
+int Player::GetDamage()
+{
+    return damage;
 }
 
 

@@ -22,7 +22,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, gameRunning(true)
 	, bounds(newGamePointer->GetWindow()->getSize().x, newGamePointer->GetWindow()->getSize().y)
 	, maxAsteroids((currentLevel + 1) * 3)
-	, currentLevel(2)
+	, currentLevel(1)
 	, maxEasy()
 	, currentEasy()
 	, maxMedium()
@@ -48,7 +48,7 @@ void LevelScreen::Update(sf::Time frameTime)
 {
 
 	if (gameRunning)
-	{		
+	{
 		MakeAsteroids(frameTime);
 		WhichShips();
 
@@ -62,7 +62,7 @@ void LevelScreen::Update(sf::Time frameTime)
 			if (asteroids[i]->GetAsteroidAliveTime().getElapsedTime() > asteroidTime)
 			{
 				asteroids[i]->SetMarkedForDeletion(true);
-				CleanUp();
+				//CleanUp();
 			}
 
 			asteroids[i]->Update(frameTime, bounds);
@@ -73,35 +73,19 @@ void LevelScreen::Update(sf::Time frameTime)
 			if (enemies[i]->GetHealth() < 0)
 			{
 				enemies[i]->SetMarkedForDeletion(true);
-				CleanUp();
+				//CleanUp();
 			}
 			enemies[i]->Update(frameTime, bounds);
-		}		
-		//default colllisiuon states
-
-		player.SetColliding(false);
-		
-		for (int i = 0; i < enemies.size(); ++i)
-		{
-			enemies[i]->SetColliding(false);
-
 
 		}
-		for (int i = 0; i < asteroids.size(); ++i)
-		{
-			asteroids[i]->SetColliding(false);
+		//default colllision states
 
-			if (asteroids[i]->CheckCollision(player))
-			{
-				player.SetColliding(true);
-//				player.SetHealth(player.GetHealth() - asteroids[i]->GetDamage());
-				asteroids[i]->SetColliding(true);
-				// player.HandleCollision(asteroids[i]);
-				asteroids[i]->HandleCollision(player);
-			}
-		}
+		Collision();
+
 	}
 		// endPanel.Update(frameTime);
+
+	NewCleanUp();
 }
 
 //draw all objects to game window
@@ -243,6 +227,10 @@ void LevelScreen::WhichShips()
 
 void LevelScreen::CleanUp()
 {
+	cleanShips.clear();
+	cleanAsteroids.clear();
+	toBeDeleted.clear();
+
 	for (auto actor : enemies)
 	{
 		if (actor->IsMarkedForDeletion())
@@ -270,4 +258,89 @@ void LevelScreen::CleanUp()
 	{
 		delete toBeDeleted[i];
 	}
+	toBeDeleted.clear();
+
+}
+
+void LevelScreen::NewCleanUp()
+{
+	for (int i = asteroids.size() - 1; i >= 0; --i)
+	{
+		// If anything else is to be done, do it before the delete call
+		if (asteroids[i]->IsMarkedForDeletion())
+		{
+			delete asteroids[i];
+			asteroids.erase(asteroids.begin() + i);
+		}// Do NOT do anything else in the loop after this as it will break!
+
+	}
+
+	for (int i = enemies.size() - 1; i >= 0; --i)
+	{
+		// If anything else is to be done, do it before the delete call
+		if (enemies[i]->IsMarkedForDeletion())
+		{
+			delete enemies[i];
+			enemies.erase(enemies.begin() + i);
+		}// Do NOT do anything else in the loop after this as it will break!
+	}
+}
+
+void LevelScreen::Collision()
+{
+	player.SetColliding(false);
+
+	for (int i = 0; i < player.GetBullets().size(); ++i)
+	{
+		player.GetBullets()[i].SetColliding(false);
+	}
+
+
+
+	for (int i = 0; i < enemies.size(); ++i)
+	{
+		enemies[i]->SetColliding(false);
+		for (int s = 0; s < enemies[i]->GetBullets().size(); ++s)
+		{
+			enemies[i]->GetBullets()[s].SetColliding(false);
+		}
+	}
+	//check collision
+
+	for (int i = 0; i < asteroids.size(); ++i)
+	{
+		asteroids[i]->SetColliding(false);
+
+		if (asteroids[i]->CheckCollision(player))
+		{
+			player.SetColliding(true);
+			asteroids[i]->SetColliding(true);
+			player.HandleCollision(*asteroids[i]);
+			asteroids[i]->HandleCollision(player);
+		}
+	}
+	for (int i = 0; i < player.GetBullets().size(); ++i)
+	{
+		for (int s = 0; s < enemies.size(); ++s)
+		{
+			if (player.GetBullets()[i].CheckCollision(*enemies[s]))
+			{
+				player.GetBullets()[i].SetColliding(true);
+				// enemies[i]->SetColliding(true);
+				enemies[s]->SetHealth(enemies[s]->GetHealth() - player.GetDamage());
+			}
+		}
+	}
+
+	for (int i = 0; i < enemies.size(); ++i)
+	{
+		for (int s = 0; s < enemies[i]->GetBullets().size(); ++s)
+		{
+			if (enemies[s]->CheckCollision(player))
+			{
+				player.SetHealth()
+			}
+		}
+
+
 }

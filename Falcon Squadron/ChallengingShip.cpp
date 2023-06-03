@@ -9,6 +9,7 @@ ChallengingShip::ChallengingShip()
     m_sprite.setRotation(90.f);
     m_speed = 250;
     m_health = 200;
+    m_damage = 25;
     
     shootCooldown = sf::seconds(1.f);
     m_CollisionOffset.x = -m_sprite.getLocalBounds().width;
@@ -39,7 +40,7 @@ void ChallengingShip::FireBullets()
         sf::Vector2f bulletPosition = m_sprite.getPosition();
         bulletPosition.y -= 35;
         bulletPosition.x -= 16;
-        Bullet newBullet(1000.f, 20, false, sf::seconds(5)); // Customize the bullet parameters as neede
+        Bullet newBullet(1000.f, m_damage, false, sf::seconds(5)); // Customize the bullet parameters as neede
 
         newBullet.SetPosition(bulletPosition);
         m_bullets.push_back(newBullet);

@@ -11,6 +11,7 @@ MediumShip::MediumShip()
     m_sprite.setRotation(270.f);
     m_speed = 500;
     m_health - 100;
+    m_damage = 10;
     shootCooldown = sf::seconds(1.0f);
     m_CollisionOffset.y = -m_sprite.getLocalBounds().height;
 
@@ -44,7 +45,7 @@ void MediumShip::FireBullets()
         sf::Vector2f bulletPosition = m_sprite.getPosition();
         bulletPosition.y -= 35;
         bulletPosition.x -= 16;
-        Bullet newBullet(500.f, 10, false, sf::seconds(5)); // Customize the bullet parameters as neede
+        Bullet newBullet(500.f, m_damage, false, sf::seconds(5)); // Customize the bullet parameters as neede
 
         newBullet.SetPosition(bulletPosition);
         m_bullets.push_back(newBullet);

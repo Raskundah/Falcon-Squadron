@@ -1,6 +1,7 @@
 #include "Bullet.h"
 #include "AssetManager.h"
 
+
 Bullet::Bullet(float _speed, int _damage, bool _isPlayerFired, sf::Time _lifetime)
 	: Physics()
 	, speed(_speed)

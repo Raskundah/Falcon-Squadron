@@ -28,6 +28,9 @@ public:
     void TriggerEndState(bool _win);
     void WhichShips();
     void CleanUp();
+    void NewCleanUp();
+
+    void Collision();
 
  
 
@@ -38,6 +41,7 @@ private:
     bool gameRunning;
     sf::Sprite background;
     sf::Vector2u bounds;
+
     MediumShip* mediumShip;
     EasyShip* easyShip;
     ChallengingShip* challengingShip;

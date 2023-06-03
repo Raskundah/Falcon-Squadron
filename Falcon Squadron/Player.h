@@ -29,6 +29,8 @@ public:
     void SetShields(int newShields);  //sets the players shields when colliding with an item that affects the shields.
     int GetShields(); // gets the players shields. 
 
+    int GetDamage();
+
     void UpdateSpeedBoost(sf::Time _frameTime); //handles the players speed boost. This logic hasn't been properly tested yet.
 
 protected:
@@ -37,7 +39,8 @@ protected:
     int speedBoosted;
     int shields;
     int health;
-    
+    int damage;
+
     float currentBoost;
     std::vector<Bullet> bullets;
 
