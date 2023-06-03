@@ -12,24 +12,24 @@ public:
     void Update(sf::Time _frameTime, sf::Vector2u levelsize);
 
          
-    void Draw(sf::RenderTarget& _target) override;
-    void DrawBullets(sf::RenderTarget& _target);
-    void UpdateBullets(sf::Time _frameTime);
+    void Draw(sf::RenderTarget& _target) override; //draws the player
+    void DrawBullets(sf::RenderTarget& _target); //draws the player's bullets
+    void UpdateBullets(sf::Time _frameTime); //updates players bullets
 
-    void FireBullets();
+    void FireBullets(); // generates the bullets and fires them.
 
-    void HandleCollision(Physics& other) override;
-    void UpdatePosition(sf::Time frameTime, sf::Vector2u levelsize);
+    void HandleCollision(Physics& other) override; //handles collision, currently working.
+    void UpdatePosition(sf::Time frameTime, sf::Vector2u levelsize); //updates the player's position
 
-    void SetHealth(int newHealth);
-    int GetHealth();
+    void SetHealth(int newHealth); // sets the players health
+    int GetHealth(); //gets the players health
 
-    std::vector<Bullet> GetBullets();
+    std::vector<Bullet> GetBullets(); //Idk why I did it this way, but it works, this returns the player's vector of bullets. May need to make this private.
 
-    void SetShields(int newShields);
-    int GetShields();
+    void SetShields(int newShields);  //sets the players shields when colliding with an item that affects the shields.
+    int GetShields(); // gets the players shields. 
 
-    void UpdateSpeedBoost(sf::Time _frameTime);
+    void UpdateSpeedBoost(sf::Time _frameTime); //handles the players speed boost. This logic hasn't been properly tested yet.
 
 protected:
     const int MAXSPEED;

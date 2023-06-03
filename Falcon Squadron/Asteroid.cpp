@@ -7,6 +7,9 @@ Asteroid::Asteroid()
 	: Physics()
 	, speed(750)
 	, firstSpawn(true)
+	, lifeTime(sf::seconds(10.f))
+	, markedForDeletion(false)
+	, damageToPlayer(25)
 {
 	m_sprite.setTexture(AssetManager::RequestTexture("Assets/Asteroids/Asteroid 01.png"));
 
@@ -17,17 +20,37 @@ Asteroid::Asteroid()
 
 void Asteroid::Update(sf::Time frameTime, sf::Vector2u levelSize)
 {
+	if (!Physics::GetAlive())
+		return;
+
 	m_position.x -= speed * frameTime.asSeconds();
 	m_sprite.setPosition(GetPosition());
-
 
 }
 
 void Asteroid::Draw(sf::RenderTarget& target)
 {
+	if (!Physics::GetAlive())
+		return;
+	
 	Physics::Draw(target);
 
 	//target.draw(m_sprite);
+}
+
+bool Asteroid::IsMarkedForDeletion() const
+{
+	return markedForDeletion;
+}
+
+void Asteroid::SetMarkedForDeletion(bool value)
+{
+	markedForDeletion = value;
+}
+
+sf::Clock Asteroid::GetAsteroidAliveTime()
+{
+	return deleteTimer;
 }
 
 void Asteroid::HandleCollision(Physics& other)
@@ -61,5 +84,10 @@ void Asteroid::SetPosition(sf::Time frameTime, sf::Vector2u levelSize)
 
 	}
 
+}
+
+int Asteroid::GetDamage()
+{
+	return damageToPlayer;
 }
 

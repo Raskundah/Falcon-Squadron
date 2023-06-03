@@ -10,7 +10,8 @@ MediumShip::MediumShip()
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Player/Green_Frame_01.png"));
     m_sprite.setRotation(270.f);
     m_speed = 500;
-    shootCooldown = sf::seconds(0.2f);
+    m_health - 100;
+    shootCooldown = sf::seconds(1.0f);
     m_CollisionOffset.y = -m_sprite.getLocalBounds().height;
 
 

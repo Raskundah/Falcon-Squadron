@@ -8,6 +8,7 @@ ChallengingShip::ChallengingShip()
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Enemy_01/Enemy01_Red_Frame_1.png"));
     m_sprite.setRotation(90.f);
     m_speed = 250;
+    m_health = 200;
     
     shootCooldown = sf::seconds(1.f);
     m_CollisionOffset.x = -m_sprite.getLocalBounds().width;
@@ -33,8 +34,6 @@ void ChallengingShip::Draw(sf::RenderTarget& target)
 
 void ChallengingShip::FireBullets()
 {
-
-
     if (shootCooldownTimer.getElapsedTime() >= shootCooldown)
     {
         sf::Vector2f bulletPosition = m_sprite.getPosition();

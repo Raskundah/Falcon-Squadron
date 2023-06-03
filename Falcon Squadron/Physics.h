@@ -36,6 +36,7 @@ public:
 	sf::Vector2f GetCOllisionDepth(Physics other); //checks how much collision overlap there is, to smoothly collide.
 
 	void SetAlive(bool _alive); // sets the flag of if an object is living or dead.
+	bool GetAlive();
 
 protected:
 

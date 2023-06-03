@@ -188,6 +188,11 @@ void Physics::SetAlive(bool _alive)
     m_IsAlive = _alive; //sets the alive flag
 }
 
+bool Physics::GetAlive()
+{
+    return m_IsAlive;
+}
+
 sf::Vector2f Physics::GetCollisionCentre()
 {
     sf::Vector2f centre = m_position; //gets the object of the child class calling this function.

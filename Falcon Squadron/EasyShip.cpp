@@ -9,7 +9,8 @@ EasyShip::EasyShip()
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Enemy_02/Enemy02_Blue_Frame_1.png"));
     m_sprite.setRotation(90.f);
     m_speed = 750;
-    shootCooldown = sf::seconds(0.2f);
+    m_health = 50;
+    shootCooldown = sf::seconds(1.0f);
     m_CollisionOffset.x = -m_sprite.getLocalBounds().width;
 
 

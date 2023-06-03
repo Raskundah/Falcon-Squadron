@@ -11,6 +11,8 @@
 
 class Game;
 class Platform;
+class EnemyShip;
+class SpriteObject;
 
 class LevelScreen :
     public Screen
@@ -25,8 +27,9 @@ public:
 
     void TriggerEndState(bool _win);
     void WhichShips();
+    void CleanUp();
 
-    
+ 
 
 private:
 
@@ -35,17 +38,22 @@ private:
     bool gameRunning;
     sf::Sprite background;
     sf::Vector2u bounds;
-    MediumShip mediumShip;
-    EasyShip easyShip;
-    ChallengingShip challengingShip;
+    MediumShip* mediumShip;
+    EasyShip* easyShip;
+    ChallengingShip* challengingShip;
 
     int currentLevel, maxEasy, maxMedium, maxChallenging;
     int currentEasy, currentMedium, currentChallenging;
     int maxAsteroids;
 
-    std::vector<Asteroid> asteroids;
     std::vector<EnemyShip*> enemies;
+    std::vector<EnemyShip*> cleanShips;
+
+    std::vector<Asteroid*> asteroids;
+    std::vector<Asteroid*> cleanAsteroids;
+
+    std::vector<SpriteObject*> toBeDeleted;
 
     sf::Time levelTime;
-    sf::Clock LevelCountdown;
+    sf::Time asteroidTime;
 };

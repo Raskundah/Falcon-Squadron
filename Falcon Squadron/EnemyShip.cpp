@@ -2,9 +2,9 @@
 #include "AssetManager.h"
 #include "LevelScreen.h"
 
-EnemyShip::EnemyShip(LevelScreen* level)
+
+EnemyShip::EnemyShip()
     : Physics()
-    , level (level)
     , m_health()
     , m_shields()
     , m_speed()
@@ -19,20 +19,30 @@ EnemyShip::EnemyShip(LevelScreen* level)
 {
     // Initialize the sprite, position, and other member variables
     // based on the specific variant of the enemy ship.
+}
 
+EnemyShip::~EnemyShip()
+{
 }
 
 // EnemyShip::~EnemyShip() {}
 
 void EnemyShip::Update(sf::Time frameTime, sf::Vector2u levelSize)
 {
+    if (!Physics::GetAlive())
+        return;
+
     UpdatePosition(frameTime, levelSize);
+    FireBullets();
     UpdateBullets(frameTime);
 
 }
 
 void EnemyShip::Draw(sf::RenderTarget& target)
 {
+    if (!Physics::GetAlive())
+        return;
+
     Physics::Draw(target);
 
     // target.draw(m_sprite);
@@ -40,14 +50,19 @@ void EnemyShip::Draw(sf::RenderTarget& target)
 
 }
 
+int EnemyShip::GetHealth()
+{
+    return m_health;
+}
+
+void EnemyShip::SetHealth(int health)
+{
+    m_health = health;
+}
+
 void EnemyShip::HandleCollision(Physics& other)
 {
     Physics::HandleCollision(other);
-}
-
-void EnemyShip::FireBullet()
-{
-
 }
 
 bool EnemyShip::IsMarkedForDeletion() const
@@ -101,12 +116,9 @@ void EnemyShip::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
 
         m_position.x = rand() % rangeX + minX;
 
-
         moveDir = getRandomDirection();
 
         firstSpawn = false;
-
-
 
     }
 
@@ -146,7 +158,6 @@ void EnemyShip::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
         }
         
         m_sprite.setPosition(m_position);
-        moveCooldownTimer.restart();
     }
 }
 

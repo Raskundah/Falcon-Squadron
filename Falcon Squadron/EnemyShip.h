@@ -4,28 +4,32 @@
 #include "Bullet.h"
 #include <random>
 
-class LevelScreen;
 
 class EnemyShip :
     public Physics
 {
     
 public:
-    EnemyShip(LevelScreen* level);
-    // virtual ~EnemyShip();
+    EnemyShip();
+    virtual ~EnemyShip();
 
-    void Update(sf::Time frameTime, sf::Vector2u levelSize);
-    void Draw(sf::RenderTarget& target);
+    void Update(sf::Time frameTime, sf::Vector2u levelSize); //update base function for all ships
+    void Draw(sf::RenderTarget& target); //draw base function for all ships
 
-    void HandleCollision(Physics& other);
+    virtual void FireBullets() = 0; 
+    int GetHealth();
+    void SetHealth(int health);
 
-    virtual void FireBullet();
+    void HandleCollision(Physics& other); // default collision call for all ships
 
-    bool IsMarkedForDeletion() const;
-    void SetMarkedForDeletion(bool value);
-    std::vector<Bullet> GetBullets();
+    virtual void UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize);
+    virtual void UpdateBullets(sf::Time frameTime) = 0;
 
-    int getRandomDirection();
+    bool IsMarkedForDeletion() const; // checks if a ship is marked for deletion
+    void SetMarkedForDeletion(bool value); // sets a ship to be marked for deletion.
+    std::vector<Bullet> GetBullets(); // same as player, this logic might be redundant, and may need to be made private.
+
+    int getRandomDirection(); //a function that spits out a random number of either 1 or -1 for initial move direction for enemy ships.
 
 protected:
     int m_health;
@@ -34,9 +38,7 @@ protected:
     float m_speed;
     std::vector<Bullet> m_bullets;
     bool m_markedForDeletion;
-
-    virtual void UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize);
-    virtual void UpdateBullets(sf::Time frameTime);
+  
     sf::Time moveCooldown;
     sf::Time shootCooldown;
     sf::Clock moveCooldownTimer;
@@ -45,5 +47,4 @@ protected:
     bool firstSpawn;
 
 private:
-    LevelScreen* level;
 };

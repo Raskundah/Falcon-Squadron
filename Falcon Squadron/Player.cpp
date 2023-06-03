@@ -24,23 +24,27 @@ Player::Player() // player contructor
 
 void Player::Update(sf::Time _frameTime, sf::Vector2u levelsize)
 {
+    if (!Physics::GetAlive())
+        return;
 
     UpdatePosition(_frameTime, levelsize);
     UpdateSpeedBoost(_frameTime);
     FireBullets();
     UpdateBullets(_frameTime);
 
-
-    // Remove bullets that are marked for deletion
-    /*
+     // Remove bullets that are marked for deletion
+    
     bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet& bullet) {
         return bullet.IsMarkedForDeletion();
         }), bullets.end());
-        */
+        
 }
 
 void Player::Draw(sf::RenderTarget& _target)
 {
+    if (!Physics::GetAlive())
+        return;
+
     Physics::Draw(_target);
 
     // _target.draw(m_sprite);; //Draws the player object.
