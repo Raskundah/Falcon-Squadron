@@ -10,7 +10,7 @@ Asteroid::Asteroid()
 	, lifeTime(sf::seconds(10.f))
 	, markedForDeletion(false)
 	, damageToPlayer(25)
-	, damageCounter()
+	, damageCounter(4)
 {
 	m_sprite.setTexture(AssetManager::RequestTexture("Assets/Asteroids/Asteroid 01.png"));
 
@@ -97,7 +97,7 @@ void Asteroid::TakeDamage()
 	damageCounter -= 1;
 	if (damageCounter <= 0);
 	{
-		this->SetMarkedForDeletion(true);
+		SetMarkedForDeletion(true);
 	}
 }
 

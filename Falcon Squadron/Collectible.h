@@ -7,13 +7,14 @@ public :
     Collectible();
     virtual ~Collectible();
 
-    void Update(sf::Time _frameTime, sf::Vector2u levelSize);
+    virtual void Update(sf::Time _frameTime, sf::Vector2u levelSize);
     void Draw(sf::RenderTarget& target);
 
-    virtual void Modify(int varInt)= 0; // allows child classes in the vector of collectibles to have their individual modify function called.
+    virtual int Modify()= 0; // allows child classes in the vector of collectibles to have their individual modify function called.
 
     virtual bool IsMarkedForDeletion() const;
     virtual void SetMarkedForDeletion(bool value);
+    virtual int GetPickupID() = 0;
 
     virtual sf::Clock GetAliveTime();
 
@@ -23,6 +24,8 @@ protected:
     int modValue;
     int speed;
     bool firstSpawn;
+    int pickupID;
+
     bool markedForDeletion;
     sf::Time lifeTime;
     sf::Clock lifeCounter;

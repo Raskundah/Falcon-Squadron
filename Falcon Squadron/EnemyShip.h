@@ -18,8 +18,8 @@ public:
 
     virtual void FireBullets() = 0;  // virtual function to make sure all ships can fire bullets, and alows the function to be called on a vector of various child classes.
 
-    int GetHealth(); // returns the health of a given ship.
-    void SetHealth(int health); // sets health for damage calculations. will be vestigial if all collision is handled internallyt.
+    virtual int GetHealth()= 0; // returns the health of a given ship.
+    virtual void SetHealth(int health)= 0; // sets health for damage calculations. will be vestigial if all collision is handled internallyt.
 
     virtual int GetDamage() = 0; // all ships must have a damage type and is needed for current collision logic.
 

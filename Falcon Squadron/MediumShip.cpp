@@ -10,7 +10,7 @@ MediumShip::MediumShip()
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Player/Green_Frame_01.png"));
     m_sprite.setRotation(270.f);
     m_speed = 500;
-    m_health - 100;
+    m_health = 100;
     m_damage = 10;
     shootCooldown = sf::seconds(1.0f);
     m_CollisionOffset.y = -m_sprite.getLocalBounds().height;
@@ -23,6 +23,11 @@ void MediumShip::Update(sf::Time frameTime, sf::Vector2u levelSize)
     UpdatePosition(frameTime, levelSize);
     FireBullets();
     UpdateBullets(frameTime);
+
+    if (m_health <= 0)
+    {
+        this->SetMarkedForDeletion(true);
+    }
 
     // Remove bullets that are marked for deletion
     m_bullets.erase(std::remove_if(m_bullets.begin(), m_bullets.end(), [](const Bullet& bullet) {
@@ -39,6 +44,16 @@ void MediumShip::Draw(sf::RenderTarget& target)
 int MediumShip::GetDamage()
 {
     return m_damage;
+}
+
+void MediumShip::SetHealth(int health)
+{
+    m_health -= health;
+}
+
+int MediumShip::GetHealth()
+{
+    return m_health;
 }
 
 void MediumShip::FireBullets()

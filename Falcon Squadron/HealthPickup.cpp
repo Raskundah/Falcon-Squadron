@@ -6,6 +6,8 @@ HealthPickup::HealthPickup()
 	:Collectible()
 {
 	m_sprite.setTexture(AssetManager::RequestTexture("Assets/Powerups/Powerup_Health.png"));
+	pickupID = 0;
+	modValue = 25;
 	CollisionType::AABB;
 }
 
@@ -20,6 +22,11 @@ void HealthPickup::Update(sf::Time _frameTime, sf::Vector2u levelSize)
 
 	m_position.x -= speed * _frameTime.asSeconds();
 	m_sprite.setPosition(m_position);
+
+	if (m_position.x < 0)
+	{
+		this->SetMarkedForDeletion(true);
+	}
 }
 
 void HealthPickup::Draw(sf::RenderTarget& target)
@@ -30,9 +37,9 @@ void HealthPickup::Draw(sf::RenderTarget& target)
 	Physics::Draw(target);
 }
 
-void HealthPickup::Modify(int varInt)
+int HealthPickup::Modify()
 {
-	modValue = varInt;
+	return modValue ;
 }
 
 bool HealthPickup::IsMarkedForDeletion() const
@@ -43,6 +50,11 @@ bool HealthPickup::IsMarkedForDeletion() const
 void HealthPickup::SetMarkedForDeletion(bool value)
 {
 	markedForDeletion = value;
+}
+
+int HealthPickup::GetPickupID()
+{
+	return pickupID;
 }
 
 void HealthPickup::UpdatePosition(sf::Time _frameTime, sf::Vector2u levelSize)

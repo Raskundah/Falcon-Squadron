@@ -21,6 +21,11 @@ void ChallengingShip::Update(sf::Time frameTime, sf::Vector2u levelSize)
     FireBullets();
     UpdateBullets(frameTime);
 
+    if (m_health <= 0)
+    {
+        SetMarkedForDeletion(true);
+    }
+
     // Remove bullets that are marked for deletion
     m_bullets.erase(std::remove_if(m_bullets.begin(), m_bullets.end(), [](const Bullet& bullet) {
         return bullet.IsMarkedForDeletion();
@@ -36,6 +41,16 @@ void ChallengingShip::Draw(sf::RenderTarget& target)
 int ChallengingShip::GetDamage()
 {
     return m_damage;
+}
+
+void ChallengingShip::SetHealth(int health)
+{
+    m_health -= health;
+}
+
+int ChallengingShip::GetHealth()
+{
+    return m_health;
 }
 
 void ChallengingShip::FireBullets()

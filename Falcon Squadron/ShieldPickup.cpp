@@ -5,7 +5,9 @@
 ShieldPickup::ShieldPickup()
 	:Collectible()
 {
-	m_sprite.setTexture(AssetManager::RequestTexture("Assets/Powerups/Powerup_Health.png"));
+	m_sprite.setTexture(AssetManager::RequestTexture("Assets/Powerups/Powerup_Shields.png"));
+	pickupID = 1;
+	modValue = 25;
 	CollisionType::AABB;
 }
 
@@ -20,6 +22,11 @@ void ShieldPickup::Update(sf::Time _frameTime, sf::Vector2u levelSize)
 
 	m_position.x -= speed * _frameTime.asSeconds();
 	m_sprite.setPosition(m_position);
+
+	if (m_position.x < 0)
+	{
+		this->SetMarkedForDeletion(true);
+	}
 }
 
 void ShieldPickup::Draw(sf::RenderTarget& target)
@@ -30,9 +37,9 @@ void ShieldPickup::Draw(sf::RenderTarget& target)
 	Physics::Draw(target);
 }
 
-void ShieldPickup::Modify(int varInt)
+int ShieldPickup::Modify()
 {
-	modValue = varInt;
+	return modValue;
 }
 
 bool ShieldPickup::IsMarkedForDeletion() const
@@ -48,6 +55,11 @@ void ShieldPickup::SetMarkedForDeletion(bool value)
 sf::Clock ShieldPickup::GetAliveTime()
 {
 	return lifeCounter;
+}
+
+int ShieldPickup::GetPickupID()
+{
+	return pickupID;
 }
 
 void ShieldPickup::UpdatePosition(sf::Time _frameTime, sf::Vector2u levelSize)

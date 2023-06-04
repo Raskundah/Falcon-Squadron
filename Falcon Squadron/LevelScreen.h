@@ -34,6 +34,8 @@ public:
     void NewCleanUp(); // does the same if the previous causes issues, thanks sarah!
     void PickUps(sf::Time frameTime);
 
+    int WhichPickup();
+
     void Collision(); // keeps the collision code to keep the update function neat and tidy. If there's time I will refactor the collision into more OOp friendly design.
 
  
@@ -58,6 +60,8 @@ private:
     int currentEasy, currentMedium, currentChallenging;
     int maxAsteroids;
     int MaxPickups;
+
+    bool isBroken;
 
     std::vector<EnemyShip*> enemies;
     std::vector<EnemyShip*> cleanShips;

@@ -11,6 +11,8 @@ public:
     void Draw(sf::RenderTarget& target);
     int GetDamage();
 
+    void SetHealth(int health);
+    int GetHealth();
 
 protected:
 

@@ -5,6 +5,7 @@
 class ShieldPickup :
     public Collectible
 {
+ 
 public:
     ShieldPickup();
     ~ShieldPickup();
@@ -12,12 +13,14 @@ public:
     void Update(sf::Time _frameTime, sf::Vector2u levelSize);
     void Draw(sf::RenderTarget& target);
 
-    void Modify(int varInt);
+    int Modify();
 
     bool IsMarkedForDeletion() const;
     void SetMarkedForDeletion(bool value);
 
     sf::Clock GetAliveTime();
+
+    int GetPickupID();
 
 
     void UpdatePosition(sf::Time _frameTime, sf::Vector2u levelSize);

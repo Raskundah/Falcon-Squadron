@@ -12,10 +12,13 @@ public:
     void Update(sf::Time _frameTime, sf::Vector2u levelSize);
     void Draw(sf::RenderTarget& target);
 
-    void Modify(int varInt);
+    int Modify(); //returns the pickups modify attribute value
 
     bool IsMarkedForDeletion() const;
     void SetMarkedForDeletion(bool value);
+
+    int GetPickupID();
+
 
     void UpdatePosition(sf::Time _frameTime, sf::Vector2u levelSize);
 

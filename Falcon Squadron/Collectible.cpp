@@ -5,6 +5,7 @@ Collectible::Collectible()
 	, modValue()
 	, firstSpawn(true)
 	, lifeTime(sf::seconds(10.0f))
+	,pickupID()
 {
 
 }
@@ -15,13 +16,13 @@ Collectible::~Collectible()
 }
 
 void Collectible::Update(sf::Time _frameTime, sf::Vector2u levelSize)
-{
-	Physics::Update(_frameTime);
+{	
+
 }
 
 void Collectible::Draw(sf::RenderTarget& target)
 {
-	Physics::Draw(target);
+	//Physics::Draw(target);
 }
 
 bool Collectible::IsMarkedForDeletion() const
@@ -31,11 +32,12 @@ bool Collectible::IsMarkedForDeletion() const
 
 void Collectible::SetMarkedForDeletion(bool value)
 {
+
 }
 
 sf::Clock Collectible::GetAliveTime()
 {
-	return sf::Clock();
+	 return sf::Clock();
 }
 
 void Collectible::UpdatePosition(sf::Time _frameTime, sf::Vector2u levelSize)

@@ -9,8 +9,11 @@ public:
     ChallengingShip();
     void Update(sf::Time frameTime, sf::Vector2u levelSize);
     void Draw(sf::RenderTarget& target);
+
     int GetDamage();
 
+    void SetHealth(int health);
+    int GetHealth();
 
 protected:
 

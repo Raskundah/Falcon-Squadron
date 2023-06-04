@@ -51,15 +51,7 @@ void EnemyShip::Draw(sf::RenderTarget& target)
 
 }
 
-int EnemyShip::GetHealth()
-{
-    return m_health;
-}
 
-void EnemyShip::SetHealth(int health)
-{
-    m_health = health;
-}
 
 void EnemyShip::HandleCollision(Physics& other)
 {
@@ -162,9 +154,5 @@ void EnemyShip::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
     }
 }
 
-void EnemyShip::UpdateBullets(sf::Time frameTime)
-{
-    // Update the position and other properties of the bullets fired by the enemy ship
-    // This can vary depending on the variant of the enemy ship
-}
+
 

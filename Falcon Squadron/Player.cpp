@@ -131,7 +131,7 @@ void Player::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
 
 void Player::SetHealth(int newHealth)
 {
-    health = newHealth;
+    health += newHealth;
 }
 
 int Player::GetHealth()
@@ -147,12 +147,12 @@ std::vector<Bullet> Player::GetBullets()
 
 void Player::SetShields(int newShields)
 {
-    shields = newShields;
+    shields += newShields;
 }
 
 int Player::GetShields()
 {
-    return shields;;
+    return shields;
 }
 
 int Player::GetDamage()

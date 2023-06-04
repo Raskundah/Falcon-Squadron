@@ -22,7 +22,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, gameRunning(true)
 	, bounds(newGamePointer->GetWindow()->getSize().x, newGamePointer->GetWindow()->getSize().y)
 	, maxAsteroids((currentLevel + 1) * 3)
-	, currentLevel(1)
+	, currentLevel(0)
 	, maxEasy()
 	, currentEasy()
 	, maxMedium()
@@ -33,7 +33,8 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, levelTime(sf::seconds(180.0f))
 	, waveTimer(sf::seconds(5.0f))
 	, firstWave (true)
-	, MaxPickups(6)
+	, MaxPickups(3) // never set this to an even number, it allows the vector of pickups to go out of defined bounds. what the fuck.
+	, isBroken(false)
 
 {
 	//default positions for non dynamically allocated and test objects.
@@ -51,17 +52,20 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 void LevelScreen::Update(sf::Time frameTime)
 {
 
+	if (pickups.size() > MaxPickups) {
+		isBroken = true;
+	} // breakpoint for checking pickup error.
+
 	if (gameRunning)
 	{
 		if (waveClock.getElapsedTime().asSeconds() >= waveTimer.asSeconds() || firstWave)
 		{
 			MakeAsteroids(frameTime);
+			PickUps(frameTime);
 			WhichShips();
-			// PickUps(frameTime);
 
 			firstWave = false;
 			waveClock.restart();
-			
 		}
 
 		//update moving positions
@@ -309,46 +313,109 @@ void LevelScreen::NewCleanUp()
 			enemies.erase(enemies.begin() + i);
 		}// Do NOT do anything else in the loop after this as it will break!
 	}
+
+	for (int i = pickups.size() - 1; i >= 0; --i)
+	{
+		// If anything else is to be done, do it before the delete call
+		if (pickups[i]->IsMarkedForDeletion())
+		{
+			delete pickups[i];
+			pickups.erase(pickups.begin() + i);
+		}// Do NOT do anything else in the loop after this as it will break!
+	}
 }
 
 void LevelScreen::PickUps(sf::Time frameTime)
 {
+
 	if (pickups.size() < MaxPickups)
 	{
-		for (int i = 0; i < floor(MaxPickups - pickups.size() / 2); ++i)
-		{
-			HealthPickup* newPickup = new HealthPickup{};
-			pickups.push_back(newPickup);
-		}
-
 		for (int i = 0; i < MaxPickups - pickups.size(); ++i)
 		{
-			ShieldPickup* newPickup = new ShieldPickup();
-			pickups.push_back(newPickup);
+			if (WhichPickup() > 0)
+			{
+				HealthPickup* newHealth = new HealthPickup{};
+				newHealth->UpdatePosition(frameTime, bounds);
+				pickups.push_back(newHealth);
+			}
+			else
+			{
+				ShieldPickup* newShield = new ShieldPickup();
+				newShield->UpdatePosition(frameTime, bounds);
+				pickups.push_back(newShield);
+			}
 		}
+
 	}
+}
+
+int LevelScreen::WhichPickup()
+{
+	// Create a random number generator engine
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
+	// Create a distribution to generate either 1 or -1
+	std::uniform_int_distribution<int> distribution(0, 1);
+
+	// Generate and return a random number (either 1 or -1)
+	return (distribution(gen) == 0) ? -1 : 1;
 }
 
 void LevelScreen::Collision()
 {
-	player.SetColliding(false);
+#pragma region Defaults
+
+
+
+	player.SetColliding(false); // player is not colliding by default. 
+
 
 	for (int i = 0; i < player.GetBullets().size(); ++i)
 	{
-		player.GetBullets()[i].SetColliding(false);
+		player.GetBullets()[i].SetColliding(false); // players bulets are not colliding by default.
 	}
 
+	for (int i = 0; i < pickups.size(); ++i)
+	{
+		pickups[i]->SetColliding(false); //set pickup collision to false by default.
+	}
 
 
 	for (int i = 0; i < enemies.size(); ++i)
 	{
-		enemies[i]->SetColliding(false);
+		enemies[i]->SetColliding(false); 
 		for (int s = 0; s < enemies[i]->GetBullets().size(); ++s)
 		{
 			enemies[i]->GetBullets()[s].SetColliding(false);
+
+			// enemies and their bullets are not colliding by default.
 		}
 	}
+
+#pragma endregion
 	//check collision
+
+	for (int i = 0; i < pickups.size(); ++i)
+	{
+		if (pickups[i]->CheckCollision(player))
+		{
+			player.SetColliding(true);
+			pickups[i]->SetColliding(true);
+			
+			if (pickups[i]->GetPickupID()) // pickup ID of shield is 1 so we hit a shield.
+			{
+				player.SetShields(pickups[i]->Modify());
+				pickups[i]->SetMarkedForDeletion(true);
+			}
+			else
+			{
+				player.SetHealth(pickups[i]->Modify()); // if it's not a shield, it must be a health pickup.
+				pickups[i]->SetMarkedForDeletion(true);
+
+			}
+		}
+	}
 
 	for (int i = 0; i < asteroids.size(); ++i)
 	{
@@ -362,6 +429,9 @@ void LevelScreen::Collision()
 			asteroids[i]->HandleCollision(player);
 		}
 	}
+
+	//check if the player's shot an enemy.
+
 	for (int i = 0; i < player.GetBullets().size(); ++i)
 	{
 		for (int s = 0; s < enemies.size(); ++s)
@@ -369,9 +439,13 @@ void LevelScreen::Collision()
 			if (player.GetBullets()[i].CheckCollision(*enemies[s]))
 			{
 				player.GetBullets()[i].SetColliding(true);
+				enemies[s]->SetColliding(true);
 				enemies[s]->SetHealth(enemies[s]->GetHealth() - player.GetDamage());
+				
 			}
 		}
+
+		// check if a asteroid collided with a player
 
 		for (int a = 0; a < asteroids.size(); ++a)
 		{
@@ -379,9 +453,10 @@ void LevelScreen::Collision()
 			{
 				asteroids[a]->TakeDamage();
 			}
-
 		}
 	}
+
+	// check if the enemy bullet collided with a player.
 
 	for (int i = 0; i < enemies.size(); ++i)
 	{
@@ -389,10 +464,9 @@ void LevelScreen::Collision()
 		{
 			if (enemies[i]->GetBullets()[s].CheckCollision(player))
 			{
+				player.SetColliding(true);
 				player.SetHealth(player.GetHealth() - enemies[i]->GetDamage());
 			}
 		}
-
-
 	}
 }
