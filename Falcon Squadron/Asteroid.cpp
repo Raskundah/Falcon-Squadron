@@ -5,7 +5,7 @@
 
 Asteroid::Asteroid()
 	: Physics()
-	, speed(750)
+	, speed(250)
 	, firstSpawn(true)
 	, lifeTime(sf::seconds(10.f))
 	, markedForDeletion(false)
@@ -63,7 +63,7 @@ void Asteroid::SetPosition(sf::Time frameTime, sf::Vector2u levelSize)
 	int minY = 0 + m_sprite.getGlobalBounds().height;
 	int maxY = levelSize.y - m_sprite.getGlobalBounds().height;
 
-	int minX = (levelSize.x / 4.0f) + m_sprite.getGlobalBounds().width;
+	int minX = (levelSize.x / 6.0f) + m_sprite.getGlobalBounds().width;
 	int maxX = levelSize.x - m_sprite.getGlobalBounds().width;
 
 	int rangeY = maxY - minY;

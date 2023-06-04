@@ -16,6 +16,7 @@ public:
     void HandleCollision(Physics& other);
     void SetPosition(sf::Time frameTime, sf::Vector2u levelSize);
     int GetDamage();
+    void SetDamage();
 
 private:
     int speed, damageToPlayer;

@@ -329,6 +329,15 @@ void LevelScreen::Collision()
 				enemies[s]->SetHealth(enemies[s]->GetHealth() - player.GetDamage());
 			}
 		}
+
+		for (int a = 0; a < asteroids.size(); ++a)
+		{
+			if (player.GetBullets()[i].CheckCollision(*asteroids[a]))
+			{
+				
+			}
+
+		}
 	}
 
 	for (int i = 0; i < enemies.size(); ++i)
