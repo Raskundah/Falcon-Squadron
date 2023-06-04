@@ -91,3 +91,13 @@ int Asteroid::GetDamage()
 	return damageToPlayer;
 }
 
+void Asteroid::TakeDamage()
+{
+	damageCounter -= 1;
+	if (damageCounter <= 0);
+	{
+		this->SetMarkedForDeletion(true);
+	}
+}
+
+

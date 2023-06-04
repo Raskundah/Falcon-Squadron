@@ -16,16 +16,16 @@ public:
     void Update(sf::Time frameTime, sf::Vector2u levelSize); //update base function for all ships
     void Draw(sf::RenderTarget& target); //draw base function for all ships
 
-    virtual void FireBullets() = 0; 
+    virtual void FireBullets() = 0;  // virtual function to make sure all ships can fire bullets, and alows the function to be called on a vector of various child classes.
 
-    int GetHealth();
-    void SetHealth(int health);
+    int GetHealth(); // returns the health of a given ship.
+    void SetHealth(int health); // sets health for damage calculations. will be vestigial if all collision is handled internallyt.
 
-    virtual int GetDamage() = 0;
+    virtual int GetDamage() = 0; // all ships must have a damage type and is needed for current collision logic.
 
     void HandleCollision(Physics& other); // default collision call for all ships
 
-    virtual void UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize);
+    virtual void UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize); 
     virtual void UpdateBullets(sf::Time frameTime) = 0;
 
     bool IsMarkedForDeletion() const; // checks if a ship is marked for deletion

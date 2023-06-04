@@ -30,6 +30,9 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, maxChallenging()
 	, currentChallenging()
 	, asteroidTime(sf::seconds(10.f))
+	, levelTime(sf::seconds(180.0f))
+	, waveTimer(sf::seconds(5.0f))
+	, firstWave (true)
 
 {
 	//default positions for non dynamically allocated and test objects.
@@ -49,8 +52,15 @@ void LevelScreen::Update(sf::Time frameTime)
 
 	if (gameRunning)
 	{
-		MakeAsteroids(frameTime);
-		WhichShips();
+		if (waveClock.getElapsedTime().asSeconds() >= waveTimer.asSeconds() || firstWave)
+		{
+			MakeAsteroids(frameTime);
+			WhichShips();
+
+			firstWave = false;
+			waveClock.restart();
+			
+		}
 
 		//update moving positions
 
@@ -334,7 +344,7 @@ void LevelScreen::Collision()
 		{
 			if (player.GetBullets()[i].CheckCollision(*asteroids[a]))
 			{
-				
+				asteroids[a]->TakeDamage();
 			}
 
 		}

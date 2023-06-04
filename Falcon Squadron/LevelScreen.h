@@ -19,18 +19,18 @@ class LevelScreen :
 {
 
 public:
-    LevelScreen(Game* newGamePointer);
+    LevelScreen(Game* newGamePointer); // constructor for the level screen which needs to point to the active game process. 
 
-    void Update(sf::Time frameTime) override;
-    void Draw(sf::RenderTarget& target) override;
-    void MakeAsteroids(sf::Time frameTime);
+    void Update(sf::Time frameTime) override; // the override of draw.
+    void Draw(sf::RenderTarget& target) override; //override of update. 
+    void MakeAsteroids(sf::Time frameTime); // makes asteroids in level. It would be possible to do this in asteroid, but an asteroid doesn't need to know about all asteroids.
 
-    void TriggerEndState(bool _win);
-    void WhichShips();
-    void CleanUp();
-    void NewCleanUp();
+    void TriggerEndState(bool _win); //this is remnants from an old project, may use this to initiate high score transition. 
+    void WhichShips(); // determines which ship vector generator to use, dependant on level.
+    void CleanUp(); // cleans up unused ships and asteroids. 
+    void NewCleanUp(); // does the same if the previous causes issues, thanks sarah!
 
-    void Collision();
+    void Collision(); // keeps the collision code to keep the update function neat and tidy. If there's time I will refactor the collision into more OOp friendly design.
 
  
 
@@ -38,14 +38,15 @@ private:
 
     Player player;
     EndPanel endPanel;
-    bool gameRunning;
-    sf::Sprite background;
-    sf::Vector2u bounds;
-
     MediumShip* mediumShip;
     EasyShip* easyShip;
     ChallengingShip* challengingShip;
 
+    sf::Sprite background;
+    sf::Vector2u bounds;
+
+    bool gameRunning;
+    bool firstWave;
     int currentLevel, maxEasy, maxMedium, maxChallenging;
     int currentEasy, currentMedium, currentChallenging;
     int maxAsteroids;
@@ -54,10 +55,14 @@ private:
     std::vector<EnemyShip*> cleanShips;
 
     std::vector<Asteroid*> asteroids;
-    std::vector<Asteroid*> cleanAsteroids;
+    std::vector<Asteroid*> cleanAsteroids; 
 
     std::vector<SpriteObject*> toBeDeleted;
 
     sf::Time levelTime;
+    sf::Time waveTimer;
     sf::Time asteroidTime;
+
+    sf::Clock waveClock;
+    sf::Clock levelClock;
 };

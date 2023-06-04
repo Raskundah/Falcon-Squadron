@@ -24,12 +24,15 @@ public:
     void SetHealth(int newHealth); // sets the players health
     int GetHealth(); //gets the players health
 
-    std::vector<Bullet> GetBullets(); //Idk why I did it this way, but it works, this returns the player's vector of bullets. May need to make this private.
+    std::vector<Bullet> GetBullets(); //Idk why I did it this way, but it works, this returns the player's vector of bullets. May need to make this private LOL NO.
 
     void SetShields(int newShields);  //sets the players shields when colliding with an item that affects the shields.
     int GetShields(); // gets the players shields. 
 
-    int GetDamage();
+    int GetDamage(); // gets incoming damage to be dealt to the player. technically we can use the set health function and take a minus value.
+
+    int GetScore(); // gets the players score. 
+    void SetScore(int scoreToAdd); // adds to score.
 
     void UpdateSpeedBoost(sf::Time _frameTime); //handles the players speed boost. This logic hasn't been properly tested yet.
 
@@ -40,6 +43,7 @@ protected:
     int shields;
     int health;
     int damage;
+    int score;
 
     float currentBoost;
     std::vector<Bullet> bullets;
