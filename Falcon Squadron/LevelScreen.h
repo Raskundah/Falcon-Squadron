@@ -32,6 +32,7 @@ public:
     void WhichShips(); // determines which ship vector generator to use, dependant on level.
     void CleanUp(); // cleans up unused ships and asteroids. 
     void NewCleanUp(); // does the same if the previous causes issues, thanks sarah!
+    void PickUps(sf::Time frameTime);
 
     void Collision(); // keeps the collision code to keep the update function neat and tidy. If there's time I will refactor the collision into more OOp friendly design.
 
@@ -56,6 +57,7 @@ private:
     int currentLevel, maxEasy, maxMedium, maxChallenging;
     int currentEasy, currentMedium, currentChallenging;
     int maxAsteroids;
+    int MaxPickups;
 
     std::vector<EnemyShip*> enemies;
     std::vector<EnemyShip*> cleanShips;

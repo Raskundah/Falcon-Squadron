@@ -33,6 +33,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, levelTime(sf::seconds(180.0f))
 	, waveTimer(sf::seconds(5.0f))
 	, firstWave (true)
+	, MaxPickups(6)
 
 {
 	//default positions for non dynamically allocated and test objects.
@@ -56,6 +57,7 @@ void LevelScreen::Update(sf::Time frameTime)
 		{
 			MakeAsteroids(frameTime);
 			WhichShips();
+			// PickUps(frameTime);
 
 			firstWave = false;
 			waveClock.restart();
@@ -88,6 +90,13 @@ void LevelScreen::Update(sf::Time frameTime)
 			enemies[i]->Update(frameTime, bounds);
 
 		}
+
+		for (int i = 0; i < pickups.size(); ++i)
+		{
+			
+			pickups[i]->Update(frameTime, bounds);
+
+		}
 		//default colllision states
 
 		Collision();
@@ -115,6 +124,12 @@ void LevelScreen::Draw(sf::RenderTarget& _target)
 	{
 		asteroids[i]->Draw(_target);
 	}
+
+	for (int i = 0; i < pickups.size(); ++i)
+	{
+		pickups[i]->Draw(_target);
+	}
+
 
 	if (!gameRunning)
 	{
@@ -293,6 +308,24 @@ void LevelScreen::NewCleanUp()
 			delete enemies[i];
 			enemies.erase(enemies.begin() + i);
 		}// Do NOT do anything else in the loop after this as it will break!
+	}
+}
+
+void LevelScreen::PickUps(sf::Time frameTime)
+{
+	if (pickups.size() < MaxPickups)
+	{
+		for (int i = 0; i < floor(MaxPickups - pickups.size() / 2); ++i)
+		{
+			HealthPickup* newPickup = new HealthPickup{};
+			pickups.push_back(newPickup);
+		}
+
+		for (int i = 0; i < MaxPickups - pickups.size(); ++i)
+		{
+			ShieldPickup* newPickup = new ShieldPickup();
+			pickups.push_back(newPickup);
+		}
 	}
 }
 
