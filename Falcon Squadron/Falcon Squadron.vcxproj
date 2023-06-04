@@ -154,6 +154,7 @@
     <ClCompile Include="EndPanel.cpp" />
     <ClCompile Include="EnemyShip.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="HealthPickup.cpp" />
     <ClCompile Include="HighScore.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="LevelScreen.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="ShieldPickup.cpp" />
     <ClCompile Include="SpriteObject.cpp" />
     <ClCompile Include="VectorHelper.cpp" />
   </ItemGroup>
@@ -177,6 +179,7 @@
     <ClInclude Include="EndPanel.h" />
     <ClInclude Include="EnemyShip.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="HealthPickup.h" />
     <ClInclude Include="HighScore.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="LevelScreen.h" />
@@ -186,6 +189,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="ShieldPickup.h" />
     <ClInclude Include="SpriteObject.h" />
     <ClInclude Include="VectorHelper.h" />
   </ItemGroup>

@@ -8,6 +8,9 @@
 #include "EasyShip.h"
 #include "ChallengingShip.h"
 #include "EnemyShip.h"
+#include "Collectible.h"
+#include "HealthPickup.h"
+#include "ShieldPickup.h"
 
 class Game;
 class Platform;
@@ -41,6 +44,9 @@ private:
     MediumShip* mediumShip;
     EasyShip* easyShip;
     ChallengingShip* challengingShip;
+    HealthPickup* healthPickup;
+    ShieldPickup* shieldPickup;
+    
 
     sf::Sprite background;
     sf::Vector2u bounds;
@@ -56,6 +62,9 @@ private:
 
     std::vector<Asteroid*> asteroids;
     std::vector<Asteroid*> cleanAsteroids; 
+
+    std::vector<Collectible*> pickups;
+    std::vector<Collectible*> cleanPickups;
 
     std::vector<SpriteObject*> toBeDeleted;
 

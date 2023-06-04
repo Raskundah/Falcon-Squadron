@@ -10,6 +10,7 @@ Asteroid::Asteroid()
 	, lifeTime(sf::seconds(10.f))
 	, markedForDeletion(false)
 	, damageToPlayer(25)
+	, damageCounter()
 {
 	m_sprite.setTexture(AssetManager::RequestTexture("Assets/Asteroids/Asteroid 01.png"));
 
