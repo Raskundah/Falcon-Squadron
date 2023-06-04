@@ -17,8 +17,11 @@ public:
     void Draw(sf::RenderTarget& target); //draw base function for all ships
 
     virtual void FireBullets() = 0; 
+
     int GetHealth();
     void SetHealth(int health);
+
+    virtual int GetDamage() = 0;
 
     void HandleCollision(Physics& other); // default collision call for all ships
 

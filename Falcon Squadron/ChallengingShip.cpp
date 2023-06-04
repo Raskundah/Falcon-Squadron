@@ -33,6 +33,11 @@ void ChallengingShip::Draw(sf::RenderTarget& target)
     DrawBullets(target);
 }
 
+int ChallengingShip::GetDamage()
+{
+    return m_damage;
+}
+
 void ChallengingShip::FireBullets()
 {
     if (shootCooldownTimer.getElapsedTime() >= shootCooldown)
@@ -56,12 +61,6 @@ void ChallengingShip::DrawBullets(sf::RenderTarget& target)
         m_bullets[bullet].Draw(target); //draws the enemy  bullets. 
     }
 
-    /*for (auto& bullet : m_bullets)
-    {
-        bullet.Draw(target); // Draw each bullet
-    }
-
-    */
 }
 
 void ChallengingShip::UpdateBullets(sf::Time frameTime)

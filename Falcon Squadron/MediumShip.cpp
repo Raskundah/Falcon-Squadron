@@ -36,6 +36,11 @@ void MediumShip::Draw(sf::RenderTarget& target)
     DrawBullets(target);
 }
 
+int MediumShip::GetDamage()
+{
+    return m_damage;
+}
+
 void MediumShip::FireBullets()
 {
    

@@ -35,6 +35,11 @@ void EasyShip::Draw(sf::RenderTarget& target)
     DrawBullets(target);
 }
 
+int EasyShip::GetDamage()
+{
+    return m_damage;
+}
+
 void EasyShip::FireBullets()
 {
 

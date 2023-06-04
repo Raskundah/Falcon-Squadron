@@ -16,6 +16,7 @@ EnemyShip::EnemyShip()
     , shootCooldown()
     , moveCooldownTimer()
     , moveDir()
+    , m_damage()
 {
     // Initialize the sprite, position, and other member variables
     // based on the specific variant of the enemy ship.
@@ -166,3 +167,4 @@ void EnemyShip::UpdateBullets(sf::Time frameTime)
     // Update the position and other properties of the bullets fired by the enemy ship
     // This can vary depending on the variant of the enemy ship
 }
+

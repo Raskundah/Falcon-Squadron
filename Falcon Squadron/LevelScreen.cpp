@@ -326,7 +326,6 @@ void LevelScreen::Collision()
 			if (player.GetBullets()[i].CheckCollision(*enemies[s]))
 			{
 				player.GetBullets()[i].SetColliding(true);
-				// enemies[i]->SetColliding(true);
 				enemies[s]->SetHealth(enemies[s]->GetHealth() - player.GetDamage());
 			}
 		}
@@ -336,11 +335,12 @@ void LevelScreen::Collision()
 	{
 		for (int s = 0; s < enemies[i]->GetBullets().size(); ++s)
 		{
-			if (enemies[s]->CheckCollision(player))
+			if (enemies[i]->GetBullets()[s].CheckCollision(player))
 			{
-				player.SetHealth()
+				player.SetHealth(player.GetHealth() - enemies[i]->GetDamage());
 			}
 		}
 
 
+	}
 }
