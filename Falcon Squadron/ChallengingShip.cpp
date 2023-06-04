@@ -20,6 +20,7 @@ void ChallengingShip::Update(sf::Time frameTime, sf::Vector2u levelSize)
     UpdatePosition(frameTime, levelSize);
     FireBullets();
     UpdateBullets(frameTime);
+    DeleteBullets();
 
     if (m_health <= 0)
     {
@@ -27,8 +28,8 @@ void ChallengingShip::Update(sf::Time frameTime, sf::Vector2u levelSize)
     }
 
     // Remove bullets that are marked for deletion
-    m_bullets.erase(std::remove_if(m_bullets.begin(), m_bullets.end(), [](const Bullet& bullet) {
-        return bullet.IsMarkedForDeletion();
+    m_bullets.erase(std::remove_if(m_bullets.begin(), m_bullets.end(), [](const Bullet* bullet) {
+        return bullet->IsMarkedForDeletion();
         }), m_bullets.end());
 }
 
@@ -53,6 +54,19 @@ int ChallengingShip::GetHealth()
     return m_health;
 }
 
+void ChallengingShip::DeleteBullets()
+{
+    for (int i = m_bullets.size() - 1; i >= 0; --i)
+    {
+        // If anything else is to be done, do it before the delete call
+        if (m_bullets[i]->IsMarkedForDeletion())
+        {
+            delete m_bullets[i];
+            m_bullets.erase(m_bullets.begin() + i);
+        }// Do NOT do anything else in the loop after this as it will break!
+    }
+}
+
 void ChallengingShip::FireBullets()
 {
     if (shootCooldownTimer.getElapsedTime() >= shootCooldown)
@@ -60,9 +74,9 @@ void ChallengingShip::FireBullets()
         sf::Vector2f bulletPosition = m_sprite.getPosition();
         bulletPosition.y -= 35;
         bulletPosition.x -= 16;
-        Bullet newBullet(1000.f, m_damage, false, sf::seconds(5)); // Customize the bullet parameters as neede
+        Bullet* newBullet = new Bullet(1000.f, m_damage, false, sf::seconds(5)); // Customize the bullet parameters as neede
 
-        newBullet.SetPosition(bulletPosition);
+        newBullet->SetPosition(bulletPosition);
         m_bullets.push_back(newBullet);
 
         shootCooldownTimer.restart(); // Restart the cooldown timer
@@ -73,7 +87,7 @@ void ChallengingShip::DrawBullets(sf::RenderTarget& target)
 {
     for (int bullet = 0; bullet < m_bullets.size(); ++bullet)
     {
-        m_bullets[bullet].Draw(target); //draws the enemy  bullets. 
+        m_bullets[bullet]->Draw(target); //draws the enemy  bullets. 
     }
 
 }
@@ -82,7 +96,7 @@ void ChallengingShip::UpdateBullets(sf::Time frameTime)
 {
     for (auto& bullet : m_bullets)
     {
-        bullet.Update(frameTime);  //updates the enemy bullets.
+        bullet->Update(frameTime);  //updates the enemy bullets.
     }
 }
 

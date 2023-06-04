@@ -5,6 +5,7 @@
 #include "EnemyShip.h"
 #include "Player.h"
 #include <iostream>
+#include <SFML/Audio.hpp>
 
 
 // make a int variable that holds the number of each ship, then multiply that by the amount for each level and add the result together to get the ful lsize of the ship vector, then fill the vector.
@@ -32,31 +33,46 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, asteroidTime(sf::seconds(10.f))
 	, levelTime(sf::seconds(180.0f))
 	, waveTimer(sf::seconds(5.0f))
-	, firstWave (true)
+	, firstWave(true)
 	, MaxPickups(3) // never set this to an even number, it allows the vector of pickups to go out of defined bounds. what the fuck.
 	, isBroken(false)
+	, gameMusic()
+	, MaxTime(120.0f)
+	, remainingTime(0)
+	, healthText()
+	, shieldText()
+	, scoreText()
+	, timeText()
 
 {
+
 	//default positions for non dynamically allocated and test objects.
 
-	//TODO: add vectors of object positions.
+	gameFont = AssetManager::RequestFont("Assets/cool.otf");
 
-	
+	gameMusic.openFromFile("Assets/Music/suez crisis remade.ogg");
+	gameMusic.setLoop(true);
+	gameMusic.setVolume(10);
+	gameMusic.play();
+
+
 	background.setTexture(AssetManager::RequestTexture("Assets/Background.png"));
 	background.setPosition(0, 0);
 	background.setScale(bounds.x / background.getGlobalBounds().width , bounds.y / background.getGlobalBounds().height);
+	
 
 	player.SetPosition(80, bounds.y/2);
+
 }
+
 
 void LevelScreen::Update(sf::Time frameTime)
 {
 
-	if (pickups.size() > MaxPickups) {
-		isBroken = true;
-	} // breakpoint for checking pickup error.
+	
+	
 
-	if (gameRunning)
+	if (gameRunning || remainingTime <= 0.0f)
 	{
 		if (waveClock.getElapsedTime().asSeconds() >= waveTimer.asSeconds() || firstWave)
 		{
@@ -71,6 +87,8 @@ void LevelScreen::Update(sf::Time frameTime)
 		//update moving positions
 
 		player.Update(frameTime, bounds);
+		TextHud();
+
 
 		for (int i = 0; i < asteroids.size(); ++i)
 		{
@@ -133,6 +151,12 @@ void LevelScreen::Draw(sf::RenderTarget& _target)
 	{
 		pickups[i]->Draw(_target);
 	}
+
+	_target.draw(healthText);
+	_target.draw(shieldText);
+	_target.draw(timeText);
+	_target.draw(scoreText);
+
 
 
 	if (!gameRunning)
@@ -314,6 +338,27 @@ void LevelScreen::NewCleanUp()
 		}// Do NOT do anything else in the loop after this as it will break!
 	}
 
+	/*
+	for (int i = enemies.size() - 1; i >= 0; --i)
+	{
+		for (int b = 0; b < enemies[i]->GetBullets().size(); ++b)
+		{
+			if (enemies[i]->GetBullets()[b]->IsMarkedForDeletion())
+			{
+				delete enemies[i]->GetBullets()[b];
+				enemies[i]->GetBullets().erase(enemies[i]->GetBullets().begin + b);
+			}
+		}
+		// If anything else is to be done, do it before the delete call
+		if (enemies[i]->IsMarkedForDeletion())
+		{
+			delete enemies[i];
+			enemies.erase(enemies.begin() + i);
+		}// Do NOT do anything else in the loop after this as it will break!
+	}
+		*/
+	
+
 	for (int i = pickups.size() - 1; i >= 0; --i)
 	{
 		// If anything else is to be done, do it before the delete call
@@ -323,6 +368,8 @@ void LevelScreen::NewCleanUp()
 			pickups.erase(pickups.begin() + i);
 		}// Do NOT do anything else in the loop after this as it will break!
 	}
+
+	
 }
 
 void LevelScreen::PickUps(sf::Time frameTime)
@@ -362,6 +409,72 @@ int LevelScreen::WhichPickup()
 	return (distribution(gen) == 0) ? -1 : 1;
 }
 
+void LevelScreen::TextHud()
+{
+#pragma region health
+	healthString = ("Health: ");
+	healthString += std::to_string(player.GetHealth());
+
+	healthText .setString(healthString);
+	healthText.setFillColor(sf::Color::White);
+	healthText.setOutlineThickness(2.0f);
+	healthText.setOutlineColor(sf::Color::Black);
+	healthText.setCharacterSize(30);
+	healthText.setPosition(50, 50);
+#pragma endregion
+
+#pragma region  shields
+
+	shieldString = ("Shields: ");
+	shieldString += std::to_string(player.GetShields());
+
+	shieldText.setString(shieldString);
+	shieldText.setFillColor(sf::Color::White);
+	shieldText.setOutlineThickness(2.0f);
+	shieldText.setOutlineColor(sf::Color::Black);
+	shieldText.setCharacterSize(30);
+	shieldText.setPosition(bounds.x * 0.25, 20);
+#pragma endregion
+
+#pragma region Timer
+	remainingTime = MaxTime - levelClock.getElapsedTime().asSeconds();
+	int timeToDisplay = trunc(remainingTime);
+
+	timerString = ("Time Remaining: ");
+	timerString += std::to_string((int)ceil(timeToDisplay));
+
+	timeText.setString(timerString);
+	timeText.setFillColor(sf::Color::White);
+	timeText.setOutlineThickness(2.0f);
+	timeText.setOutlineColor(sf::Color::Black);
+	timeText.setCharacterSize(30);
+	timeText.setPosition(bounds.x / 0.5f, 20);
+#pragma endregion
+
+	scoreString = ("Score: ");
+	scoreString += std::to_string(player.GetScore());
+
+	scoreText.setString(shieldString);
+	scoreText.setFillColor(sf::Color::White);
+	scoreText.setOutlineThickness(2.0f);
+	scoreText.setOutlineColor(sf::Color::Black);
+	scoreText.setCharacterSize(30);
+	scoreText.setPosition(bounds.x * 0.7f, 20);
+
+#pragma region  Score
+
+
+#pragma endregion
+
+
+
+
+}
+
+
+
+
+
 void LevelScreen::Collision()
 {
 #pragma region Defaults
@@ -373,7 +486,7 @@ void LevelScreen::Collision()
 
 	for (int i = 0; i < player.GetBullets().size(); ++i)
 	{
-		player.GetBullets()[i].SetColliding(false); // players bulets are not colliding by default.
+		player.GetBullets()[i]->SetColliding(false); // players bulets are not colliding by default.
 	}
 
 	for (int i = 0; i < pickups.size(); ++i)
@@ -387,7 +500,7 @@ void LevelScreen::Collision()
 		enemies[i]->SetColliding(false); 
 		for (int s = 0; s < enemies[i]->GetBullets().size(); ++s)
 		{
-			enemies[i]->GetBullets()[s].SetColliding(false);
+			enemies[i]->GetBullets()[s]->SetColliding(false);
 
 			// enemies and their bullets are not colliding by default.
 		}
@@ -436,22 +549,25 @@ void LevelScreen::Collision()
 	{
 		for (int s = 0; s < enemies.size(); ++s)
 		{
-			if (player.GetBullets()[i].CheckCollision(*enemies[s]))
+			if (player.GetBullets()[i]->CheckCollision(*enemies[s]))
 			{
-				player.GetBullets()[i].SetColliding(true);
+				player.GetBullets()[i]->SetColliding(true);
+				player.GetBullets()[i]->SetMarkedForDeletion(true);
+
 				enemies[s]->SetColliding(true);
-				enemies[s]->SetHealth(enemies[s]->GetHealth() - player.GetDamage());
-				
+				enemies[s]->SetHealth(player.GetDamage());
+
 			}
 		}
 
-		// check if a asteroid collided with a player
+		// check if a asteroid collided with a player's bullet
 
 		for (int a = 0; a < asteroids.size(); ++a)
 		{
-			if (player.GetBullets()[i].CheckCollision(*asteroids[a]))
+			if (player.GetBullets()[i]->CheckCollision(*asteroids[a]))
 			{
 				asteroids[a]->TakeDamage();
+				player.GetBullets()[i]->SetMarkedForDeletion(true);
 			}
 		}
 	}
@@ -462,10 +578,12 @@ void LevelScreen::Collision()
 	{
 		for (int s = 0; s < enemies[i]->GetBullets().size(); ++s)
 		{
-			if (enemies[i]->GetBullets()[s].CheckCollision(player))
+			if (enemies[i]->GetBullets()[s]->CheckCollision(player))
 			{
 				player.SetColliding(true);
-				player.SetHealth(player.GetHealth() - enemies[i]->GetDamage());
+				enemies[i]->GetBullets()[s]->SetMarkedForDeletion(true);
+				
+				player.SetHealth (-( enemies[i]->GetDamage() ) );
 			}
 		}
 	}

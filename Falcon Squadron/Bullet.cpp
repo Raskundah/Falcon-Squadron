@@ -43,7 +43,7 @@ bool Bullet::IsMarkedForDeletion() const
 
 void Bullet::SetMarkedForDeletion(bool value)
 {
-	markedForDeletion = value;
+       	markedForDeletion = value;
 }
 
 void Bullet::SetDamage(int _damage)

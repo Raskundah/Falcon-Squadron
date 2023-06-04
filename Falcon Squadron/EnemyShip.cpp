@@ -44,9 +44,9 @@ void EnemyShip::Draw(sf::RenderTarget& target)
     if (!Physics::GetAlive())
         return;
 
-    Physics::Draw(target);
+    // Physics::Draw(target);
 
-    // target.draw(m_sprite);
+     target.draw(m_sprite);
     //Draw other visual elements associated with the enemy ship.
 
 }
@@ -68,7 +68,7 @@ void EnemyShip::SetMarkedForDeletion(bool value)
     m_markedForDeletion = value;
 }
 
-std::vector<Bullet> EnemyShip::GetBullets()
+std::vector<Bullet*> EnemyShip::GetBullets()
 {
     return m_bullets;
 }

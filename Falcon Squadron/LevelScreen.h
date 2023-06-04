@@ -1,6 +1,7 @@
 #pragma once
 #include "Screen.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Player.h"
 #include "EndPanel.h"
 #include "Asteroid.h"
@@ -35,6 +36,7 @@ public:
     void PickUps(sf::Time frameTime);
 
     int WhichPickup();
+    void TextHud();
 
     void Collision(); // keeps the collision code to keep the update function neat and tidy. If there's time I will refactor the collision into more OOp friendly design.
 
@@ -61,23 +63,28 @@ private:
     int maxAsteroids;
     int MaxPickups;
 
+    float MaxTime, remainingTime;;
+
     bool isBroken;
 
-    std::vector<EnemyShip*> enemies;
-    std::vector<EnemyShip*> cleanShips;
+    std::vector<EnemyShip*> enemies, cleanShips;
 
-    std::vector<Asteroid*> asteroids;
-    std::vector<Asteroid*> cleanAsteroids; 
+    std::vector<Asteroid*> asteroids, cleanAsteroids;
 
-    std::vector<Collectible*> pickups;
-    std::vector<Collectible*> cleanPickups;
+    std::vector<Collectible*> pickups, cleanPickups;
 
     std::vector<SpriteObject*> toBeDeleted;
 
-    sf::Time levelTime;
-    sf::Time waveTimer;
-    sf::Time asteroidTime;
+    sf::Time levelTime, waveTimer, asteroidTime;
 
-    sf::Clock waveClock;
-    sf::Clock levelClock;
+    sf::Clock waveClock, levelClock;
+
+    sf::Music gameMusic;
+
+    sf::Font gameFont;
+
+    sf::Text healthText, shieldText, timeText, scoreText;
+
+    std::string timerString, healthString, shieldString, scoreString;
+
 };

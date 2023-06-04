@@ -15,6 +15,7 @@ public:
     void SetHealth(int health);
     int GetHealth();
    
+    void DeleteBullets();
 
 protected:
 

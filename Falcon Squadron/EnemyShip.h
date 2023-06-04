@@ -4,6 +4,7 @@
 #include "Bullet.h"
 #include <random>
 
+class Bullet;
 
 class EnemyShip :
     public Physics
@@ -18,6 +19,7 @@ public:
 
     virtual void FireBullets() = 0;  // virtual function to make sure all ships can fire bullets, and alows the function to be called on a vector of various child classes.
 
+
     virtual int GetHealth()= 0; // returns the health of a given ship.
     virtual void SetHealth(int health)= 0; // sets health for damage calculations. will be vestigial if all collision is handled internallyt.
 
@@ -30,7 +32,7 @@ public:
 
     bool IsMarkedForDeletion() const; // checks if a ship is marked for deletion
     void SetMarkedForDeletion(bool value); // sets a ship to be marked for deletion.
-    std::vector<Bullet> GetBullets(); // same as player, this logic might be redundant, and may need to be made private.
+    std::vector<Bullet*> GetBullets(); // same as player, this logic might be redundant, and may need to be made private.
 
     int getRandomDirection(); //a function that spits out a random number of either 1 or -1 for initial move direction for enemy ships.
 
@@ -40,7 +42,7 @@ protected:
     int moveDir;
     float m_speed;
     int m_damage;
-    std::vector<Bullet> m_bullets;
+    std::vector<Bullet*> m_bullets;
     bool m_markedForDeletion;
   
     sf::Time moveCooldown;

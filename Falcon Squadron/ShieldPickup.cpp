@@ -34,7 +34,9 @@ void ShieldPickup::Draw(sf::RenderTarget& target)
 	if (!Physics::GetAlive())
 		return;
 
-	Physics::Draw(target);
+	// Physics::Draw(target);
+
+	target.draw(m_sprite);
 }
 
 int ShieldPickup::Modify()

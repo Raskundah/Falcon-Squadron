@@ -34,9 +34,9 @@ void Asteroid::Draw(sf::RenderTarget& target)
 	if (!Physics::GetAlive())
 		return;
 	
-	Physics::Draw(target);
+	//Physics::Draw(target);
 
-	//target.draw(m_sprite);
+	target.draw(m_sprite);
 }
 
 bool Asteroid::IsMarkedForDeletion() const

@@ -23,6 +23,8 @@ void Collectible::Update(sf::Time _frameTime, sf::Vector2u levelSize)
 void Collectible::Draw(sf::RenderTarget& target)
 {
 	//Physics::Draw(target);
+
+	target.draw(m_sprite);
 }
 
 bool Collectible::IsMarkedForDeletion() const
