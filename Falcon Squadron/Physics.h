@@ -36,6 +36,7 @@ public:
 	sf::Vector2f GetCOllisionDepth(Physics other); //checks how much collision overlap there is, to smoothly collide.
 
 	void SetAlive(bool _alive); // sets the flag of if an object is living or dead.
+	bool GetAlive();
 
 protected:
 
@@ -43,7 +44,7 @@ protected:
 	sf::Vector2f m_CollisionScale; //scales the collision box.
 	CollisionType collisionType; //determines which collision type to use.
 	bool m_IsAlive; //handles if the object is alive.
-	sf::Vector2f m_pos; // if I don't have this things break in the old physics implimentation, this sucks.
+	// sf::Vector2f m_pos; // if I don't have this things break in the old physics implimentation, this sucks.
 
 private:
 

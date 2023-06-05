@@ -1,6 +1,7 @@
 #include "Bullet.h"
 #include "AssetManager.h"
 
+
 Bullet::Bullet(float _speed, int _damage, bool _isPlayerFired, sf::Time _lifetime)
 	: Physics()
 	, speed(_speed)
@@ -10,6 +11,7 @@ Bullet::Bullet(float _speed, int _damage, bool _isPlayerFired, sf::Time _lifetim
 	, markedForDeletion(false)
 {
 	m_sprite.setTexture((AssetManager::RequestTexture("Assets/Bullets/Proton_Medium.png")));
+	//collisionType = CollisionType::CIRCLE;
 
 	lifetimeTimer.restart();
 }
@@ -28,6 +30,12 @@ void Bullet::Update(sf::Time frameTime)
 	SetBulletPath(frameTime);	
 }
 
+void Bullet::Draw(sf::RenderTarget& _target)
+{
+	//_target.draw(m_sprite);
+	Physics::Draw(_target);
+}
+
 bool Bullet::IsMarkedForDeletion() const
 {
 	return markedForDeletion;
@@ -35,7 +43,7 @@ bool Bullet::IsMarkedForDeletion() const
 
 void Bullet::SetMarkedForDeletion(bool value)
 {
-	markedForDeletion = value;
+       	markedForDeletion = value;
 }
 
 void Bullet::SetDamage(int _damage)
@@ -64,4 +72,9 @@ if (isPlayerFired)
 	void Bullet::SetSpriteTexture(sf::Texture i_bullet)
 	{
 		m_sprite.setTexture(i_bullet);
+	}
+
+	bool Bullet::GetShooter()
+	{
+		return isPlayerFired;
 	}

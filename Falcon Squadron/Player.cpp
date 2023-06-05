@@ -4,7 +4,10 @@
 Player::Player() // player contructor 
     : Physics()
     , health(100)
+    , damage(25)
     , shields(0)
+    , maxHealth(100)
+    , MaxShields(100)
     , speed(500)
     , speedBoosted(1000)
     , MAXSPEED(2000)
@@ -15,64 +18,81 @@ Player::Player() // player contructor
 {
     m_sprite.setTexture(AssetManager::RequestTexture("Assets/Player/PlayerBlue_Frame_01.png"));
     m_sprite.setRotation(90.0f); //rotates the sprite to suit our needs.
+    m_CollisionOffset.x = -m_sprite.getLocalBounds().width;
 
-    bulletCooldown = sf::seconds(0.2); //defining the players shooting cooldown. 
+    bulletCooldown = sf::seconds(0.5f); //defining the players shooting cooldown. 
+
+    collisionType = CollisionType::AABB;
 }
 
 void Player::Update(sf::Time _frameTime, sf::Vector2u levelsize)
 {
+    if (!Physics::GetAlive())
+        return;
 
     UpdatePosition(_frameTime, levelsize);
     UpdateSpeedBoost(_frameTime);
     FireBullets();
     UpdateBullets(_frameTime);
-
-
-    // Remove bullets that are marked for deletion
-    bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet& bullet) {
-        return bullet.IsMarkedForDeletion();
+    DeleteBullets();
+    
+    bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet* bullet) {
+        return bullet->IsMarkedForDeletion();
         }), bullets.end());
+        
 }
 
 void Player::Draw(sf::RenderTarget& _target)
 {
-	SpriteObject::Draw(_target); //Draws the player object.
+    if (!Physics::GetAlive())
+        return;
+
+    //Physics::Draw(_target);
+
+     _target.draw(m_sprite);; //Draws the player object.
     DrawBullets(_target);
 }
 
 void Player::DrawBullets(sf::RenderTarget& _target)
 {
-
     for (int bullet = 0; bullet < bullets.size(); ++bullet)
     {
-        bullets[bullet].Draw(_target); //draws the players bullets. 
+        bullets[bullet]->Draw(_target); //draws the players bullets. 
     }
-
- /*   for (auto& bullet : GetBullets())
-    {
-        bullet.Draw(_target);
-    }
-    */
 }
 
 void Player::UpdateBullets(sf::Time _frameTime)
 {
-    for (auto& bullet : bullets)
+    for (int bullet = 0; bullet < bullets.size(); ++bullet)
     {
-        bullet.Update(_frameTime);  //updates the players bullets.
+     
+        bullets[bullet]->Update(_frameTime); //draws the players bullets. 
+    }
+}
+
+void Player::DeleteBullets()
+{
+    for (int i = bullets.size() - 1; i >= 0; --i)
+    {
+        // If anything else is to be done, do it before the delete call
+        if (bullets[i]->IsMarkedForDeletion())
+        {
+            delete bullets[i];
+           bullets.erase(bullets.begin() + i);
+        }// Do NOT do anything else in the loop after this as it will break!
     }
 }
 
 void Player::FireBullets() //generates a bullet to the players bullet vector and handles the initilisation of each.
-{
+ {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && cooldownTimer.getElapsedTime() >= bulletCooldown)
     {
         sf::Vector2f bulletPosition = m_sprite.getPosition(); 
         bulletPosition.y += m_sprite.getLocalBounds().height * 0.5f; // Adjust x-coordinate to the right side of the player
 
-        Bullet newBullet(500.f, 10, true, sf::seconds(5)); // Customize the bullet parameters as needed
+        Bullet* newBullet = new Bullet(1000.f, 10, true, sf::seconds(5)); // Customize the bullet parameters as needed
         // newBullet.SetSpriteTexture(AssetManager::RequestTexture("Assets/Bullets/Proton_Medium.png"));
-        newBullet.SetPosition(bulletPosition);
+        newBullet->SetPosition(bulletPosition);
         bullets.push_back(newBullet); 
 
         cooldownTimer.restart(); // Restart the cooldown timer
@@ -126,7 +146,11 @@ void Player::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
 
 void Player::SetHealth(int newHealth)
 {
-    health = newHealth;
+    health += newHealth;
+    if (health >= maxHealth)
+    {
+        health = maxHealth;
+    }
 }
 
 int Player::GetHealth()
@@ -134,7 +158,7 @@ int Player::GetHealth()
     return health;
 }
 
-std::vector<Bullet> Player::GetBullets()
+std::vector<Bullet*> Player::GetBullets()
 {
     return bullets;
 }
@@ -142,12 +166,32 @@ std::vector<Bullet> Player::GetBullets()
 
 void Player::SetShields(int newShields)
 {
-    shields = newShields;
+    shields += newShields;
+
+    if (shields >= MaxShields)
+    {
+        shields = MaxShields;
+    }
 }
 
 int Player::GetShields()
 {
-    return shields;;
+    return shields;
+}
+
+int Player::GetDamage()
+{
+    return damage;
+}
+
+int Player::GetScore()
+{
+    return score;
+}
+
+void Player::SetScore(int scoreToAdd)
+{
+    score += scoreToAdd;
 }
 
 

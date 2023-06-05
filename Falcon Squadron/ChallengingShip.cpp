@@ -1,24 +1,21 @@
-
-#include "MediumShip.h"
+#include "ChallengingShip.h"
 #include "AssetManager.h"
 #include <cstdlib>
 
-MediumShip::MediumShip()
-	: EnemyShip()
-
+ChallengingShip::ChallengingShip()
+    :EnemyShip()
 {
-    m_sprite.setTexture(AssetManager::RequestTexture("Assets/Player/Green_Frame_01.png"));
-    m_sprite.setRotation(270.f);
-    m_speed = 500;
-    m_health = 100;
-    m_damage = 10;
-    shootCooldown = sf::seconds(1.0f);
-    m_CollisionOffset.y = -m_sprite.getLocalBounds().height;
-
-
+    m_sprite.setTexture(AssetManager::RequestTexture("Assets/Enemy_01/Enemy01_Red_Frame_1.png"));
+    m_sprite.setRotation(90.f);
+    m_speed = 250;
+    m_health = 200;
+    m_damage = 25;
+    
+    shootCooldown = sf::seconds(1.f);
+    m_CollisionOffset.x = -m_sprite.getLocalBounds().width;
 }
 
-void MediumShip::Update(sf::Time frameTime, sf::Vector2u levelSize)
+void ChallengingShip::Update(sf::Time frameTime, sf::Vector2u levelSize)
 {
     UpdatePosition(frameTime, levelSize);
     FireBullets();
@@ -27,7 +24,7 @@ void MediumShip::Update(sf::Time frameTime, sf::Vector2u levelSize)
 
     if (m_health <= 0)
     {
-        this->SetMarkedForDeletion(true);
+        SetMarkedForDeletion(true);
     }
 
     // Remove bullets that are marked for deletion
@@ -36,28 +33,28 @@ void MediumShip::Update(sf::Time frameTime, sf::Vector2u levelSize)
         }), m_bullets.end());
 }
 
-void MediumShip::Draw(sf::RenderTarget& target)
+void ChallengingShip::Draw(sf::RenderTarget& target)
 {
     EnemyShip::Draw(target);
     DrawBullets(target);
 }
 
-int MediumShip::GetDamage()
+int ChallengingShip::GetDamage()
 {
     return m_damage;
 }
 
-void MediumShip::SetHealth(int health)
+void ChallengingShip::SetHealth(int health)
 {
     m_health -= health;
 }
 
-int MediumShip::GetHealth()
+int ChallengingShip::GetHealth()
 {
     return m_health;
 }
 
-void MediumShip::DeleteBullets()
+void ChallengingShip::DeleteBullets()
 {
     for (int i = m_bullets.size() - 1; i >= 0; --i)
     {
@@ -70,16 +67,14 @@ void MediumShip::DeleteBullets()
     }
 }
 
-void MediumShip::FireBullets()
+void ChallengingShip::FireBullets()
 {
-   
-
     if (shootCooldownTimer.getElapsedTime() >= shootCooldown)
     {
         sf::Vector2f bulletPosition = m_sprite.getPosition();
         bulletPosition.y -= 35;
         bulletPosition.x -= 16;
-        Bullet* newBullet = new Bullet(500.f, m_damage, false, sf::seconds(5)); // Customize the bullet parameters as neede
+        Bullet* newBullet = new Bullet(1000.f, m_damage, false, sf::seconds(5)); // Customize the bullet parameters as neede
 
         newBullet->SetPosition(bulletPosition);
         m_bullets.push_back(newBullet);
@@ -88,22 +83,16 @@ void MediumShip::FireBullets()
     }
 }
 
-void MediumShip::DrawBullets(sf::RenderTarget& target)
+void ChallengingShip::DrawBullets(sf::RenderTarget& target)
 {
     for (int bullet = 0; bullet < m_bullets.size(); ++bullet)
     {
-        m_bullets[bullet]->Draw(target); //draws the enemy bullets. 
+        m_bullets[bullet]->Draw(target); //draws the enemy  bullets. 
     }
 
-    /*for (auto& bullet : m_bullets)
-    {
-        bullet.Draw(target); // Draw each bullet
-    }
-
-    */
 }
 
-void MediumShip::UpdateBullets(sf::Time frameTime)
+void ChallengingShip::UpdateBullets(sf::Time frameTime)
 {
     for (auto& bullet : m_bullets)
     {
@@ -111,7 +100,7 @@ void MediumShip::UpdateBullets(sf::Time frameTime)
     }
 }
 
-void MediumShip::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
+void ChallengingShip::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
 {
     EnemyShip::UpdatePosition(frameTime, levelSize);
 }

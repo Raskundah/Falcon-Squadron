@@ -5,7 +5,7 @@
 
 SpriteObject::SpriteObject()
 	: m_position(0, 0)
-	, m_isAlive(true)
+	, m_isAliveInternal(true)
 	, m_sprite()
 {
 
@@ -17,7 +17,7 @@ void SpriteObject::Update(sf::Time _frameTime)
 
 void SpriteObject::Draw(sf::RenderTarget& _target)
 {
-	if (!m_isAlive)
+	if (!m_isAliveInternal)
 		return;
 
 	_target.draw(m_sprite);

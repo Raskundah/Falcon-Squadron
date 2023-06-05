@@ -1,21 +1,19 @@
 #pragma once
 #include "EnemyShip.h"
 
-class MediumShip :
+class EasyShip :
     public EnemyShip
 {
 public:
 
-    MediumShip();
+    EasyShip();
     void Update(sf::Time frameTime, sf::Vector2u levelSize);
     void Draw(sf::RenderTarget& target);
-
     int GetDamage();
+    void DeleteBullets();
 
     void SetHealth(int health);
     int GetHealth();
-   
-    void DeleteBullets();
 
 protected:
 
@@ -23,7 +21,6 @@ private:
     void FireBullets();
     void DrawBullets(sf::RenderTarget& target);
     void UpdateBullets(sf::Time frameTime);
-
 
     void UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize);
 
