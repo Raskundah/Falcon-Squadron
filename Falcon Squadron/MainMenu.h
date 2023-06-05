@@ -18,5 +18,7 @@ protected:
 private:
     sf::Text mainMenuText;
     sf::Font menuFont;
+    sf::Sprite background;
+
 };
 

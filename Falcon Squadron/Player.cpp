@@ -181,6 +181,12 @@ void Player::SetShields(int newShields)
     {
         shields = MaxShields;
     }
+
+    if (shields <= 0)
+    {
+        health += shields;
+        shields = 0;
+    }
 }
 
 int Player::GetShields()

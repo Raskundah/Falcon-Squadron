@@ -74,6 +74,8 @@ void LevelScreen::Update(sf::Time frameTime)
 		firstLoad = false;
 		MaxTime = 120.f;
 		levelClock.restart();
+		gameMusic.play();
+
 	}
 
 	if (remainingTime <= 0)
@@ -81,9 +83,16 @@ void LevelScreen::Update(sf::Time frameTime)
 		reset = true;
 	}
 
+	if (player.GetHealth() <= 0)
+	{
+		gamePointer->SetScreen("HighScore");
+		gameMusic.stop();
+	}
+
+
+
 	if (gameRunning && player.GetHealth() >= 0)
 	{
-		gameMusic.play();
 
 
 		if (waveClock.getElapsedTime().asSeconds() >= waveTimer.asSeconds() || firstWave)
