@@ -19,7 +19,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, asteroids()
 	, background()
 	, endPanel(newGamePointer->GetWindow())
-	, gameRunning(true)
+	, gameRunning(false)
 	, bounds(newGamePointer->GetWindow()->getSize().x, newGamePointer->GetWindow()->getSize().y)
 	, maxAsteroids((currentLevel + 1) * 3)
 	, currentLevel(0)
@@ -43,6 +43,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, scoreText()
 	, timeText()
 	, MaxEnemies(13) 
+	, firstLoad(true)
 
 {
 
@@ -67,12 +68,20 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 
 void LevelScreen::Update(sf::Time frameTime)
 {
+	if (firstLoad)
+	{
+		gameRunning = true;
+		firstLoad = false;
+		MaxTime = 120.f;
+		levelClock.restart();
+	}
+
 	if (remainingTime <= 0)
 	{
 		reset = true;
 	}
 
-	if (gameRunning /*||player.GetHealth() <= 0*/)
+	if (gameRunning && player.GetHealth() >= 0)
 	{
 		gameMusic.play();
 
@@ -377,27 +386,6 @@ void LevelScreen::NewCleanUp()
 		}// Do NOT do anything else in the loop after this as it will break!
 	}
 
-	/*
-	for (int i = enemies.size() - 1; i >= 0; --i)
-	{
-		for (int b = 0; b < enemies[i]->GetBullets().size(); ++b)
-		{
-			if (enemies[i]->GetBullets()[b]->IsMarkedForDeletion())
-			{
-				delete enemies[i]->GetBullets()[b];
-				enemies[i]->GetBullets().erase(enemies[i]->GetBullets().begin + b);
-			}
-		}
-		// If anything else is to be done, do it before the delete call
-		if (enemies[i]->IsMarkedForDeletion())
-		{
-			delete enemies[i];
-			enemies.erase(enemies.begin() + i);
-		}// Do NOT do anything else in the loop after this as it will break!
-	}
-		*/
-	
-
 	for (int i = pickups.size() - 1; i >= 0; --i)
 	{
 		// If anything else is to be done, do it before the delete call
@@ -513,10 +501,6 @@ void LevelScreen::TextHud()
 
 }
 
-void LevelScreen::SetGameRunning(bool _var)
-{
-	gameRunning = _var;
-}
 
 void LevelScreen::Collision()
 {
@@ -678,12 +662,19 @@ void LevelScreen::ResetVectors()
 
 		currentLevel++;
 
+		MaxTime = 120.0f;
+
 		remainingTime = MaxTime;
 
 		firstWave = true;
 
 		waveClock.restart();
 		levelClock.restart();
+
+		if (currentLevel > 2)
+		{
+			gamePointer->SetScreen("HighScore");
+		}
 
 	}
 	

@@ -39,7 +39,6 @@ public:
 
     int WhichPickup(); // creates randomly allocated pickups.
     void TextHud(); // generates a text HUD that dynamically updates.
-    void  SetGameRunning(bool _var);
 
     void Collision(); // keeps the collision code to keep the update function neat and tidy. If there's time I will refactor the collision into more OOp friendly design.
     void ResetVectors();
@@ -68,7 +67,7 @@ private:
 
     float MaxTime, remainingTime;;
 
-    bool isBroken, reset;
+    bool isBroken, reset, firstLoad;
 
     std::vector<EnemyShip*> enemies, cleanShips;
 

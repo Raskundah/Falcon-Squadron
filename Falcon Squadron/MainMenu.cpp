@@ -24,6 +24,7 @@ void MainMenu::Update(sf::Time frameTime)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
 	{
 		gamePointer->SetScreen("Level Screen");
+		
 	}
 }
 
