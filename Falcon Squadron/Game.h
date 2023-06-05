@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 class Screen;
 
@@ -16,15 +17,16 @@ public:
 	void Update();
 	void Draw();
 
-	
-
 	sf::RenderWindow* GetWindow();
+	void SetScreen(std::string levelToLoad);
 
-private:
+
+	private:
+
 
 	sf::RenderWindow window;
 	sf::Clock gameClock;
-
+	std::map<std::string, Screen*> screens;
 	Screen* currentScreen;
 
 };

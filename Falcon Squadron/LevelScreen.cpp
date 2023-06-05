@@ -53,8 +53,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	gameMusic.openFromFile("Assets/Music/suez crisis remade.ogg");
 	gameMusic.setLoop(true);
 	gameMusic.setVolume(10);
-	gameMusic.play();
-
+	
 
 	background.setTexture(AssetManager::RequestTexture("Assets/Background.png"));
 	background.setPosition(0, 0);
@@ -75,6 +74,8 @@ void LevelScreen::Update(sf::Time frameTime)
 
 	if (gameRunning /*||player.GetHealth() <= 0*/)
 	{
+		gameMusic.play();
+
 
 		if (waveClock.getElapsedTime().asSeconds() >= waveTimer.asSeconds() || firstWave)
 		{
@@ -510,6 +511,11 @@ void LevelScreen::TextHud()
 
 #pragma endregion
 
+}
+
+void LevelScreen::SetGameRunning(bool _var)
+{
+	gameRunning = _var;
 }
 
 void LevelScreen::Collision()

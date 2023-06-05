@@ -1,6 +1,8 @@
 #include "Game.h"
 #include "Screen.h"
 #include "LevelScreen.h"
+#include "MainMenu.h";
+#include "HighScore.h"
 
 Game::Game()
 	: window(sf::VideoMode::getDesktopMode(), "Falcon Squadron", sf::Style::Titlebar | sf::Style::Close)
@@ -11,7 +13,17 @@ Game::Game()
 	window.setMouseCursorVisible(false);
 
 	// TODO: Setup screens
-	currentScreen = new LevelScreen(this);
+
+
+	//currentScreen = new LevelScreen(this);
+	screens.insert({ "Main menu", new MainMenu(this) });
+	screens.insert({ "Level Screen", new LevelScreen(this) });
+	screens.insert({ "HighScore", new HighScore(this) });
+
+	currentScreen = screens["Main menu"];
+
+
+
 }
 
 void Game::RunGameLoop()
@@ -69,3 +81,10 @@ sf::RenderWindow* Game::GetWindow()
 {
 	return &window;
 }
+
+void Game::SetScreen(std::string levelToLoad)
+{
+	currentScreen = screens[levelToLoad];
+}
+
+
