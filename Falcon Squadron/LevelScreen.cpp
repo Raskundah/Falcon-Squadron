@@ -36,7 +36,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, MaxPickups(3) // never set this to an even number, it allows the vector of pickups to go out of defined bounds. what the fuck.
 	, isBroken(false)
 	, gameMusic()
-	, MaxTime(6.0f)
+	, MaxTime(120.0f)
 	, remainingTime(0)
 	, healthText()
 	, shieldText()
@@ -510,9 +510,6 @@ void LevelScreen::TextHud()
 
 #pragma endregion
 
-
-
-
 }
 
 void LevelScreen::Collision()
@@ -574,13 +571,18 @@ void LevelScreen::Collision()
 	{
 		asteroids[i]->SetColliding(false);
 
-		if (asteroids[i]->CheckCollision(player))
-		{
+		
 			player.SetColliding(true);
 			asteroids[i]->SetColliding(true);
 			player.HandleCollision(*asteroids[i]);
 			asteroids[i]->HandleCollision(player);
-		}
+
+			if (asteroids[i]->CheckCollision(player) && asteroids[i]->GetDamageCheck())
+			{
+				player.SetHealth(-asteroids[i]->GetDamage());
+				asteroids[i]->SetDamageCheck(true);
+			}
+		
 	}
 
 	//check if the player's shot an enemy.
@@ -596,6 +598,7 @@ void LevelScreen::Collision()
 
 				enemies[s]->SetColliding(true);
 				enemies[s]->SetHealth(player.GetDamage());
+				player.SetScore(enemies[s]->GetScore());
 
 			}
 		}
@@ -606,7 +609,11 @@ void LevelScreen::Collision()
 		{
 			if (player.GetBullets()[i]->CheckCollision(*asteroids[a]))
 			{
-    				asteroids[a]->TakeDamage();
+    			asteroids[a]->TakeDamage();
+				if (asteroids[a]->GetHealth() <= 0)
+				{
+					player.SetScore(asteroids[a]->GetScore());
+				}
 				player.GetBullets()[i]->SetMarkedForDeletion(true);
 			}
 		}

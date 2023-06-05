@@ -11,6 +11,8 @@ Asteroid::Asteroid()
 	, markedForDeletion(false)
 	, damageToPlayer(25)
 	, damageCounter(4)
+	, score(50)
+	, hasDamagedPlayerRecently(false)
 {
 	m_sprite.setTexture(AssetManager::RequestTexture("Assets/Asteroids/Asteroid 01.png"));
 
@@ -32,6 +34,7 @@ void Asteroid::Update(sf::Time frameTime, sf::Vector2u levelSize)
 	m_position.x -= speed * frameTime.asSeconds();
 	m_sprite.setPosition(GetPosition());
 
+	GetDamageCheck();
 }
 
 void Asteroid::Draw(sf::RenderTarget& target)
@@ -62,6 +65,23 @@ sf::Clock Asteroid::GetAsteroidAliveTime()
 void Asteroid::HandleCollision(Physics& other)
 {
 	Physics::HandleCollision(other);
+}
+
+bool Asteroid::GetDamageCheck()
+{
+	{
+		if (collisionTimer.getElapsedTime().asSeconds() > 1.0f)
+		{
+			collisionTimer.restart();
+			return hasDamagedPlayerRecently == true;
+		}
+	}	
+		return hasDamagedPlayerRecently == false;
+}
+
+void Asteroid::SetDamageCheck(bool toSet)
+{
+	hasDamagedPlayerRecently = toSet;
 }
 
 void Asteroid::SetPosition(sf::Time frameTime, sf::Vector2u levelSize)
@@ -95,6 +115,16 @@ void Asteroid::SetPosition(sf::Time frameTime, sf::Vector2u levelSize)
 int Asteroid::GetDamage()
 {
 	return damageToPlayer;
+}
+
+int Asteroid::GetHealth()
+{
+	return damageCounter;
+}
+
+int Asteroid::GetScore()
+{
+	return score;
 }
 
 void Asteroid::TakeDamage()
