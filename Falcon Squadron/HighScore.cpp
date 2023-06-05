@@ -38,7 +38,7 @@ void HighScore::Update(sf::Time frameTime)
 		if (currentScore > stoi(fileReadLine) && didPlayerComplete && lineCount == 0)
 		{
 			currentScore += 5000;
-			highScoreString += "You Survived and reached a new high score! Bonus of 5000 granted.";
+			highScoreString += "You Survived and reached a new high score! Bonus of 5000 granted. \n";
 			fileReadLine = std::to_string(currentScore);
 			break;
 		}
@@ -47,9 +47,11 @@ void HighScore::Update(sf::Time frameTime)
 		else if (currentScore > stoi(fileReadLine) && didPlayerComplete && lineCount == 1)
 		{
 			currentScore += 4000;
-			highScoreString += " You Survived and reached second place. Bonus of 4000 granted.";
+			highScoreString += " You Survived and reached second place. Bonus of 4000 granted. \n";
 			fileReadLine = std::to_string(currentScore);
+			break;
 		}
+
 
 
 		else if (currentScore > stoi(fileReadLine) && didPlayerComplete && lineCount == 2)
@@ -57,16 +59,56 @@ void HighScore::Update(sf::Time frameTime)
 			currentScore += 3000;
 			highScoreString += "You Survived and came third! Bonus of 3000 granted. \n";
 			fileReadLine = std::to_string(currentScore);
+			break;
 		}
 
+		else if (!didPlayerComplete && currentScore > stoi(fileReadLine) && lineCount == 0)
+		{
+			highScoreString += "You died, but still took the high score! \n";
+			fileReadLine = std::to_string(currentScore);
+			break;
+		}
+
+		else if (!didPlayerComplete && currentScore > stoi(fileReadLine) && lineCount == 1)
+		{
+			highScoreString += "You died, but still took Second Place! \n";
+			fileReadLine = std::to_string(currentScore);
+			break;
+
+		}
+		else if (!didPlayerComplete && currentScore > stoi(fileReadLine) && lineCount == 2)
+		{
+			highScoreString += "You died, but still took third place. \n";
+			fileReadLine = std::to_string(currentScore);
+			break;
+		}
+		else
+			highScoreString += "You didn't make it to the high score, but don't worry! This is tough. \n";
+
+		++lineCount;
 	}
-	
 
+	highScoreString += "The current high scores are: ";
 
+	while (std::getline(highScoreFile, fileReadLine))
+	{
+		highScoreString += " " + fileReadLine + ", ";
+	}
+
+	highScoreString += "\n Press Y to exit.";
+
+	while (!sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
+		{
+			gamePointer->SetScreen("Main menu");
+		}
+	}
 }
 
 void HighScore::Draw(sf::RenderTarget& target)
 {
 	target.draw(background);
+	target.draw(highScoreText);
 	
 }
