@@ -163,8 +163,8 @@ void Player::DestroyAllBullets()
     for (int i = bullets.size() - 1; i >= 0; --i)
     {
             delete bullets[i];
-            bullets.erase(bullets.begin() + i);
     }
+    bullets.clear();
 }
 
 std::vector<Bullet*> Player::GetBullets()

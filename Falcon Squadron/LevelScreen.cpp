@@ -127,6 +127,8 @@ void LevelScreen::Update(sf::Time frameTime)
 		// endPanel.Update(frameTime);
 
 	NewCleanUp();
+	ResetVectors();
+
 
 }
 
@@ -164,10 +166,6 @@ void LevelScreen::Draw(sf::RenderTarget& _target)
 	{
 		endPanel.Draw(_target);
 	}
-
-
-
-	ResetVectors();
 
 }
 
@@ -643,33 +641,31 @@ void LevelScreen::ResetVectors()
 		for (int i = enemies.size() - 1; i >= 0; --i)
 		{
 			delete enemies[i];
-			enemies.erase(enemies.begin() + i);
 		}
+		enemies.clear();
 
 		for (int i = pickups.size() - 1; i >= 0; --i)
 		{
 			delete pickups[i];
-			pickups.erase(pickups.begin() + i);
-
 		}
+		pickups.clear();
 
-		for (int i = pickups.size() - 1; i >= 0; --i)
+
+		for (int i = asteroids.size() - 1; i >= 0; --i)
 		{
 			delete asteroids[i];
-			pickups.erase(pickups.begin() + i);
 		}
+		asteroids.clear();
 
-		for (int i =  player.GetBullets().size() - 1; i >= 0; --i)
-		{
-			delete player.GetBullets()[i];
-			player.DestroyAllBullets();
-		}
+		player.DestroyAllBullets();
 
 		currentLevel++;
 
 		remainingTime = MaxTime;
 
+		firstWave = true;
+		waveClock.restart();
+
 	}
-	if (currentLevel > 2)
-		gameRunning = 0;
+	
 }
