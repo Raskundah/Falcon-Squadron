@@ -68,6 +68,10 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 
 void LevelScreen::Update(sf::Time frameTime)
 {
+	if (remainingTime <= 0)
+	{
+		reset = true;
+	}
 
 	if (gameRunning /*||player.GetHealth() <= 0*/)
 	{
@@ -632,7 +636,7 @@ void LevelScreen::Collision()
 void LevelScreen::ResetVectors()
 {
 
-	if (remainingTime <= 0.f)
+	if (remainingTime <= 0.f &&  reset == true)
 	{
 
 		player.SetPosition(80, bounds.y / 2);
@@ -664,7 +668,9 @@ void LevelScreen::ResetVectors()
 		remainingTime = MaxTime;
 
 		firstWave = true;
+
 		waveClock.restart();
+		levelClock.restart();
 
 	}
 	

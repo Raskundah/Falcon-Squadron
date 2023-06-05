@@ -67,7 +67,7 @@ private:
 
     float MaxTime, remainingTime;;
 
-    bool isBroken;
+    bool isBroken, reset;
 
     std::vector<EnemyShip*> enemies, cleanShips;
 
