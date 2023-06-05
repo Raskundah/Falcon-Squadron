@@ -11,6 +11,7 @@ public:
     void Draw(sf::RenderTarget& target);
 
     int GetDamage();
+    int GetScore();
 
     void SetHealth(int health);
     int GetHealth();

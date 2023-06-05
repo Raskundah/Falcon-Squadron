@@ -24,6 +24,11 @@ void Asteroid::Update(sf::Time frameTime, sf::Vector2u levelSize)
 	if (!Physics::GetAlive())
 		return;
 
+	if (damageCounter <= 0)
+	{
+		SetMarkedForDeletion(true);
+	}
+
 	m_position.x -= speed * frameTime.asSeconds();
 	m_sprite.setPosition(GetPosition());
 
@@ -95,10 +100,6 @@ int Asteroid::GetDamage()
 void Asteroid::TakeDamage()
 {
 	damageCounter -= 1;
-	if (damageCounter <= 0);
-	{
-		SetMarkedForDeletion(true);
-	}
 }
 
 

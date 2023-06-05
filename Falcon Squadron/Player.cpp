@@ -158,6 +158,15 @@ int Player::GetHealth()
     return health;
 }
 
+void Player::DestroyAllBullets()
+{
+    for (int i = bullets.size() - 1; i >= 0; --i)
+    {
+            delete bullets[i];
+            bullets.erase(bullets.begin() + i);
+    }
+}
+
 std::vector<Bullet*> Player::GetBullets()
 {
     return bullets;

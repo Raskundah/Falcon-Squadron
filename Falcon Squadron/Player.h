@@ -27,6 +27,7 @@ public:
 
     void SetHealth(int newHealth); // sets the players health
     int GetHealth(); //gets the players health
+    void DestroyAllBullets();
 
     std::vector<Bullet*> GetBullets(); //Idk why I did it this way, but it works, this returns the player's vector of bullets. May need to make this private LOL NO.
 

@@ -12,9 +12,9 @@ MediumShip::MediumShip()
     m_speed = 500;
     m_health = 100;
     m_damage = 10;
+    m_score = 500;
     shootCooldown = sf::seconds(1.0f);
     m_CollisionOffset.y = -m_sprite.getLocalBounds().height;
-
 
 }
 
@@ -47,6 +47,11 @@ int MediumShip::GetDamage()
     return m_damage;
 }
 
+int MediumShip::GetScore()
+{
+    return m_score;
+}
+
 void MediumShip::SetHealth(int health)
 {
     m_health -= health;
@@ -59,15 +64,8 @@ int MediumShip::GetHealth()
 
 void MediumShip::DeleteBullets()
 {
-    for (int i = m_bullets.size() - 1; i >= 0; --i)
-    {
-        // If anything else is to be done, do it before the delete call
-        if (m_bullets[i]->IsMarkedForDeletion())
-        {
-            delete m_bullets[i];
-            m_bullets.erase(m_bullets.begin() + i);
-        }// Do NOT do anything else in the loop after this as it will break!
-    }
+    EnemyShip::DeleteBullets();
+
 }
 
 void MediumShip::FireBullets()

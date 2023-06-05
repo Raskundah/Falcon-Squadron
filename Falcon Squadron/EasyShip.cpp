@@ -13,6 +13,7 @@ EasyShip::EasyShip()
     m_damage = 5;
     shootCooldown = sf::seconds(1.0f);
     m_CollisionOffset.x = -m_sprite.getLocalBounds().width;
+    m_score = 100;
 
 
 }
@@ -47,17 +48,14 @@ int EasyShip::GetDamage()
     return m_damage;
 }
 
+int EasyShip::GetScore()
+{
+    return m_score;
+}
+
 void EasyShip::DeleteBullets()
 {
-    for (int i = m_bullets.size() - 1; i >= 0; --i)
-    {
-        // If anything else is to be done, do it before the delete call
-        if (m_bullets[i]->IsMarkedForDeletion())
-        {
-            delete m_bullets[i];
-            m_bullets.erase(m_bullets.begin() + i);
-        }// Do NOT do anything else in the loop after this as it will break!
-    }
+    EnemyShip::DeleteBullets();
 }
 
 void EasyShip::SetHealth(int health)

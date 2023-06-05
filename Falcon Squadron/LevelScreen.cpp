@@ -7,7 +7,6 @@
 #include <iostream>
 #include <SFML/Audio.hpp>
 
-
 // make a int variable that holds the number of each ship, then multiply that by the amount for each level and add the result together to get the ful lsize of the ship vector, then fill the vector.
 // 
 
@@ -37,12 +36,13 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, MaxPickups(3) // never set this to an even number, it allows the vector of pickups to go out of defined bounds. what the fuck.
 	, isBroken(false)
 	, gameMusic()
-	, MaxTime(120.0f)
+	, MaxTime(6.0f)
 	, remainingTime(0)
 	, healthText()
 	, shieldText()
 	, scoreText()
 	, timeText()
+	, MaxEnemies(13) 
 
 {
 
@@ -69,11 +69,9 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 void LevelScreen::Update(sf::Time frameTime)
 {
 
-	
-	
-
-	if (gameRunning || remainingTime <= 0.0f)
+	if (gameRunning /*||player.GetHealth() <= 0*/)
 	{
+
 		if (waveClock.getElapsedTime().asSeconds() >= waveTimer.asSeconds() || firstWave)
 		{
 			MakeAsteroids(frameTime);
@@ -83,6 +81,8 @@ void LevelScreen::Update(sf::Time frameTime)
 			firstWave = false;
 			waveClock.restart();
 		}
+
+
 
 		//update moving positions
 
@@ -127,6 +127,7 @@ void LevelScreen::Update(sf::Time frameTime)
 		// endPanel.Update(frameTime);
 
 	NewCleanUp();
+
 }
 
 //draw all objects to game window
@@ -163,6 +164,11 @@ void LevelScreen::Draw(sf::RenderTarget& _target)
 	{
 		endPanel.Draw(_target);
 	}
+
+
+
+	ResetVectors();
+
 }
 
 void LevelScreen::MakeAsteroids(sf::Time frameTime)
@@ -187,21 +193,32 @@ void LevelScreen::WhichShips()
 {
 #pragma region Level One ships
 
+	
 	if (currentLevel == 0)
 	{
-		maxEasy = 10;
+		maxEasy = 9;
 		maxMedium = 2;
+		maxChallenging = 0;
+
+		if (enemies.size() >= maxEasy + maxMedium)
+			return;
 
 		if (enemies.size() < maxEasy + maxMedium)
 		{
 			for (int i = 0; i < maxEasy - currentEasy; ++i)
 			{
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+					break;
+
 				EasyShip* newEasy = new EasyShip();
 				enemies.push_back(newEasy);
 			}
 
 			for (int i = 0; i < maxMedium - currentMedium; ++i)
 			{
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+					break;
+
 				MediumShip* newMedium = new MediumShip();
 				enemies.push_back(newMedium);
 			}
@@ -223,18 +240,28 @@ void LevelScreen::WhichShips()
 
 			for (int i = 0; i < maxEasy - currentEasy; ++i)
 			{
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+					break;
+
 				EasyShip* newEasy = new EasyShip();
 				enemies.push_back(newEasy);
+
 			}
 
 			for (int i = 0; i < maxMedium - currentMedium; ++i)
 			{
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+					break;
+
 				MediumShip* newMedium = new MediumShip();
 				enemies.push_back(newMedium);
 			}
 
 			for (int i = 0; i < maxChallenging - currentChallenging; ++i)
 			{
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+					break;
+
 				ChallengingShip* newHard = new ChallengingShip();
 				enemies.push_back(newHard);
 			}
@@ -256,18 +283,27 @@ void LevelScreen::WhichShips()
 
 			for (int i = 0; i < maxEasy - currentEasy; ++i)
 			{
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+					break;
+
 				EasyShip* newEasy = new EasyShip();
 				enemies.push_back(newEasy);
 			}
 
 			for (int i = 0; i < maxMedium - currentMedium; ++i)
 			{
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+					break;
+
 				MediumShip* newMedium = new MediumShip();
 				enemies.push_back(newMedium);
 			}
 
 			for (int i = 0; i < maxChallenging - currentChallenging; ++i)
 			{
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+					break;
+
 				ChallengingShip* newHard = new ChallengingShip();
 				enemies.push_back(newHard);
 			}
@@ -420,7 +456,8 @@ void LevelScreen::TextHud()
 	healthText.setOutlineThickness(2.0f);
 	healthText.setOutlineColor(sf::Color::Black);
 	healthText.setCharacterSize(30);
-	healthText.setPosition(50, 50);
+	healthText.setPosition(1, 20);
+	healthText.setFont(gameFont);
 #pragma endregion
 
 #pragma region  shields
@@ -433,12 +470,15 @@ void LevelScreen::TextHud()
 	shieldText.setOutlineThickness(2.0f);
 	shieldText.setOutlineColor(sf::Color::Black);
 	shieldText.setCharacterSize(30);
-	shieldText.setPosition(bounds.x * 0.25, 20);
+	shieldText.setPosition(bounds.x * 0.25f, 20);
+	shieldText.setFont(gameFont);
 #pragma endregion
 
 #pragma region Timer
 	remainingTime = MaxTime - levelClock.getElapsedTime().asSeconds();
 	int timeToDisplay = trunc(remainingTime);
+
+	
 
 	timerString = ("Time Remaining: ");
 	timerString += std::to_string((int)ceil(timeToDisplay));
@@ -448,18 +488,20 @@ void LevelScreen::TextHud()
 	timeText.setOutlineThickness(2.0f);
 	timeText.setOutlineColor(sf::Color::Black);
 	timeText.setCharacterSize(30);
-	timeText.setPosition(bounds.x / 0.5f, 20);
+	timeText.setPosition(bounds.x * 0.5f, 20);
+	timeText.setFont(gameFont);
 #pragma endregion
 
 	scoreString = ("Score: ");
 	scoreString += std::to_string(player.GetScore());
 
-	scoreText.setString(shieldString);
+	scoreText.setString(scoreString);
 	scoreText.setFillColor(sf::Color::White);
 	scoreText.setOutlineThickness(2.0f);
 	scoreText.setOutlineColor(sf::Color::Black);
 	scoreText.setCharacterSize(30);
-	scoreText.setPosition(bounds.x * 0.7f, 20);
+	scoreText.setPosition(bounds.x * 0.75f, 20);
+	scoreText.setFont(gameFont);
 
 #pragma region  Score
 
@@ -470,10 +512,6 @@ void LevelScreen::TextHud()
 
 
 }
-
-
-
-
 
 void LevelScreen::Collision()
 {
@@ -566,7 +604,7 @@ void LevelScreen::Collision()
 		{
 			if (player.GetBullets()[i]->CheckCollision(*asteroids[a]))
 			{
-				asteroids[a]->TakeDamage();
+    				asteroids[a]->TakeDamage();
 				player.GetBullets()[i]->SetMarkedForDeletion(true);
 			}
 		}
@@ -583,8 +621,55 @@ void LevelScreen::Collision()
 				player.SetColliding(true);
 				enemies[i]->GetBullets()[s]->SetMarkedForDeletion(true);
 				
-				player.SetHealth (-( enemies[i]->GetDamage() ) );
+				if(player.GetShields() >0)
+					player.SetShields(-enemies[i]->GetDamage());
+
+				else
+					player.SetHealth (- enemies[i]->GetDamage() );
 			}
 		}
 	}
+}
+
+void LevelScreen::ResetVectors()
+{
+
+	if (remainingTime <= 0.f)
+	{
+
+		player.SetPosition(80, bounds.y / 2);
+
+		// clean up between levels
+		for (int i = enemies.size() - 1; i >= 0; --i)
+		{
+			delete enemies[i];
+			enemies.erase(enemies.begin() + i);
+		}
+
+		for (int i = pickups.size() - 1; i >= 0; --i)
+		{
+			delete pickups[i];
+			pickups.erase(pickups.begin() + i);
+
+		}
+
+		for (int i = pickups.size() - 1; i >= 0; --i)
+		{
+			delete asteroids[i];
+			pickups.erase(pickups.begin() + i);
+		}
+
+		for (int i =  player.GetBullets().size() - 1; i >= 0; --i)
+		{
+			delete player.GetBullets()[i];
+			player.DestroyAllBullets();
+		}
+
+		currentLevel++;
+
+		remainingTime = MaxTime;
+
+	}
+	if (currentLevel > 2)
+		gameRunning = 0;
 }

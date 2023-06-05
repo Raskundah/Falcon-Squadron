@@ -37,10 +37,11 @@ public:
     void NewCleanUp(); // does the same if the previous causes issues, thanks sarah!
     void PickUps(sf::Time frameTime);
 
-    int WhichPickup();
-    void TextHud();
+    int WhichPickup(); // creates randomly allocated pickups.
+    void TextHud(); // generates a text HUD that dynamically updates.
 
     void Collision(); // keeps the collision code to keep the update function neat and tidy. If there's time I will refactor the collision into more OOp friendly design.
+    void ResetVectors();
 
  
 
@@ -62,8 +63,7 @@ private:
     bool firstWave;
     int currentLevel, maxEasy, maxMedium, maxChallenging;
     int currentEasy, currentMedium, currentChallenging;
-    int maxAsteroids;
-    int MaxPickups;
+    int maxAsteroids, MaxPickups, MaxEnemies;
 
     float MaxTime, remainingTime;;
 
@@ -84,6 +84,8 @@ private:
     sf::Music gameMusic;
 
     sf::Font gameFont;
+
+    
 
     sf::Text healthText, shieldText, timeText, scoreText;
 

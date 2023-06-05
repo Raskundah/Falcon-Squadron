@@ -9,6 +9,7 @@ ChallengingShip::ChallengingShip()
     m_sprite.setRotation(90.f);
     m_speed = 250;
     m_health = 200;
+    m_score = 1000;
     m_damage = 25;
     
     shootCooldown = sf::seconds(1.f);
@@ -44,6 +45,11 @@ int ChallengingShip::GetDamage()
     return m_damage;
 }
 
+int ChallengingShip::GetScore()
+{
+    return m_score;
+}
+
 void ChallengingShip::SetHealth(int health)
 {
     m_health -= health;
@@ -56,15 +62,8 @@ int ChallengingShip::GetHealth()
 
 void ChallengingShip::DeleteBullets()
 {
-    for (int i = m_bullets.size() - 1; i >= 0; --i)
-    {
-        // If anything else is to be done, do it before the delete call
-        if (m_bullets[i]->IsMarkedForDeletion())
-        {
-            delete m_bullets[i];
-            m_bullets.erase(m_bullets.begin() + i);
-        }// Do NOT do anything else in the loop after this as it will break!
-    }
+    EnemyShip::DeleteBullets();
+
 }
 
 void ChallengingShip::FireBullets()
