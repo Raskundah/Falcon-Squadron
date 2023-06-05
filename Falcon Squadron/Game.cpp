@@ -87,4 +87,24 @@ void Game::SetScreen(std::string levelToLoad)
 	currentScreen = screens[levelToLoad];
 }
 
+void Game::SetPlayerAlive(bool _death)
+{
+	living = _death;
+}
+
+bool Game::GetPlayerAlive()
+{
+	return living;
+}
+
+void Game::SetPlayerScore(int _score)
+{
+	score = _score;
+}
+
+int Game::GetPlayerScore()
+{
+	return score;
+}
+
 

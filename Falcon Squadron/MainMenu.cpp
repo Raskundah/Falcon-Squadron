@@ -11,8 +11,6 @@ MainMenu::MainMenu(Game* newGamePointer)
 {
 	menuFont = AssetManager::RequestFont("Assets/cool.otf");
 
-	
-
 	std::string mainMenuString = ("Greetings Falcon, we're now callibrating your skills in this training simulator. \n Please report any and all bugs!Press Y to continue!");
 
 	mainMenuText.setString(mainMenuString);

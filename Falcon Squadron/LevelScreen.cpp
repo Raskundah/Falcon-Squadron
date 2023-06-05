@@ -85,8 +85,14 @@ void LevelScreen::Update(sf::Time frameTime)
 
 	if (player.GetHealth() <= 0)
 	{
-		gamePointer->SetScreen("HighScore");
+		player.SetAlive(false);
+
 		gameMusic.stop();
+		gamePointer->SetPlayerAlive(player.GetAlive());
+		gamePointer->SetPlayerScore(player.GetScore());
+
+		gamePointer->SetScreen("HighScore");
+		
 	}
 
 

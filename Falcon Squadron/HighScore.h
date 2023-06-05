@@ -1,6 +1,9 @@
 #pragma once
 #include "Screen.h"
 #include "SFML/Graphics.hpp"
+#include <iostream>
+#include <fstream>
+
 
 class Game;
 
@@ -16,5 +19,14 @@ public:
 protected:
 
 private:
+    std::string highScoreString;
+    int highScoreNumerical;
+    std::fstream highScoreFile;
+    sf::Sprite background;
+    sf::Text highScoreText;
+    sf::Font highScoreFont;
+
+    int currentScore;
+    bool didPlayerComplete;
 };
 
