@@ -19,14 +19,16 @@ public:
 protected:
 
 private:
-    std::string highScoreString, fileReadLine;
+    std::string highScoreString, fileReadLine, line;
     int highScoreNumerical;
     std::fstream highScoreFile;
     sf::Sprite background;
     sf::Text highScoreText;
     sf::Font highScoreFont;
 
-    int currentScore;
+
+    int currentScore, count;
     bool didPlayerComplete;
+    
 };
 

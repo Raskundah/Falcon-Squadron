@@ -688,6 +688,7 @@ void LevelScreen::ResetVectors()
 
 		if (currentLevel > 2)
 		{
+			gameMusic.stop();
 			gamePointer->SetScreen("HighScore");
 		}
 

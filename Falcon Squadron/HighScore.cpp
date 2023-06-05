@@ -31,9 +31,21 @@ HighScore::HighScore(Game* newGamePointer)
 
 void HighScore::Update(sf::Time frameTime)
 {
-	int lineCount = 0;
-	while (std::getline(highScoreFile, fileReadLine)) // the player survived and scored a new top score
+	
+
+	if (highScoreFile.is_open())
 	{
+		while (highScoreFile.peek() != EOF)
+		{
+			std::getline(highScoreFile, fileReadLine);
+			count++;
+		}
+	}
+	int lineCount = 0;
+	for (lineCount = 0; lineCount < count; ++lineCount)
+	{
+	//while (std::getline(highScoreFile, fileReadLine)) // the player survived and scored a new top score
+	//{
 
 		if (currentScore > stoi(fileReadLine) && didPlayerComplete && lineCount == 0)
 		{
@@ -80,12 +92,13 @@ void HighScore::Update(sf::Time frameTime)
 		{
 			highScoreString += "You died, but still took third place. \n";
 			fileReadLine = std::to_string(currentScore);
+
 			break;
 		}
 		else
 			highScoreString += "You didn't make it to the high score, but don't worry! This is tough. \n";
 
-		++lineCount;
+		
 	}
 
 	highScoreString += "The current high scores are: ";
@@ -94,6 +107,9 @@ void HighScore::Update(sf::Time frameTime)
 	{
 		highScoreString += " " + fileReadLine + ", ";
 	}
+
+	highScoreFile.close();
+
 
 	highScoreString += "\n Press Y to exit.";
 
