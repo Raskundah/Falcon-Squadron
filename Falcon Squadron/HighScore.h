@@ -19,7 +19,7 @@ public:
 protected:
 
 private:
-    std::string highScoreString;
+    std::string highScoreString, fileReadLine;
     int highScoreNumerical;
     std::fstream highScoreFile;
     sf::Sprite background;

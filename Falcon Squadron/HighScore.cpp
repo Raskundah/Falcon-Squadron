@@ -8,6 +8,7 @@ HighScore::HighScore(Game* newGamePointer)
 	, highScoreFile("Assets/HighScores/hi_score.txt")
 	, currentScore(newGamePointer->GetPlayerScore())
 	, didPlayerComplete(newGamePointer->GetPlayerAlive())
+	
 {
 	highScoreFont = AssetManager::RequestFont("Assets/cool.otf");
 
@@ -30,7 +31,37 @@ HighScore::HighScore(Game* newGamePointer)
 
 void HighScore::Update(sf::Time frameTime)
 {
+	int lineCount = 0;
+	while (std::getline(highScoreFile, fileReadLine)) // the player survived and scored a new top score
+	{
+
+		if (currentScore > stoi(fileReadLine) && didPlayerComplete && lineCount == 0)
+		{
+			currentScore += 5000;
+			highScoreString += "You Survived and reached a new high score! Bonus of 5000 granted.";
+			fileReadLine = std::to_string(currentScore);
+			break;
+		}
+
+
+		else if (currentScore > stoi(fileReadLine) && didPlayerComplete && lineCount == 1)
+		{
+			currentScore += 4000;
+			highScoreString += " You Survived and reached second place. Bonus of 4000 granted.";
+			fileReadLine = std::to_string(currentScore);
+		}
+
+
+		else if (currentScore > stoi(fileReadLine) && didPlayerComplete && lineCount == 2)
+		{
+			currentScore += 3000;
+			highScoreString += "You Survived and came third! Bonus of 3000 granted. \n";
+			fileReadLine = std::to_string(currentScore);
+		}
+
+	}
 	
+
 
 }
 
