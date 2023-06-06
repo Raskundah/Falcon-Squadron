@@ -59,8 +59,8 @@ void HighScore::Update(sf::Time frameTime)
 				if (i == 2 && didPlayerComplete)
 					currentScore + 1000;
 
-				scoreHolder.insert(scoreHolder.begin() + i, currentScore);
-				bool found = true;
+				scoreHolder.insert(scoreHolder.begin(), currentScore);
+				found = true;
 				break;
 			}
 		}
@@ -101,10 +101,9 @@ void HighScore::Update(sf::Time frameTime)
 
 		for (int i = 0; i < scoreHolder.size() && i < maxHighScores; ++i)
 		{
-			highScoreString + std::to_string(scoreHolder[i]) + " , ";
+			highScoreString += std::to_string(scoreHolder[i]);
+			highScoreString += " , ";
 
-			
-			
 		}
 
 		highScoreString += "\n Press S to return to main menu";
