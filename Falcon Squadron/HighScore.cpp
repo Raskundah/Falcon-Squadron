@@ -11,8 +11,9 @@ HighScore::HighScore(Game* newGamePointer)
 	, didPlayerComplete(newGamePointer->GetPlayerAlive())
 	, count()
 	, maxHighScores(10)
-	, waitTime(sf::seconds(5.0f))
+	, waitTime(sf::seconds(1.0f))
 	, breakLoop(false)
+	, hasRun(false)
 
 {
 	highScoreFont = AssetManager::RequestFont("Assets/cool.otf");
@@ -20,7 +21,7 @@ HighScore::HighScore(Game* newGamePointer)
 	highScoreFile.open("Assets/HighScores/hi_score.txt");
 
 
-	std::string highScoreString = ("Here we've reached the end of the simulation. \nIf you're reading this, the high scores are broken. \nPress S to go back to main menu.\n");
+	//std::string highScoreString = ("Here we've reached the end of the simulation. \nIf you're reading this, the high scores are broken. \nPress S to go back to main menu.\n");
 
 	highScoreText.setString(highScoreString);
 	highScoreText.setFillColor(sf::Color::White);
@@ -44,80 +45,85 @@ void HighScore::Update(sf::Time frameTime)
 
 	bool found = false;
 
-
-	for (int i = 0; i < scoreHolder.size(); ++i) // here we loop through the current session's high scores.
+	if (!hasRun)
 	{
-
-		if (currentScore > scoreHolder[i]) //checks if the recent score is greater than the current entry in the score holder for the session.
+		for (int i = 0; i < scoreHolder.size(); ++i) // here we loop through the current session's high scores.
 		{
-			if (i == 0 && didPlayerComplete) // bonus for finishing first.
-				currentScore + 5000;
-			if (i == 1 && didPlayerComplete) 
-				currentScore + 3000;
-			if (i == 2 && didPlayerComplete)
-				currentScore + 1000;
 
-			scoreHolder.insert(scoreHolder.begin() + i, currentScore);
-			bool found = true;
-			break;
+			if (currentScore > scoreHolder[i]) //checks if the recent score is greater than the current entry in the score holder for the session.
+			{
+				if (i == 0 && didPlayerComplete) // bonus for finishing first.
+					currentScore + 5000;
+				if (i == 1 && didPlayerComplete)
+					currentScore + 3000;
+				if (i == 2 && didPlayerComplete)
+					currentScore + 1000;
+
+				scoreHolder.insert(scoreHolder.begin() + i, currentScore);
+				bool found = true;
+				break;
+			}
+
+
 		}
 
 		if (!found)
 			scoreHolder.push_back(currentScore);
-		
+
+		/*for (int i = 0; i < scoreHolder.size() || !breakLoop; ++i)
+		{
+			while (std::getline(highScoreFile, line));
+
+			//while (highScoreFile.peek() != EOF)
+			{
+				if (stoi(line) < scoreHolder[i])
+				{
+					line = std::to_string(scoreHolder[i]);
+					highScoreFile << line;
+
+					break;
+					breakLoop = true;
+				}
+			}
+		}
+		*/
+
+		/*while (waitClock.getElapsedTime() < waitTime)
+		{
+			if (waitClock.getElapsedTime() > waitTime)
+				waitClock.restart();
+		}
+		*/
+
+		highScoreString.clear();
+		highScoreString = ("The Current High scores are: ");
+
+		for (int i = 0; i < scoreHolder.size() && i < maxHighScores; ++i)
+		{
+			highScoreString += std::to_string(scoreHolder[i]);
+
+			if (i < maxHighScores)
+				highScoreString += ", ";
+			if (i == scoreHolder.size() - 1)
+			{
+				break;
+			}
+		}
+
+		highScoreString += "\n Press S to return to main menu";
+
+		highScoreText.setString(highScoreString);
 	}
 	
-	for (int i = 0; i < scoreHolder.size() || !breakLoop ; ++i)
-	{
-		while (std::getline(highScoreFile, line));
-
-		//while (highScoreFile.peek() != EOF)
-		{
-			if (stoi(line) < scoreHolder[i])
-			{
-				line = std::to_string(scoreHolder[i]);
-				highScoreFile << line;
-
-				break;
-				breakLoop = true;
-			}
-
-			
-		}
-	}
-
-	//while (waitClock.getElapsedTime() < waitTime)
-	{
-		/*if (waitClock.getElapsedTime() > waitTime)
-			waitClock.restart();
-
-		*/
-	}
-
-	highScoreString.clear();
-	highScoreString = ("The Current High scores are: ");
-
-	for (int i = 0; i < scoreHolder.size() && i < maxHighScores; ++i)
-	{
-		highScoreString += (scoreHolder[i]);
-		
-		if (i != maxHighScores)
-			highScoreString += ", ";
-	}
-
-	highScoreString += "\n Press S to return to main menu";
-
-	highScoreText.setString(highScoreString);
-
-	while (!sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
+			hasRun = false;
 			gamePointer->Resetlevel();
 			gamePointer->SetScreen("Main menu");
-			break;
+
+		
 		}
-	}
+	
 }
 
 void HighScore::Draw(sf::RenderTarget& target)
