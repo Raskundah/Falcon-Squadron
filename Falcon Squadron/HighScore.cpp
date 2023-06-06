@@ -6,7 +6,7 @@
 
 HighScore::HighScore(Game* newGamePointer)
 	: Screen(newGamePointer)
-	, highScoreFile()
+	, highScoreFile("Assets/HighScores/hi_score.txt")
 	, currentScore(newGamePointer->GetPlayerScore())
 	, didPlayerComplete(newGamePointer->GetPlayerAlive())
 	, count()
@@ -42,6 +42,11 @@ void HighScore::Update(sf::Time frameTime)
 	currentScore = gamePointer->GetPlayerScore();
 	didPlayerComplete = gamePointer->GetPlayerAlive();
 	waitClock.restart();
+
+	while ((highScoreFile >> line))
+	{
+		scoreHolder.push_back(stoi(line));
+	}
 
 	bool found = false;
 
@@ -138,8 +143,15 @@ void HighScore::Update(sf::Time frameTime)
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
+			for (int i = 0; i < scoreHolder.size(); ++i)
+			{
+				highScoreFile << std::to_string(scoreHolder[i]) + "\n";
+			}
+
+			
 			hasLoopRun = false;
-			gamePointer->Resetlevel();			
+			gamePointer->Resetlevel();	
+			highScoreFile.close();
 			gamePointer->SetScreen("Main menu");
 	
 		}	
