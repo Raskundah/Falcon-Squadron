@@ -23,14 +23,17 @@ MainMenu::MainMenu(Game* newGamePointer)
 
 	background.setTexture(AssetManager::RequestTexture("Assets/background.png"));
 	background.setScale(newGamePointer->GetWindow()->getSize().x / background.getGlobalBounds().width, newGamePointer->GetWindow()->getSize().y / background.getGlobalBounds().height);
+	gamePointer->GetWindow()->setMouseCursorVisible(true);
 
 }
 
 void MainMenu::Update(sf::Time frameTime)
 {
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
 	{
 		gamePointer->SetScreen("Level Screen");
+		gamePointer->ResetHighScore();
 		
 	}
 }

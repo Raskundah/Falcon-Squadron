@@ -15,6 +15,7 @@ public:
 
     void Update(sf::Time frameTime);
     void Draw(sf::RenderTarget& target);
+    void loopScore(bool _value);
 
 protected:
 
@@ -28,7 +29,7 @@ private:
 
 
     int currentScore, count;
-    bool didPlayerComplete;
+    bool didPlayerComplete, hasRun;
     
 };
 

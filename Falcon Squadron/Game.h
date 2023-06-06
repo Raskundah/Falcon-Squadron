@@ -26,6 +26,12 @@ public:
 	void SetPlayerScore(int _score);
 	int GetPlayerScore();
 
+	int GetGameLevel();
+	void SetGameLevel(int _level);
+
+	void Resetlevel();
+	void ResetHighScore();
+
 	private:
 
 
@@ -34,8 +40,9 @@ public:
 	std::map<std::string, Screen*> screens;
 	Screen* currentScreen;
 
-	int score;
-	bool living;
+	int score, gameLevel;
+
+	bool living, reset;
 
 };
 

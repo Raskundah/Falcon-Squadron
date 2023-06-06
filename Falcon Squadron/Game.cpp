@@ -8,6 +8,7 @@ Game::Game()
 	: window(sf::VideoMode::getDesktopMode(), "Falcon Squadron", sf::Style::Titlebar | sf::Style::Close)
 	, gameClock()
 	, currentScreen(nullptr)
+	, gameLevel(0)
 {
 	// Window setup
 	window.setMouseCursorVisible(false);
@@ -105,6 +106,26 @@ void Game::SetPlayerScore(int _score)
 int Game::GetPlayerScore()
 {
 	return score;
+}
+
+int Game::GetGameLevel()
+{
+	return gameLevel;
+}
+
+void Game::SetGameLevel(int _level)
+{
+	gameLevel = _level;
+}
+
+void Game::Resetlevel()
+{
+	dynamic_cast<LevelScreen*>(screens["Level Screen"])->setReset(true);
+}
+
+void Game::ResetHighScore()
+{
+	dynamic_cast<HighScore*>(screens["HighScore"])->loopScore(true);
 }
 
 

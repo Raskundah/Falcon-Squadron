@@ -38,10 +38,12 @@ public:
     void PickUps(sf::Time frameTime);
 
     int WhichPickup(); // creates randomly allocated pickups.
+    void SetLevel(int _valueInt);
     void TextHud(); // generates a text HUD that dynamically updates.
 
     void Collision(); // keeps the collision code to keep the update function neat and tidy. If there's time I will refactor the collision into more OOp friendly design.
     void ResetVectors();
+    void setReset(bool _reset);
 
  
 

@@ -40,6 +40,8 @@ public:
     void SetScore(int scoreToAdd); // adds to score.
 
     void UpdateSpeedBoost(sf::Time _frameTime); //handles the players speed boost. This logic hasn't been properly tested yet.
+    bool ExploitHandler(sf::Vector2u levelSize);
+    void SetExploitChecker(bool _pain);
 
 protected:
     const int MAXSPEED;
@@ -51,11 +53,14 @@ protected:
     int health;
     int damage;
     int score;
+    bool hasBeenDamaged;
 
     float currentBoost;
     std::vector<Bullet*> bullets;
 
 private:
+
     sf::Time bulletCooldown;
-    sf::Clock cooldownTimer;
+    sf::Clock cooldownTimer, exploitTimer;
+
 };

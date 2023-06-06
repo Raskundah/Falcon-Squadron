@@ -36,7 +36,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, MaxPickups(3) // never set this to an even number, it allows the vector of pickups to go out of defined bounds. what the fuck.
 	, isBroken(false)
 	, gameMusic()
-	, MaxTime(120.0f)
+	, MaxTime(20.0f)
 	, remainingTime(0)
 	, healthText()
 	, shieldText()
@@ -44,6 +44,8 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, timeText()
 	, MaxEnemies(13) 
 	, firstLoad(true)
+
+
 
 {
 
@@ -59,22 +61,25 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	background.setTexture(AssetManager::RequestTexture("Assets/Background.png"));
 	background.setPosition(0, 0);
 	background.setScale(bounds.x / background.getGlobalBounds().width , bounds.y / background.getGlobalBounds().height);
-	
-
-	player.SetPosition(80, bounds.y/2);
 
 }
-
 
 void LevelScreen::Update(sf::Time frameTime)
 {
 	if (firstLoad)
 	{
+		player.SetPosition(80, bounds.y / 2);
+		player.SetExploitChecker(false);
+		player.SetAlive(true);
 		gameRunning = true;
 		firstLoad = false;
 		MaxTime = 120.f;
 		levelClock.restart();
 		gameMusic.play();
+		ResetVectors();
+		player.SetHealth(100);
+		player.SetShields(0);
+		currentLevel = 0;
 
 	}
 
@@ -451,6 +456,11 @@ int LevelScreen::WhichPickup()
 	return (distribution(gen) == 0) ? -1 : 1;
 }
 
+void LevelScreen::SetLevel(int _valueInt)
+{
+	currentLevel = _valueInt;
+}
+
 void LevelScreen::TextHud()
 {
 #pragma region health
@@ -584,6 +594,9 @@ void LevelScreen::Collision()
 
 			if (asteroids[i]->CheckCollision(player) && asteroids[i]->GetDamageCheck())
 			{
+				if (player.GetPosition().x > bounds.x * 0.75)
+					player.SetHealth(-10);
+
 				player.SetHealth(-asteroids[i]->GetDamage());
 				asteroids[i]->SetDamageCheck(true);
 			}
@@ -677,7 +690,7 @@ void LevelScreen::ResetVectors()
 
 		currentLevel++;
 
-		MaxTime = 120.0f;
+		MaxTime = 20.0f;
 
 		remainingTime = MaxTime;
 
@@ -688,10 +701,18 @@ void LevelScreen::ResetVectors()
 
 		if (currentLevel > 2)
 		{
+
 			gameMusic.stop();
+			player.SetPosition(20, bounds.y /2);
 			gamePointer->SetScreen("HighScore");
 		}
 
 	}
 	
 }
+
+void LevelScreen::setReset(bool _reset)
+{
+	firstLoad = reset;
+}
+

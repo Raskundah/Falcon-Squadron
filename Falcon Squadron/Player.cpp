@@ -35,6 +35,7 @@ void Player::Update(sf::Time _frameTime, sf::Vector2u levelsize)
     FireBullets();
     UpdateBullets(_frameTime);
     DeleteBullets();
+    ExploitHandler(levelsize);
     
     bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet* bullet) {
         return bullet->IsMarkedForDeletion();
@@ -233,4 +234,26 @@ void Player::UpdateSpeedBoost(sf::Time _frameTime)
             }
         }
     }
+}
+
+bool Player::ExploitHandler(sf::Vector2u levelSize)
+{
+
+
+    {
+        if (exploitTimer.getElapsedTime().asSeconds() > 1.0f)
+        {
+            exploitTimer.restart();
+            return hasBeenDamaged == true;
+        }
+    }
+    if (m_sprite.getPosition().x > levelSize.x * 0.75)
+        SetHealth(-10);
+    return hasBeenDamaged == false;
+    
+}
+
+void Player::SetExploitChecker(bool _pain)
+{
+    hasBeenDamaged = _pain;
 }
