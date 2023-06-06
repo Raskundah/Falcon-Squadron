@@ -112,15 +112,17 @@ void HighScore::Update(sf::Time frameTime)
 
 		highScoreText.setString(highScoreString);
 
-		hasLoopRun = false;
+		hasLoopRun = true;
 	
 	}
-	
+	/*
 	sf::Event event;
 	while (gamePointer->GetWindow()->pollEvent(event))
 	{
-		if (event.type == sf::Event::KeyPressed)
+		if (event.type == sf::Event::KeyReleased)
 		{
+
+
 			hasLoopRun = false;
 			gamePointer->Resetlevel();
 			gamePointer->SetScreen("Main menu");
@@ -134,7 +136,7 @@ void HighScore::Update(sf::Time frameTime)
 			gamePointer->SetScreen("Main menu");
 		}
 	}
-
+	*/
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
