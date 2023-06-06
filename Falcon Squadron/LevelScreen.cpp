@@ -77,7 +77,7 @@ void LevelScreen::Update(sf::Time frameTime)
 		levelClock.restart();
 		gameMusic.play();
 		ResetVectors();
-		player.SetHealth(100);
+		player.SetHealth(105);
 		player.SetShields(0);
 		currentLevel = 0;
 
@@ -690,7 +690,7 @@ void LevelScreen::ResetVectors()
 
 		currentLevel++;
 
-		MaxTime = 20.0f;
+		MaxTime = 120.0f;
 
 		remainingTime = MaxTime;
 
@@ -701,10 +701,12 @@ void LevelScreen::ResetVectors()
 
 		if (currentLevel > 2)
 		{
-
+			gamePointer->SetPlayerScore(player.GetScore());
+			gamePointer->SetPlayerAlive(player.GetAlive());
 			gameMusic.stop();
 			player.SetPosition(20, bounds.y /2);
 			gamePointer->SetScreen("HighScore");
+			
 		}
 
 	}

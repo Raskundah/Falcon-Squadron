@@ -11,14 +11,14 @@ MainMenu::MainMenu(Game* newGamePointer)
 {
 	menuFont = AssetManager::RequestFont("Assets/cool.otf");
 
-	std::string mainMenuString = ("Greetings Falcon, we're now callibrating your skills in this training simulator. \n Please report any and all bugs!Press Y to continue!");
+	std::string mainMenuString = ("Greetings Falcon, we're now callibrating your skills in this training simulator. \n						Please report any and all bugs!\n							  Press Y to continue!");
 
 	mainMenuText.setString(mainMenuString);
 	mainMenuText.setFillColor(sf::Color::White);
 	mainMenuText.setOutlineThickness(2.0f);
 	mainMenuText.setOutlineColor(sf::Color::Black);
 	mainMenuText.setCharacterSize(30);
-	mainMenuText.setPosition((newGamePointer->GetWindow()->getSize().x - mainMenuText.getGlobalBounds().width) *0.1f, newGamePointer->GetWindow()->getSize().y /2);
+	mainMenuText.setPosition((newGamePointer->GetWindow()->getSize().x - mainMenuText.getGlobalBounds().width) *0.2f, newGamePointer->GetWindow()->getSize().y /2);
 	mainMenuText.setFont(menuFont);
 
 	background.setTexture(AssetManager::RequestTexture("Assets/background.png"));

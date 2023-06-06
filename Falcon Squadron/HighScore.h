@@ -27,9 +27,13 @@ private:
     sf::Text highScoreText;
     sf::Font highScoreFont;
 
+    sf::Time waitTime;
+    sf::Clock waitClock;
 
-    int currentScore, count;
-    bool didPlayerComplete, hasRun;
+
+    int currentScore, count, maxHighScores;
+    bool didPlayerComplete, hasRun, breakLoop;
+    std::vector<int> scoreHolder;
     
 };
 
