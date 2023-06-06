@@ -32,114 +32,11 @@ HighScore::HighScore(Game* newGamePointer)
 }
 
 void HighScore::Update(sf::Time frameTime)
-
-#pragma region hell
-
-
 {
 	
 	currentScore = gamePointer->GetPlayerScore();
 	didPlayerComplete = gamePointer->GetPlayerAlive();
 	waitClock.restart();
-	/*
-	if (!hasRun)
-	{
-
-		if (highScoreFile.is_open())
-		{
-			highScoreString.clear();
-
-			while (highScoreFile.peek() != EOF)
-			{
-				std::getline(highScoreFile, fileReadLine);
-				count++;
-			}
-		}
-		int lineCount = 0;
-		for (lineCount = 0; lineCount < count; ++lineCount)
-		{
-
-			//while (std::getline(highScoreFile, fileReadLine)) // the player survived and scored a new top score
-			//{
-
-			if (currentScore > stoi(fileReadLine) && didPlayerComplete && lineCount == 0)
-			{
-				currentScore += 5000;
-				highScoreString += "You Survived and reached a new high score! Bonus of 5000 granted. \n";
-				fileReadLine = std::to_string(currentScore);
-				break;
-			}
-
-
-			else if (currentScore > stoi(fileReadLine) && didPlayerComplete && lineCount == 1)
-			{
-				currentScore += 4000;
-				highScoreString += " You Survived and reached second place. Bonus of 4000 granted. \n";
-				fileReadLine = std::to_string(currentScore);
-				break;
-			}
-
-
-
-			else if (currentScore > stoi(fileReadLine) && didPlayerComplete && lineCount == 2)
-			{
-				currentScore += 3000;
-				highScoreString += "You Survived and came third! Bonus of 3000 granted. \n";
-				fileReadLine = std::to_string(currentScore);
-
-				break;
-			}
-
-			else if (!didPlayerComplete && currentScore > stoi(fileReadLine) && lineCount == 0)
-			{
-				highScoreString += "You died, but still took the high score! \n";
-				fileReadLine = std::to_string(currentScore);
-
-				break;
-			}
-
-			else if (!didPlayerComplete && currentScore > stoi(fileReadLine) && lineCount == 1)
-			{
-				highScoreString += "You died, but still took Second Place! \n";
-				fileReadLine = std::to_string(currentScore);
-
-				break;
-
-
-			}
-			else if (!didPlayerComplete && currentScore > stoi(fileReadLine) && lineCount == 2)
-			{
-				highScoreString += "You died, but still took third place. \n";
-				fileReadLine = std::to_string(currentScore);
-
-				break;
-			}
-			else
-				highScoreString += "You didn't make it to the high score, but don't worry! This is tough. \n";
-
-
-		}
-
-		highScoreString += "The current high scores are: ";
-
-
-		while (std::getline(highScoreFile, fileReadLine))
-		{
-			highScoreString += " " + fileReadLine + ", ";
-		}
-
-		highScoreFile.close();
-
-
-		highScoreString += "\n Press Y to exit.";
-		highScoreText.setString(highScoreString);
-
-		hasRun = true;
-	}
-
-	*/
-
-#pragma endregion
 
 	for (int i = 0; i < scoreHolder.size(); ++i) // here we loop through the current session's high scores.
 	{
@@ -181,7 +78,7 @@ void HighScore::Update(sf::Time frameTime)
 		}
 	}
 
-	while (waitClock.getElapsedTime() < waitTime)
+	//while (waitClock.getElapsedTime() < waitTime)
 	{
 		/*if (waitClock.getElapsedTime() > waitTime)
 			waitClock.restart();
