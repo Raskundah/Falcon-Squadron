@@ -2,7 +2,7 @@
 #include "AssetManager.h"
 #include "Game.h"
 #include "Player.h"
-#include <Windows.h>
+#include  <algorithm>
 
 HighScore::HighScore(Game* newGamePointer)
 	: Screen(newGamePointer)
@@ -51,7 +51,7 @@ void HighScore::Update(sf::Time frameTime)
 		{
 
 			if (currentScore > scoreHolder[i]) //checks if the recent score is greater than the current entry in the score holder for the session.
-			{
+			{			
 				if (i == 0 && didPlayerComplete) // bonus for finishing first.
 					currentScore + 5000;
 				if (i == 1 && didPlayerComplete)
@@ -93,19 +93,18 @@ void HighScore::Update(sf::Time frameTime)
 		}
 		*/
 
+
+
 		highScoreString.clear();
-		highScoreString = ("The Current High scores are: ");
+		std::sort(scoreHolder.rbegin(), scoreHolder.rend());
+		highScoreString = ("The Current High scores are:  ");
 
 		for (int i = 0; i < scoreHolder.size() && i < maxHighScores; ++i)
 		{
-			highScoreString += std::to_string(scoreHolder[i]);
+			highScoreString + std::to_string(scoreHolder[i]) + " , ";
 
-			if (i < maxHighScores)
-				highScoreString += ", ";
-			if (i == scoreHolder.size() - 1)
-			{
-				break;
-			}
+			
+			
 		}
 
 		highScoreString += "\n Press S to return to main menu";
