@@ -3,10 +3,13 @@
 #include "Game.h"
 #include "Player.h"
 #include  <algorithm>
+#include <iostream>
+#include <fstream>
+
+
 
 HighScore::HighScore(Game* newGamePointer)
 	: Screen(newGamePointer)
-	, highScoreFile("Assets/HighScores/hi_score.txt")
 	, currentScore(newGamePointer->GetPlayerScore())
 	, didPlayerComplete(newGamePointer->GetPlayerAlive())
 	, count()
@@ -14,12 +17,12 @@ HighScore::HighScore(Game* newGamePointer)
 	, waitTime(sf::seconds(1.0f))
 	, breakLoop(false)
 	, hasLoopRun(false)
+	, highScoreFile()
+	, doFileRead(true)
+	, doFileWrite(true)
 
 {
 	highScoreFont = AssetManager::RequestFont("Assets/cool.otf");
-
-	highScoreFile.open("Assets/HighScores/hi_score.txt");
-
 
 	//std::string highScoreString = ("Here we've reached the end of the simulation. \nIf you're reading this, the high scores are broken. \nPress S to go back to main menu.\n");
 
@@ -38,14 +41,28 @@ HighScore::HighScore(Game* newGamePointer)
 
 void HighScore::Update(sf::Time frameTime)
 {
+	const std::string HIGH_SCORE_NAME = "Assets/HighScores/highscore.txt";
+
+	scoreHolder.clear();
 	
 	currentScore = gamePointer->GetPlayerScore();
 	didPlayerComplete = gamePointer->GetPlayerAlive();
 	waitClock.restart();
 
-	while ((highScoreFile >> line))
+	if(doFileRead)
 	{
-		scoreHolder.push_back(stoi(line));
+		highScoreFile.open(HIGH_SCORE_NAME, std::fstream::in);
+
+
+		while ((highScoreFile >> line))
+		{
+			scoreHolder.push_back(stoi(line));
+		}
+
+		doFileRead = false;
+
+		highScoreFile.close();
+
 	}
 
 	bool found = false;
@@ -141,15 +158,28 @@ void HighScore::Update(sf::Time frameTime)
 	}
 	*/
 
+
+	if (doFileWrite)
+	{
+		highScoreFile.open(HIGH_SCORE_NAME, std::fstream::out);
+
+
+		for (int i = 0; i < scoreHolder.size(); i++)
+		{
+			highScoreFile << std::to_string(scoreHolder[i]) << std::endl;
+		}
+
+		highScoreFile.close();
+
+		doFileWrite = false;
+	}
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
-			for (int i = 0; i < scoreHolder.size(); ++i)
-			{
-				highScoreFile << std::to_string(scoreHolder[i]) + "\n";
-			}
-
-			
 			hasLoopRun = false;
+			doFileRead = true;
+			doFileWrite = true;
+
 			gamePointer->Resetlevel();	
 			highScoreFile.close();
 			gamePointer->SetScreen("Main menu");
@@ -167,4 +197,9 @@ void HighScore::Draw(sf::RenderTarget& target)
 void HighScore::loopScore(bool _value)
 {
 	hasRun = _value;
+}
+
+void HighScore::passToFile(int i)
+{
+	highScoreFile << std::to_string(i) << std::endl;
 }

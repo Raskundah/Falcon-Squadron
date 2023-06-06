@@ -4,6 +4,7 @@
 #include "MainMenu.h";
 #include "HighScore.h"
 
+
 Game::Game()
 	: window(sf::VideoMode::getDesktopMode(), "Falcon Squadron", sf::Style::Titlebar | sf::Style::Close)
 	, gameClock()

@@ -16,6 +16,7 @@ public:
     void Update(sf::Time frameTime);
     void Draw(sf::RenderTarget& target);
     void loopScore(bool _value);
+    void passToFile(int i);
 
 protected:
 
@@ -32,7 +33,7 @@ private:
 
 
     int currentScore, count, maxHighScores;
-    bool didPlayerComplete, hasRun, hasLoopRun, breakLoop;
+    bool didPlayerComplete, hasRun, hasLoopRun, breakLoop, doFileWrite, doFileRead;
     std::vector<int> scoreHolder;
     
 };
