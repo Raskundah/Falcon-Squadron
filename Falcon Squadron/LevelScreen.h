@@ -89,8 +89,8 @@ private:
 
     
 
-    sf::Text healthText, shieldText, timeText, scoreText;
+    sf::Text healthText, shieldText, timeText, scoreText, levelText;
 
-    std::string timerString, healthString, shieldString, scoreString;
+    std::string timerString, healthString, shieldString, scoreString, levelString;
 
 };

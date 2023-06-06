@@ -175,10 +175,7 @@ void LevelScreen::Draw(sf::RenderTarget& _target)
 	_target.draw(background);
 	player.Draw(_target);
 
-	for (int i = 0; i < enemies.size(); ++i)
-	{
-		enemies[i]->Draw(_target);
-	}
+	
 
 	for (int i = 0; i < asteroids.size(); ++i)
 	{
@@ -190,10 +187,16 @@ void LevelScreen::Draw(sf::RenderTarget& _target)
 		pickups[i]->Draw(_target);
 	}
 
+	for (int i = 0; i < enemies.size(); ++i)
+	{
+		enemies[i]->Draw(_target);
+	}
+
 	_target.draw(healthText);
 	_target.draw(shieldText);
 	_target.draw(timeText);
 	_target.draw(scoreText);
+	_target.draw(levelText);
 
 
 
@@ -472,8 +475,8 @@ void LevelScreen::TextHud()
 	healthText.setFillColor(sf::Color::White);
 	healthText.setOutlineThickness(2.0f);
 	healthText.setOutlineColor(sf::Color::Black);
-	healthText.setCharacterSize(30);
-	healthText.setPosition(1, 20);
+	healthText.setCharacterSize(22);
+	healthText.setPosition(0, 20);
 	healthText.setFont(gameFont);
 #pragma endregion
 
@@ -486,7 +489,7 @@ void LevelScreen::TextHud()
 	shieldText.setFillColor(sf::Color::White);
 	shieldText.setOutlineThickness(2.0f);
 	shieldText.setOutlineColor(sf::Color::Black);
-	shieldText.setCharacterSize(30);
+	shieldText.setCharacterSize(22);
 	shieldText.setPosition(bounds.x * 0.25f, 20);
 	shieldText.setFont(gameFont);
 #pragma endregion
@@ -504,21 +507,32 @@ void LevelScreen::TextHud()
 	timeText.setFillColor(sf::Color::White);
 	timeText.setOutlineThickness(2.0f);
 	timeText.setOutlineColor(sf::Color::Black);
-	timeText.setCharacterSize(30);
+	timeText.setCharacterSize(22);
 	timeText.setPosition(bounds.x * 0.5f, 20);
 	timeText.setFont(gameFont);
 #pragma endregion
 
-	scoreString = ("Score: ");
+	scoreString = ("Score: " );
 	scoreString += std::to_string(player.GetScore());
 
 	scoreText.setString(scoreString);
 	scoreText.setFillColor(sf::Color::White);
 	scoreText.setOutlineThickness(2.0f);
 	scoreText.setOutlineColor(sf::Color::Black);
-	scoreText.setCharacterSize(30);
+	scoreText.setCharacterSize(22);
 	scoreText.setPosition(bounds.x * 0.75f, 20);
 	scoreText.setFont(gameFont);
+
+	levelString = ("Level:  " );
+	levelString += std::to_string(currentLevel + 1);
+
+	levelText.setString(levelString);
+	levelText.setFillColor(sf::Color::White);
+	levelText.setOutlineThickness(2.0f);
+	levelText.setOutlineColor(sf::Color::Black);
+	levelText.setCharacterSize(22);
+	levelText.setPosition(bounds.x - levelText.getGlobalBounds().width-10, 20);
+	levelText.setFont(gameFont);
 
 #pragma region  Score
 
