@@ -79,6 +79,7 @@ void LevelScreen::Update(sf::Time frameTime)
 		ResetVectors();
 		player.SetHealth(105);
 		player.SetShields(0);
+		player.ResetScore();
 		currentLevel = 0;
 
 	}

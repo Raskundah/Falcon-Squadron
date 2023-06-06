@@ -13,7 +13,7 @@ HighScore::HighScore(Game* newGamePointer)
 	, maxHighScores(10)
 	, waitTime(sf::seconds(1.0f))
 	, breakLoop(false)
-	, hasRun(false)
+	, hasLoopRun(false)
 
 {
 	highScoreFont = AssetManager::RequestFont("Assets/cool.otf");
@@ -45,7 +45,7 @@ void HighScore::Update(sf::Time frameTime)
 
 	bool found = false;
 
-	if (!hasRun)
+	if (!hasLoopRun)
 	{
 		for (int i = 0; i < scoreHolder.size(); ++i) // here we loop through the current session's high scores.
 		{
@@ -63,8 +63,6 @@ void HighScore::Update(sf::Time frameTime)
 				bool found = true;
 				break;
 			}
-
-
 		}
 
 		if (!found)
@@ -113,17 +111,16 @@ void HighScore::Update(sf::Time frameTime)
 		highScoreString += "\n Press S to return to main menu";
 
 		highScoreText.setString(highScoreString);
+	
 	}
 	
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
 			hasRun = false;
-			gamePointer->Resetlevel();
+			gamePointer->Resetlevel();			
 			gamePointer->SetScreen("Main menu");
-
-		
-		}
 	
+		}	
 }
 
 void HighScore::Draw(sf::RenderTarget& target)

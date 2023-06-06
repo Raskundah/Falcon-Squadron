@@ -38,6 +38,7 @@ public:
 
     int GetScore(); // gets the players score. 
     void SetScore(int scoreToAdd); // adds to score.
+    void ResetScore();
 
     void UpdateSpeedBoost(sf::Time _frameTime); //handles the players speed boost. This logic hasn't been properly tested yet.
     bool ExploitHandler(sf::Vector2u levelSize);

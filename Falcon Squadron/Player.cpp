@@ -210,6 +210,11 @@ void Player::SetScore(int scoreToAdd)
     score += scoreToAdd;
 }
 
+void Player::ResetScore()
+{
+    score = 0;
+}
+
 
 
 void Player::UpdateSpeedBoost(sf::Time _frameTime)

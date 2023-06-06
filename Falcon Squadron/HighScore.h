@@ -32,7 +32,7 @@ private:
 
 
     int currentScore, count, maxHighScores;
-    bool didPlayerComplete, hasRun, breakLoop;
+    bool didPlayerComplete, hasRun, hasLoopRun, breakLoop;
     std::vector<int> scoreHolder;
     
 };
