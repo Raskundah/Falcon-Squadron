@@ -111,12 +111,34 @@ void HighScore::Update(sf::Time frameTime)
 		highScoreString += "\n Press S to return to main menu";
 
 		highScoreText.setString(highScoreString);
+
+		hasLoopRun = false;
 	
 	}
 	
+	sf::Event event;
+	while (gamePointer->GetWindow()->pollEvent(event))
+	{
+		if (event.type == sf::Event::KeyPressed)
+		{
+			hasLoopRun = false;
+			gamePointer->Resetlevel();
+			gamePointer->SetScreen("Main menu");
+		}
+
+		// Close the game if escape is pressed
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
-			hasRun = false;
+			hasLoopRun = false;
+			gamePointer->Resetlevel();
+			gamePointer->SetScreen("Main menu");
+		}
+	}
+
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		{
+			hasLoopRun = false;
 			gamePointer->Resetlevel();			
 			gamePointer->SetScreen("Main menu");
 	
