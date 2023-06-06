@@ -163,10 +163,7 @@ void HighScore::Update(sf::Time frameTime)
 			scoreHolder.push_back(currentScore);
 		
 	}
-	count = 0;
 
-	
-	
 	for (int i = 0; i < scoreHolder.size() && !breakLoop; ++i)
 	{
 		// while (std::getline(highScoreFile, line));
@@ -195,7 +192,7 @@ void HighScore::Update(sf::Time frameTime)
 	highScoreString.clear();
 	highScoreString = ("The Current High scores are: ");
 
-	for (int i = 0; i < scoreHolder.size() || i < maxHighScores; ++i)
+	for (int i = 0; i < scoreHolder.size() && i < maxHighScores; ++i)
 	{
 		highScoreString += (scoreHolder[i]);
 		
