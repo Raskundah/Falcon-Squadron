@@ -6,15 +6,19 @@
 
 HighScore::HighScore(Game* newGamePointer)
 	: Screen(newGamePointer)
-	, highScoreFile("Assets/HighScores/hi_score.txt")
+	, highScoreFile()
 	, currentScore(newGamePointer->GetPlayerScore())
 	, didPlayerComplete(newGamePointer->GetPlayerAlive())
 	, count()
 	, maxHighScores(10)
 	, waitTime(sf::seconds(5.0f))
-	
+	, breakLoop(false)
+
 {
 	highScoreFont = AssetManager::RequestFont("Assets/cool.otf");
+
+	highScoreFile.open("Assets/HighScores/hi_score.txt");
+
 
 	std::string highScoreString = ("Here we've reached the end of the simulation. \nIf you're reading this, the high scores are broken. \nPress S to go back to main menu.\n");
 
@@ -38,9 +42,11 @@ void HighScore::Update(sf::Time frameTime)
 	didPlayerComplete = gamePointer->GetPlayerAlive();
 	waitClock.restart();
 
+	bool found = false;
+
+
 	for (int i = 0; i < scoreHolder.size(); ++i) // here we loop through the current session's high scores.
 	{
-		bool found = false;
 
 		if (currentScore > scoreHolder[i]) //checks if the recent score is greater than the current entry in the score holder for the session.
 		{
@@ -60,21 +66,23 @@ void HighScore::Update(sf::Time frameTime)
 			scoreHolder.push_back(currentScore);
 		
 	}
-
-	for (int i = 0; i < scoreHolder.size() && !breakLoop; ++i)
+	
+	for (int i = 0; i < scoreHolder.size() || !breakLoop ; ++i)
 	{
-		// while (std::getline(highScoreFile, line));
-		while (highScoreFile.peek() != EOF)
+		while (std::getline(highScoreFile, line));
+
+		//while (highScoreFile.peek() != EOF)
 		{
 			if (stoi(line) < scoreHolder[i])
 			{
 				line = std::to_string(scoreHolder[i]);
 				highScoreFile << line;
+
 				break;
 				breakLoop = true;
 			}
 
-			++i;
+			
 		}
 	}
 
