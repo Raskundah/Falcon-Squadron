@@ -86,7 +86,7 @@ void Player::DeleteBullets()
 
 void Player::FireBullets() //generates a bullet to the players bullet vector and handles the initilisation of each.
  {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && cooldownTimer.getElapsedTime() >= bulletCooldown)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num4) && cooldownTimer.getElapsedTime() >= bulletCooldown)
     {
         sf::Vector2f bulletPosition = m_sprite.getPosition(); 
         bulletPosition.y += m_sprite.getLocalBounds().height * 0.5f; // Adjust x-coordinate to the right side of the player
@@ -109,7 +109,7 @@ void Player::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
 {
     // Update the player's position based on keyboard input
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
     {
         if (m_position.y + speed * frameTime.asSeconds() < levelSize.y - m_sprite.getLocalBounds().height - 32)
         {
@@ -117,7 +117,7 @@ void Player::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
         }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
         if (m_position.y - speed * frameTime.asSeconds() >= 0)
         {
@@ -125,7 +125,7 @@ void Player::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
         }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
         if (m_position.x + speed * frameTime.asSeconds() < levelSize.x)
         {
@@ -133,7 +133,7 @@ void Player::UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize)
         }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)|| sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
         if (m_position.x - speed * frameTime.asSeconds() >= 0 + m_sprite.getLocalBounds().width)
         {

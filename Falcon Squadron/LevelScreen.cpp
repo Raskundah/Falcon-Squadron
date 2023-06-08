@@ -418,9 +418,7 @@ void LevelScreen::NewCleanUp()
 			delete pickups[i];
 			pickups.erase(pickups.begin() + i);
 		}// Do NOT do anything else in the loop after this as it will break!
-	}
-
-	
+ 	}
 }
 
 void LevelScreen::PickUps(sf::Time frameTime)

@@ -11,7 +11,7 @@ MainMenu::MainMenu(Game* newGamePointer)
 {
 	menuFont = AssetManager::RequestFont("Assets/cool.otf");
 
-	std::string mainMenuString = ("Greetings Falcon, we're now callibrating your skills in this training simulator. \n						Please report any and all bugs!\n							  Press Y to continue!");
+	std::string mainMenuString = ("Greetings Falcon, we're now callibrating your skills in this training simulator. \n						Please report any and all bugs!\n							  Press front left button to continue!");
 
 	mainMenuText.setString(mainMenuString);
 	mainMenuText.setFillColor(sf::Color::White);
@@ -30,7 +30,7 @@ MainMenu::MainMenu(Game* newGamePointer)
 void MainMenu::Update(sf::Time frameTime)
 {
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
 	{
 		gamePointer->SetScreen("Level Screen");
 		gamePointer->ResetHighScore();

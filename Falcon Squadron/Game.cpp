@@ -49,7 +49,7 @@ void Game::EventHandling()
 			window.close();
 
 		// Close the game if escape is pressed
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7))
 		{
 			window.close();
 		}

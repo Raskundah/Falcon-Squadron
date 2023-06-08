@@ -128,7 +128,7 @@ void HighScore::Update(sf::Time frameTime)
 
 		}
 
-		highScoreString += "\n Press S to return to main menu";
+		highScoreString += "\n Press Front Left to return to main menu";
 
 		highScoreText.setString(highScoreString);
 
@@ -174,7 +174,7 @@ void HighScore::Update(sf::Time frameTime)
 		doFileWrite = false;
 	}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
 		{
 			hasLoopRun = false;
 			doFileRead = true;
