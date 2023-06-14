@@ -91,7 +91,7 @@ void Player::FireBullets() //generates a bullet to the players bullet vector and
         sf::Vector2f bulletPosition = m_sprite.getPosition(); 
         bulletPosition.y += m_sprite.getLocalBounds().height * 0.5f; // Adjust x-coordinate to the right side of the player
 
-        Bullet* newBullet = new Bullet(1000.f, 10, true, sf::seconds(5)); // Customize the bullet parameters as needed
+        Bullet* newBullet = new Bullet(1000.f, 10, true, sf::seconds(10)); // Customize the bullet parameters as needed
         // newBullet.SetSpriteTexture(AssetManager::RequestTexture("Assets/Bullets/Proton_Medium.png"));
         newBullet->SetPosition(bulletPosition);
         bullets.push_back(newBullet); 

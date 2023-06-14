@@ -272,7 +272,7 @@ void LevelScreen::WhichShips()
 		maxChallenging = 1;
 
 		if (enemies.size() < maxEasy + maxMedium + maxChallenging)
-		{
+		{			
 
 			for (int i = 0; i < maxEasy - currentEasy; ++i)
 			{
@@ -301,6 +301,7 @@ void LevelScreen::WhichShips()
 				ChallengingShip* newHard = new ChallengingShip();
 				enemies.push_back(newHard);
 			}
+
 		}
 	}
 
@@ -343,6 +344,7 @@ void LevelScreen::WhichShips()
 				ChallengingShip* newHard = new ChallengingShip();
 				enemies.push_back(newHard);
 			}
+
 		}
 	}
 #pragma endregion

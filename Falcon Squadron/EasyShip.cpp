@@ -77,7 +77,7 @@ void EasyShip::FireBullets()
         sf::Vector2f bulletPosition = m_sprite.getPosition();
         bulletPosition.y -= 35;
         bulletPosition.x -= 16;
-        Bullet* newBullet = new Bullet(500.f, m_damage, false, sf::seconds(5)); // Customize the bullet parameters as needed
+        Bullet* newBullet = new Bullet(500.f, m_damage, false, sf::seconds(10)); // Customize the bullet parameters as needed
 
         newBullet->SetPosition(bulletPosition);
         m_bullets.push_back(newBullet);
