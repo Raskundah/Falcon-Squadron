@@ -66,6 +66,7 @@ private:
     int currentLevel, maxEasy, maxMedium, maxChallenging;
     int currentEasy, currentMedium, currentChallenging;
     int maxAsteroids, MaxPickups, MaxEnemies;
+    int numberOfEasy, numberOfMedium, numberOfHard;
 
     float MaxTime, remainingTime;;
 

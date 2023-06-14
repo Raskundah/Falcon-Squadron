@@ -128,7 +128,7 @@ void HighScore::Update(sf::Time frameTime)
 
 		}
 
-		highScoreString += "\n Press Front Left to return to main menu";
+		highScoreString += "\n Press Front Right to return to main menu";
 
 		highScoreText.setString(highScoreString);
 

@@ -6,7 +6,7 @@
 
 
 Game::Game()
-	: window(sf::VideoMode::getDesktopMode(), "Falcon Squadron", sf::Style::Titlebar | sf::Style::Fullscreen)
+	: window(sf::VideoMode::getDesktopMode(), "Falcon Squadron", sf::Style::Titlebar | sf::Style::Close)
 	, gameClock()
 	, currentScreen(nullptr)
 	, gameLevel(0)

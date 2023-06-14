@@ -29,6 +29,9 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, currentMedium()
 	, maxChallenging()
 	, currentChallenging()
+	, numberOfEasy()
+	, numberOfMedium()
+	, numberOfHard()
 	, asteroidTime(sf::seconds(10.f))
 	, levelTime(sf::seconds(180.0f))
 	, waveTimer(sf::seconds(5.0f))
@@ -36,7 +39,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, MaxPickups(3) // never set this to an even number, it allows the vector of pickups to go out of defined bounds. what the fuck.
 	, isBroken(false)
 	, gameMusic()
-	, MaxTime(20.0f)
+	, MaxTime(120.0f)
 	, remainingTime(0)
 	, healthText()
 	, shieldText()
@@ -81,6 +84,9 @@ void LevelScreen::Update(sf::Time frameTime)
 		player.SetShields(0);
 		player.ResetScore();
 		currentLevel = 0;
+		numberOfEasy = 0;
+		numberOfMedium = 0;
+		numberOfHard = 0;
 
 	}
 
@@ -236,27 +242,29 @@ void LevelScreen::WhichShips()
 		maxMedium = 2;
 		maxChallenging = 0;
 
-		if (enemies.size() >= maxEasy + maxMedium)
+		if (enemies.size() > maxEasy + maxMedium)
 			return;
 
-		if (enemies.size() < maxEasy + maxMedium)
+		if (enemies.size() < maxEasy + maxMedium && numberOfEasy < maxEasy)
 		{
-			for (int i = 0; i < maxEasy - currentEasy; ++i)
+			for (int i = 0; i < maxEasy - numberOfEasy; ++i)
 			{
 				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
 					break;
 
 				EasyShip* newEasy = new EasyShip();
 				enemies.push_back(newEasy);
+				numberOfEasy++;
 			}
 
-			for (int i = 0; i < maxMedium - currentMedium; ++i)
+			for (int i = 0; i < maxMedium - numberOfMedium; ++i)
 			{
-				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging && numberOfMedium < maxMedium )
 					break;
 
 				MediumShip* newMedium = new MediumShip();
 				enemies.push_back(newMedium);
+				numberOfMedium++;
 			}
 		}
 	}
@@ -274,32 +282,35 @@ void LevelScreen::WhichShips()
 		if (enemies.size() < maxEasy + maxMedium + maxChallenging)
 		{			
 
-			for (int i = 0; i < maxEasy - currentEasy; ++i)
+			for (int i = 0; i < maxEasy - numberOfEasy; ++i)
 			{
-				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging && numberOfEasy < maxEasy)
 					break;
 
 				EasyShip* newEasy = new EasyShip();
 				enemies.push_back(newEasy);
+				numberOfEasy++;
 
 			}
 
-			for (int i = 0; i < maxMedium - currentMedium; ++i)
+			for (int i = 0; i < maxMedium - numberOfMedium; ++i)
 			{
-				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging && numberOfMedium < maxMedium)
 					break;
 
 				MediumShip* newMedium = new MediumShip();
 				enemies.push_back(newMedium);
+				numberOfMedium++;
 			}
 
-			for (int i = 0; i < maxChallenging - currentChallenging; ++i)
+			for (int i = 0; i < maxChallenging - numberOfHard; ++i)
 			{
-				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging && numberOfHard < maxChallenging)
 					break;
 
 				ChallengingShip* newHard = new ChallengingShip();
 				enemies.push_back(newHard);
+				numberOfHard++;
 			}
 
 		}
@@ -318,31 +329,36 @@ void LevelScreen::WhichShips()
 		if (enemies.size() < maxEasy + maxMedium + maxChallenging)
 		{
 
-			for (int i = 0; i < maxEasy - currentEasy; ++i)
+			for (int i = 0; i < maxEasy - numberOfEasy; ++i)
 			{
-				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging && numberOfEasy < maxEasy)
 					break;
 
 				EasyShip* newEasy = new EasyShip();
 				enemies.push_back(newEasy);
+				numberOfEasy++;
 			}
 
-			for (int i = 0; i < maxMedium - currentMedium; ++i)
+			for (int i = 0; i < maxMedium - numberOfMedium; ++i)
 			{
-				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging && numberOfMedium < maxMedium)
 					break;
 
 				MediumShip* newMedium = new MediumShip();
 				enemies.push_back(newMedium);
+				numberOfMedium++;
+
 			}
 
-			for (int i = 0; i < maxChallenging - currentChallenging; ++i)
+			for (int i = 0; i < maxChallenging - numberOfHard; ++i)
 			{
-				if (enemies.size() >= maxEasy + maxMedium + maxChallenging)
+				if (enemies.size() >= maxEasy + maxMedium + maxChallenging && numberOfHard < maxChallenging)
 					break;
 
 				ChallengingShip* newHard = new ChallengingShip();
 				enemies.push_back(newHard);
+				numberOfHard++;
+
 			}
 
 		}
@@ -407,6 +423,22 @@ void LevelScreen::NewCleanUp()
 		// If anything else is to be done, do it before the delete call
 		if (enemies[i]->IsMarkedForDeletion())
 		{
+
+			if (dynamic_cast<EasyShip*>(enemies[i]))
+			{
+				numberOfEasy--;
+			}
+
+			if (dynamic_cast<MediumShip*>(enemies[i]))
+			{
+				numberOfMedium--;
+			}
+
+			if (dynamic_cast<ChallengingShip*>(enemies[i]))
+			{
+				numberOfHard--;
+			}
+
 			delete enemies[i];
 			enemies.erase(enemies.begin() + i);
 		}// Do NOT do anything else in the loop after this as it will break!
@@ -713,6 +745,9 @@ void LevelScreen::ResetVectors()
 
 		waveClock.restart();
 		levelClock.restart();
+		numberOfEasy = 0;
+		numberOfMedium = 0;
+		numberOfHard = 0;
 
 		if (currentLevel > 2)
 		{
