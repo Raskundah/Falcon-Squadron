@@ -174,7 +174,7 @@ void HighScore::Update(sf::Time frameTime)
 		doFileWrite = false;
 	}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2))
 		{
 			hasLoopRun = false;
 			doFileRead = true;

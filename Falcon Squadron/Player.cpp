@@ -86,7 +86,7 @@ void Player::DeleteBullets()
 
 void Player::FireBullets() //generates a bullet to the players bullet vector and handles the initilisation of each.
  {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Num4) && cooldownTimer.getElapsedTime() >= bulletCooldown)
+    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)) && cooldownTimer.getElapsedTime() >= bulletCooldown)
     {
         sf::Vector2f bulletPosition = m_sprite.getPosition(); 
         bulletPosition.y += m_sprite.getLocalBounds().height * 0.5f; // Adjust x-coordinate to the right side of the player
