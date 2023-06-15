@@ -73,7 +73,7 @@ private:
 
     float MaxTime, remainingTime;;
 
-    bool isBroken, reset, firstLoad;
+    bool isBroken, reset, firstLoad, bossDefeated, bossSpawned;
 
     std::vector<EnemyShip*> enemies, cleanShips;
 

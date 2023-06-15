@@ -22,7 +22,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, gameRunning(false)
 	, bounds(newGamePointer->GetWindow()->getSize().x, newGamePointer->GetWindow()->getSize().y)
 	, maxAsteroids((currentLevel + 1) * 3)
-	, currentLevel(0)
+	, currentLevel(3)
 	, maxEasy()
 	, currentEasy()
 	, maxMedium()
@@ -47,7 +47,8 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, timeText()
 	, MaxEnemies(13) 
 	, firstLoad(true)
-
+	, bossDefeated(false)
+	, bossSpawned(false)
 
 
 {
@@ -76,6 +77,7 @@ void LevelScreen::Update(sf::Time frameTime)
 		player.SetAlive(true);
 		gameRunning = true;
 		firstLoad = false;
+		bossSpawned = false;
 		MaxTime = 120.f;
 		levelClock.restart();
 		gameMusic.play();
@@ -83,7 +85,7 @@ void LevelScreen::Update(sf::Time frameTime)
 		player.SetHealth(105);
 		player.SetShields(0);
 		player.ResetScore();
-		currentLevel = 0;
+		//currentLevel = 0;
 		numberOfEasy = 0;
 		numberOfMedium = 0;
 		numberOfHard = 0;
@@ -367,9 +369,16 @@ void LevelScreen::WhichShips()
 
 #pragma region BossShips
 	{
+
 		if (currentLevel == 3)
 		{
-			BossShip* newBoss = new BossShip();
+			if (!bossSpawned)
+			{
+				BossShip* newBoss = new BossShip();
+				enemies.push_back(newBoss);
+				bossSpawned = true;
+			}
+			
 		}
 	}
 
@@ -447,6 +456,15 @@ void LevelScreen::NewCleanUp()
 			{
 				numberOfHard--;
 			}
+
+			if (dynamic_cast<BossShip*>(enemies[i]))
+			{
+				if (enemies[i]->GetHealth() <= 0)
+				{
+					bossDefeated == true;
+				}
+			}
+
 
 			delete enemies[i];
 			enemies.erase(enemies.begin() + i);
@@ -717,7 +735,7 @@ void LevelScreen::Collision()
 void LevelScreen::ResetVectors()
 {
 
-	if (remainingTime <= 0.f &&  reset == true)
+	if (remainingTime <= 0.f &&  reset == true || bossDefeated)
 	{
 
 		player.SetPosition(80, bounds.y / 2);
