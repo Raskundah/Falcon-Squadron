@@ -24,8 +24,6 @@ Game::Game()
 
 	currentScreen = screens["Main menu"];
 
-
-
 }
 
 void Game::RunGameLoop()

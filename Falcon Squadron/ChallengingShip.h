@@ -25,6 +25,4 @@ private:
     void UpdateBullets(sf::Time frameTime);
 
     void UpdatePosition(sf::Time frameTime, sf::Vector2u levelSize);
-
-
 };

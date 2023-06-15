@@ -12,6 +12,7 @@
 #include "Collectible.h"
 #include "HealthPickup.h"
 #include "ShieldPickup.h"
+#include "BossShip.h"
 
 // scream
 
@@ -56,6 +57,8 @@ private:
     ChallengingShip* challengingShip;
     HealthPickup* healthPickup;
     ShieldPickup* shieldPickup;
+    BossShip* bossShip;
+    
     
 
     sf::Sprite background;

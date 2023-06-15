@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AssetManager.cpp" />
+    <ClCompile Include="BossShip.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="ChallengingShip.cpp" />
     <ClCompile Include="Collectible.cpp" />
@@ -171,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="BossShip.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="ChallengingShip.h" />
     <ClInclude Include="Collectible.h" />
