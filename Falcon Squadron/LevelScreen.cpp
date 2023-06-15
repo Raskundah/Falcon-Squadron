@@ -365,6 +365,15 @@ void LevelScreen::WhichShips()
 	}
 #pragma endregion
 
+#pragma region BossShips
+	{
+		if (currentLevel == 3)
+		{
+			BossShip* newBoss = new BossShip();
+		}
+	}
+
+#pragma endregion
 
 }
 
@@ -749,7 +758,7 @@ void LevelScreen::ResetVectors()
 		numberOfMedium = 0;
 		numberOfHard = 0;
 
-		if (currentLevel > 2)
+		if (currentLevel > 3)
 		{
 			gamePointer->SetPlayerScore(player.GetScore());
 			gamePointer->SetPlayerAlive(player.GetAlive());
